@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -26,19 +28,26 @@ public class ReportCard {
 	@Column (name ="RC_DATE")
 	private Timestamp date;
 	
+	@ManyToOne
+	@JoinColumn(name="t_id")
+	private User teacher;
+	
+	@ManyToOne
+	@JoinColumn(name="s_id")
+	private Student student;
 	
 
 	public ReportCard (){}
 	
-	
-	public ReportCard(int id, String grade, Timestamp date) {
+	public ReportCard(int id, String grade, Timestamp date, User teacher, Student student) {
 		super();
 		this.id = id;
 		this.grade = grade;
 		this.date = date;
+		this.teacher = teacher;
+		this.student = student;
 	}
-	
-	
+
 	public int getId() {
 		return id;
 	}
@@ -57,6 +66,21 @@ public class ReportCard {
 	public void setDate(Timestamp date) {
 		this.date = date;
 	}
-	
+
+	public User getTeacher() {
+		return teacher;
+	}
+
+	public void setTeacher(User teacher) {
+		this.teacher = teacher;
+	}
+
+	public Student getStudent() {
+		return student;
+	}
+
+	public void setStudent(Student student) {
+		this.student = student;
+	}
 
 }

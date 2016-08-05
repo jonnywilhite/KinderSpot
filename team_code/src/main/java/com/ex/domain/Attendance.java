@@ -1,11 +1,16 @@
 package com.ex.domain;
 
 import java.sql.Timestamp;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -22,21 +27,23 @@ public class Attendance
 	@Column(name="A_DATE")
 	private Timestamp date;
 	
-	@Column(name="T_ID")
-	private int t_id;
+	@ManyToOne
+	@JoinColumn(name="T_ID")
+	private User teacher;
+	
+	@OneToMany(mappedBy="teacher")
+	private List<Student> students;
 	
 	public Attendance(){}
-	
-	public Attendance(int id, Timestamp date, int t_id)
-	{
+
+	public Attendance(int id, Timestamp date, User teacher, List<Student> students) {
 		super();
 		this.id = id;
 		this.date = date;
-		this.t_id = t_id;
+		this.teacher = teacher;
+		this.students = students;
 	}
-	
-	
-	
+
 	//Getters & Setters
 	public int getId() {
 		return id;
@@ -54,14 +61,20 @@ public class Attendance
 		this.date = date;
 	}
 
-	public int getT_id() {
-		return t_id;
+	public User getTeacher() {
+		return teacher;
 	}
 
-	public void setT_id(int t_id) {
-		this.t_id = t_id;
+	public void setTeacher(User teacher) {
+		this.teacher = teacher;
 	}
-	
-	
+
+	public List<Student> getStudents() {
+		return students;
+	}
+
+	public void setStudents(List<Student> students) {
+		this.students = students;
+	}
 	
 }

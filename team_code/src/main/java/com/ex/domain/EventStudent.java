@@ -2,9 +2,10 @@ package com.ex.domain;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -17,33 +18,40 @@ public class EventStudent implements Serializable{
 	
 	
 	@Id
-	@Column(name="e_id")
-	private int eId;
+	@ManyToOne
+	@JoinColumn(name="e_id")
+	private Event event;
 	
 	@Id
-	@Column(name="s_id")
-	private int sId;
+	@ManyToOne
+	@JoinColumn(name="s_id")
+	private Student student;
 	
 	
-	public EventStudent(int eId, int sId) {
+	
+	public EventStudent(Event event, Student student) {
 		super();
-		this.eId = eId;
-		this.sId = sId;
+		this.event = event;
+		this.student = student;
 	}
 	public EventStudent() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public int geteId() {
-		return eId;
+	public Event getEvent() {
+		return event;
 	}
-	public void seteId(int eId) {
-		this.eId = eId;
+	public void setEvent(Event event) {
+		this.event = event;
 	}
-	public int getsId() {
-		return sId;
+	public Student getStudent() {
+		return student;
 	}
-	public void setsId(int sId) {
-		this.sId = sId;
+	public void setStudent(Student student) {
+		this.student = student;
 	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	
 }

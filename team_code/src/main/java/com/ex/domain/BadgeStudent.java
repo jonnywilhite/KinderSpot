@@ -2,9 +2,10 @@ package com.ex.domain;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -17,40 +18,41 @@ public class BadgeStudent implements Serializable{
 	
 
 	@Id
-	@Column(name="e_id")
-	private int bId;
+	@ManyToOne
+	@JoinColumn(name="b_id")
+	private Badge badge;
 	
 	@Id
-	@Column(name="s_id")
-	private int sId;
+	@ManyToOne
+	@JoinColumn(name="s_id")
+	private Student student;
 	
-	
+	public BadgeStudent() {}
 
-	public BadgeStudent(int bId, int sId) {
+	public BadgeStudent(Badge badge, Student student) {
 		super();
-		this.bId = bId;
-		this.sId = sId;
+		this.badge = badge;
+		this.student = student;
 	}
 
-	public BadgeStudent() {
-		super();
-		// TODO Auto-generated constructor stub
+	public Badge getBadge() {
+		return badge;
 	}
 
-	public int getbId() {
-		return bId;
+	public void setBadge(Badge badge) {
+		this.badge = badge;
 	}
 
-	public void setbId(int bId) {
-		this.bId = bId;
+	public Student getStudent() {
+		return student;
 	}
 
-	public int getsId() {
-		return sId;
+	public void setStudent(Student student) {
+		this.student = student;
 	}
 
-	public void setsId(int sId) {
-		this.sId = sId;
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 }

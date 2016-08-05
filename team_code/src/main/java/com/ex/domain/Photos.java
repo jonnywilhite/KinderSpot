@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -21,12 +23,17 @@ public class Photos {
 	@Column(name ="P_PHOTO")
 	private String photo;
 	
+	@ManyToOne
+	@JoinColumn(name="e_id")
+	private Event event;
+	
 	public Photos (){}
 
-	public Photos(int id, String photo) {
+	public Photos(int id, String photo, Event event) {
 		super();
 		this.id = id;
 		this.photo = photo;
+		this.event = event;
 	}
 
 	public int getId() {
@@ -44,7 +51,13 @@ public class Photos {
 	public void setPhoto(String photo) {
 		this.photo = photo;
 	}
-	
-	
+
+	public Event getEvent() {
+		return event;
+	}
+
+	public void setEvent(Event event) {
+		this.event = event;
+	}
 
 }

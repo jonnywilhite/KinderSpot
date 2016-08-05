@@ -1,62 +1,69 @@
 package com.ex.domain;
 
-import java.sql.Timestamp;
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="EDU_ATTENDANCE_STUDENT")
-public class AttendanceStudent 
-{
+public class AttendanceStudent implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8909459415030833362L;
+
 	@Id
-	@Column(name="A_ID")
-	private int a_id;
+	@ManyToOne
+	@JoinColumn(name="A_ID")
+	private Attendance attendance;
 	
-	@Column(name="s_id")
-	private int s_id;
+	@Id
+	@ManyToOne
+	@JoinColumn(name="s_id")
+	private Student student;
 	
 	@Column(name="as_present")
-	private double present;
+	private boolean present;
 	
 	public AttendanceStudent(){}
 	
-	
-	public AttendanceStudent(int a_id, int s_id, double present)
-	{
+	public AttendanceStudent(Attendance attendance, Student student, boolean present) {
 		super();
-		this.a_id = a_id;
-		this.s_id = s_id;
+		this.attendance = attendance;
+		this.student = student;
 		this.present = present;
 	}
-	
-	
-	
-	//Getters & Setters
-	public int getA_id() {
-		return a_id;
-	}
-	public void setA_id(int a_id) {
-		this.a_id = a_id;
+
+	public Attendance getAttendance() {
+		return attendance;
 	}
 
-	public int getS_id() {
-		return s_id;
-	}
-	public void setS_id(int s_id) {
-		this.s_id = s_id;
+	public void setAttendance(Attendance attendance) {
+		this.attendance = attendance;
 	}
 
-	public double getPresent() {
+	public Student getStudent() {
+		return student;
+	}
+
+	public void setStudent(Student student) {
+		this.student = student;
+	}
+
+	public boolean isPresent() {
 		return present;
 	}
-	public void setPresent(double present) {
+
+	public void setPresent(boolean present) {
 		this.present = present;
 	}
-	
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 	
 }

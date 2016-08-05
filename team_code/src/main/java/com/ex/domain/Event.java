@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -28,16 +30,18 @@ public class Event {
 	@Column(name="e_date")
 	private Timestamp date;
 	
-	@Column(name="et_id")
-	private int typeId;
+	@ManyToOne
+	@JoinColumn(name="et_id")
+	private EventType eventType;
 	
-	public Event(int id, String name, String description, Timestamp date, int typeId) {
+	
+	public Event(int id, String name, String description, Timestamp date, EventType eventType) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.date = date;
-		this.typeId = typeId;
+		this.eventType = eventType;
 	}
 	public Event() {
 		super();
@@ -67,10 +71,10 @@ public class Event {
 	public void setDate(Timestamp date) {
 		this.date = date;
 	}
-	public int getTypeId() {
-		return typeId;
+	public EventType getEventType() {
+		return eventType;
 	}
-	public void setTypeId(int typeId) {
-		this.typeId = typeId;
+	public void setEventType(EventType eventType) {
+		this.eventType = eventType;
 	}
 }
