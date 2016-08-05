@@ -1,0 +1,101 @@
+Project 3 Requirements/Stories/Notes:
+
+(feel free to add/modify/delete as you see fit)
+
+What is it: Classroom Management System- for Kindergarten level classes. 
+Users: Teachers/Principal, parents
+Problem addressed: Universal class management systems are generally tailored towards
+	older students. Students/parents would benefit more from a more specific
+	target-audience based application.
+How is it specific towards Kindergarten level classes, and not just like Blackboard:
+	 For parents, not students. Kindergarten themed. The events/uploads/pics are
+	 generally tailored towards younger school-classes. Good/bad behavior.
+	 (field trips- (joke) student forgets to bring home sheet and they can't go).
+
+* Pictures/class hardcoded in are based off Kindergarten Cop movie.
+
+* Fun based- maybe blog-style layout?
+
+* As a teacher, I can:
+	-Log in/out
+	-Register student (not needed)
+	-Soft delete student (if time- not important)
+	-Record/view grades for students
+	-Schedule meetings with parents
+	-Reschedule/delete meetings
+	-Approve/deny meetings from parents
+	-View meetings table (shows pending/approved/denied status)
+	-Create & manage events
+	-Send emails to single parent
+	-Send email to all parents
+	-Uploading photos (class/field-trip photos)
+	-Good/bad behavior. 
+	-Give students special merit badges on their account area: like boyscout
+	 badges with custom icons. "3-week spelling Test 100%", "teacher assistant
+	 for a day", "neat handwriting", "best napper", etc.
+	
+* As a parent, I can:
+	-Log in/out
+	-View Students' grades/info/events/assignments
+	-Send email to teacher
+	-Schedule meetings with teacher
+	--View meetings table (shows pending/approved/denied status)
+	-Approve/deny meetings from teacher
+	-Approve/deny students events
+
+
+
+TECHNOLOGIES:
+
+-Java 1.8
+-Angular & JQLite
+-Ajax
+-(UI) Bootstrap
+-WS
+-Spring (MVC)
+-Spring Data
+-Hibernate
+-JUnit & Mockito
+-Spring AOP (instead of Log4j)
+-AWS
+-REST
+-Jenkins
+-Oracle SQL
+-Tomcat 8
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
