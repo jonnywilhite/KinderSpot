@@ -1,9 +1,15 @@
 *.class
 *.classpath
+<<<<<<< HEAD
 *.gitignore
 *.project
 *.settings/
 
+=======
+*.project
+*.settings/
+team_code/.gitignore
+>>>>>>> dev
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
