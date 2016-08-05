@@ -2,20 +2,6 @@ Project 3 Requirements/Stories/Notes:
 
 (feel free to add/modify/delete as you see fit)
 
-What is it: Classroom Management System- for Kindergarten level classes. 
-Users: Teachers/Principal, parents
-Problem addressed: Universal class management systems are generally tailored towards
-	older students. Students/parents would benefit more from a more specific
-	target-audience based application.
-How is it specific towards Kindergarten level classes, and not just like Blackboard:
-	 For parents, not students. Kindergarten themed. The events/uploads/pics are
-	 generally tailored towards younger school-classes. Good/bad behavior.
-	 (field trips- (joke) student forgets to bring home sheet and they can't go).
-
-* Pictures/class hardcoded in are based off Kindergarten Cop movie.
-
-* Fun based- maybe blog-style layout?
-
 * As a teacher, I can:
 	-Log in/out
 	-Register student (not needed)
