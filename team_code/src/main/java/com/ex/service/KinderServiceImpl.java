@@ -12,13 +12,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import com.ex.domain.Attendance;
 import com.ex.domain.Event;
 import com.ex.domain.Meetings;
 import com.ex.domain.ReportCard;
 import com.ex.domain.Student;
 import com.ex.domain.User;
+
 import com.ex.repo.EventsRepo;
 import com.ex.repo.MeetingRepo;
+
+import com.ex.repo.AttendanceRepo;
 import com.ex.repo.ReportCardRepo;
 import com.ex.repo.StudentRepo;
 import com.ex.repo.TeacherRepo;
@@ -45,6 +49,10 @@ public class KinderServiceImpl implements KinderService {
 	
 	@Autowired 
 	private MeetingRepo meetingRepo;
+	
+	@Autowired 
+	private AttendanceRepo attendanceRepo;
+	
 
 	//Student stuff
 	@Override
@@ -92,8 +100,16 @@ public class KinderServiceImpl implements KinderService {
 		rc.setDate(new Timestamp(new Date().getTime()));
 		return reportCardRepo.save(rc);
 	}
+	
+	@Override
+	public List<ReportCard> getAllReportCardsByTeacher(int teacherId) {
+		User teacher = teacherRepo.findOne(teacherId);
+		return reportCardRepo.findByTeacher(teacher);
+	}
 
 	
+	
+
 	//Event stuff
 	@Override
 	public Page<Event> getEventpage(Integer page, Integer size) {
@@ -144,8 +160,18 @@ public class KinderServiceImpl implements KinderService {
 	}
 
 	
+
+	//Attendance stuff
+	@Override
+	public Attendance submitAttendanceSheet(List<Student> absent) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
-	
-	
+	@Override
+	public List<Attendance> viewAttendanceSheets(int teacherId) {
+		User teacher = teacherRepo.findOne(teacherId);
+		return attendanceRepo.findByTeacher(teacher);
+	}
 
 }

@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,7 +32,7 @@ public class Attendance
 	@JoinColumn(name="T_ID")
 	private User teacher;
 	
-	@OneToMany(mappedBy="teacher")
+	@OneToMany(mappedBy="teacher", fetch=FetchType.EAGER)
 	private List<Student> students;
 	
 	public Attendance(){}

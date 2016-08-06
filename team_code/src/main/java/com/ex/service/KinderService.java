@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import com.ex.domain.Attendance;
 import com.ex.domain.Event;
 import com.ex.domain.Meetings;
 import com.ex.domain.ReportCard;
@@ -22,6 +23,7 @@ public interface KinderService {
 	
 	//ReportCard stuff
 	ReportCard createReportCardEntry(ReportCard rc);
+	List<ReportCard> getAllReportCardsByTeacher(int teacherId);
 	
 	
 	//Event stuff
@@ -41,4 +43,7 @@ public interface KinderService {
 	//Login stuff
 	User authenticate(User user);
 
+	//Attendance stuff
+	public Attendance submitAttendanceSheet(List<Student> absent);
+	public List<Attendance> viewAttendanceSheets(int teacherId);
 }
