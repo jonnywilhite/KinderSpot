@@ -6,13 +6,19 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.ex.domain.Event;
+import com.ex.domain.Meetings;
 import com.ex.domain.ReportCard;
 import com.ex.domain.Student;
 import com.ex.domain.User;
+import com.ex.repo.EventsRepo;
+import com.ex.repo.MeetingRepo;
 import com.ex.repo.ReportCardRepo;
 import com.ex.repo.StudentRepo;
 import com.ex.repo.TeacherRepo;
@@ -33,6 +39,12 @@ public class KinderServiceImpl implements KinderService {
 	
 	@Autowired
 	ReportCardRepo reportCardRepo;
+	
+	@Autowired
+	private EventsRepo eventRepo;
+	
+	@Autowired 
+	private MeetingRepo meetingRepo;
 
 	//Student stuff
 	@Override
@@ -85,20 +97,55 @@ public class KinderServiceImpl implements KinderService {
 	//Event stuff
 	@Override
 	public Page<Event> getEventpage(Integer page, Integer size) {
-		// TODO Auto-generated method stub
+		Pageable pageable =  new PageRequest(page, size);
+		return eventRepo.findByNameOrderByDateDesc(pageable);
+	}
+
+	@Override
+	public Event getEventByEventName(String name) {
+		return eventRepo.findByName(name);
+	}
+
+	@Override
+	public Event createEvent(Event event) {
+		event.setDate(new Timestamp(new Date().getTime()));
+		event.setDescription(event.getDescription());
+		event.setName(event.getName());
+		return eventRepo.save(event) ;
+	}
+	
+	@Override
+	public Event updateEvent(Event room, String eventName) {
 		return null;
 	}
 
 	@Override
 	public Event deleteEvent(String name) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
+	//Meeting stuff
+
 	@Override
-	public Event updateEvent(String name) {
-		// TODO Auto-generated method stub
+	public Meetings createMeeting(Meetings meeting) {
+		meeting.setDate(new Timestamp (new Date().getTime()));
+		meeting.setReason(meeting.getReason());
+		return meetingRepo.save(meeting);
+	}
+
+	@Override
+	public Meetings getMeetingByDate(Timestamp date) {
+		return meetingRepo.findByDate(date);
+	}
+
+	@Override
+	public Meetings updateMeetingStatus(Meetings meeting, Boolean meetingStatus) {
 		return null;
 	}
+
+	
+	
+	
+	
 
 }
