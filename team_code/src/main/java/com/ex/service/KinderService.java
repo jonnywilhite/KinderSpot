@@ -19,6 +19,7 @@ public interface KinderService {
 	
 	//ReportCard stuff
 	ReportCard createReportCardEntry(ReportCard rc);
+	List<ReportCard> getAllReportCardsByTeacher(int teacherId);
 	
 	
 	//Event stuff

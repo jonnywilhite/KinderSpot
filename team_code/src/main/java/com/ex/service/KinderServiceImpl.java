@@ -80,6 +80,12 @@ public class KinderServiceImpl implements KinderService {
 		rc.setDate(new Timestamp(new Date().getTime()));
 		return reportCardRepo.save(rc);
 	}
+	
+	@Override
+	public List<ReportCard> getAllReportCardsByTeacher(int teacherId) {
+		User teacher = teacherRepo.findOne(teacherId);
+		return reportCardRepo.findByTeacher(teacher);
+	}
 
 	
 	//Event stuff
