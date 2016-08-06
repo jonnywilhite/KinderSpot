@@ -7,5 +7,7 @@ import com.ex.domain.Attendance;
 
 @Repository
 public interface AttendanceRepo extends JpaRepository<Attendance, Integer>{
+	
+	
 
 }
