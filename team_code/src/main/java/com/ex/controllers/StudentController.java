@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ex.domain.Student;
-import com.ex.service.StudentService;
+import com.ex.service.KinderService;
 
 @RestController
 public class StudentController {
 	
 	@Autowired
-	private StudentService service;
+	private KinderService service;
 	
 	@RequestMapping(value="{teacherId}/students", method=RequestMethod.GET)
 	public List<Student> getStudentsInClass(@PathVariable int teacherId) {
