@@ -28,6 +28,9 @@ public class ReportCard {
 	@Column (name ="RC_DATE")
 	private Timestamp date;
 	
+	@Column(name="RC_COMMENTS")
+	private String comments;
+	
 	@ManyToOne
 	@JoinColumn(name="t_id")
 	private User teacher;
@@ -38,12 +41,13 @@ public class ReportCard {
 	
 
 	public ReportCard (){}
-	
-	public ReportCard(int id, String grade, Timestamp date, User teacher, Student student) {
+
+	public ReportCard(int id, String grade, Timestamp date, String comments, User teacher, Student student) {
 		super();
 		this.id = id;
 		this.grade = grade;
 		this.date = date;
+		this.comments = comments;
 		this.teacher = teacher;
 		this.student = student;
 	}
@@ -81,6 +85,14 @@ public class ReportCard {
 
 	public void setStudent(Student student) {
 		this.student = student;
+	}
+
+	public String getComments() {
+		return comments;
+	}
+
+	public void setComments(String comments) {
+		this.comments = comments;
 	}
 
 }

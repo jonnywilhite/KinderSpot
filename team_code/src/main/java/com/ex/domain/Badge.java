@@ -17,17 +17,19 @@ public class Badge {
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="badgeSequence")
 	private int id;
 	
+	@Column(name="b_name")
+	private String name;
+	
 	@Column(name="b_description")
 	private String description;
 	
 	@Column(name="b_photo")
 	private String photo;
-	
-	
 
-	public Badge(int id, String description, String photo) {
+	public Badge(int id, String name, String description, String photo) {
 		super();
 		this.id = id;
+		this.name = name;
 		this.description = description;
 		this.photo = photo;
 	}
@@ -59,6 +61,14 @@ public class Badge {
 
 	public void setPhoto(String photo) {
 		this.photo = photo;
+	}
+	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	@Override

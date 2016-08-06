@@ -6,9 +6,9 @@ import com.ex.domain.Photos;
 
 public interface PhotosRepo extends JpaRepository <Photos,Integer> {
 	
-	Photos uploadPhotos (Photos photo);
+	//Photos uploadPhotos (Photos photo);
 	
-	Photos deleteByPhoto (Photos photo);
+	//Photos deleteByPhoto (Photos photo);
 	
 
 }

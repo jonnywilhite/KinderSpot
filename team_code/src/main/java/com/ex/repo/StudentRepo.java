@@ -9,6 +9,6 @@ import com.ex.domain.User;
 
 public interface StudentRepo extends JpaRepository<Student, Integer> {
 	
-	List<Student> findByTeacher(User user);
+	List<Student> findByTeacherAndActiveTrue(User user);
 
 }

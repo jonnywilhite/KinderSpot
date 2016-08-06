@@ -24,7 +24,32 @@ public class StudentServiceImpl implements StudentService {
 	@Override
 	public List<Student> getAllStudentsByTeacher(int teacherId) {
 		User teacher = teacherRepo.findById(teacherId);
-		return studentRepo.findByTeacher(teacher);
+		return studentRepo.findByTeacherAndActiveTrue(teacher);
+	}
+
+	@Override
+	public List<Student> deleteStudentsInClassByTeacher(int teacherId) {
+		User teacher = teacherRepo.findById(teacherId);
+		List<Student> students = studentRepo.findByTeacherAndActiveTrue(teacher);
+		for (Student s : students) {
+			s.setActive(false);
+		}
+		return students;
+	}
+
+	@Override
+	public List<Student> deleteStudentsInClassByTeacher(int teacherId, int[] studentIds) {
+		User teacher = teacherRepo.findById(teacherId);
+		List<Student> students = studentRepo.findByTeacherAndActiveTrue(teacher);
+		for (Student s : students) {
+			for (int id : studentIds) {
+				if (s.getId() == id) {
+					s.setActive(false);
+					break;
+				}
+			}
+		}
+		return students;
 	}
 
 }

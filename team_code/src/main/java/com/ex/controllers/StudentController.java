@@ -17,9 +17,19 @@ public class StudentController {
 	@Autowired
 	private StudentService service;
 	
-	@RequestMapping(value="students/{teacherId}", method=RequestMethod.GET)
+	@RequestMapping(value="{teacherId}/students", method=RequestMethod.GET)
 	public List<Student> getStudentsInClass(@PathVariable int teacherId) {
 		return service.getAllStudentsByTeacher(teacherId);
+	}
+	
+	@RequestMapping(value="{teacherId}/students", method=RequestMethod.DELETE)
+	public List<Student> deleteAllStudentsInClass(@PathVariable int teacherId) {	//For when students 'graduate' kindergarten
+		return service.deleteStudentsInClassByTeacher(teacherId);
+	}
+	
+	@RequestMapping(value="{teacherId}/students/{studentIds}", method=RequestMethod.DELETE)
+	public List<Student> deleteSomeStudentsInClass(@PathVariable int teacherId, @PathVariable int[] studentIds) {	//For when students 'graduate' kindergarten
+		return service.deleteStudentsInClassByTeacher(teacherId, studentIds);
 	}
 
 }
