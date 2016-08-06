@@ -65,5 +65,39 @@ public class AttendanceStudent implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((attendance == null) ? 0 : attendance.hashCode());
+		result = prime * result + (present ? 1231 : 1237);
+		result = prime * result + ((student == null) ? 0 : student.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		AttendanceStudent other = (AttendanceStudent) obj;
+		if (attendance == null) {
+			if (other.attendance != null)
+				return false;
+		} else if (!attendance.equals(other.attendance))
+			return false;
+		if (present != other.present)
+			return false;
+		if (student == null) {
+			if (other.student != null)
+				return false;
+		} else if (!student.equals(other.student))
+			return false;
+		return true;
+	}
 	
 }
