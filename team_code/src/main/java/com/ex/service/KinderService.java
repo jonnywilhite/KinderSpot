@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 
 import com.ex.domain.Event;
+import com.ex.domain.Photos;
 import com.ex.domain.ReportCard;
 import com.ex.domain.Student;
 import com.ex.domain.User;
@@ -30,5 +31,9 @@ public interface KinderService {
 	
 	//Login stuff
 	User authenticate(User user);
+	
+	
+	//Photos stuff
+	Photos uploadPhoto(Photos photo);
 
 }

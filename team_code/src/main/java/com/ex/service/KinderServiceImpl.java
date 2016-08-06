@@ -10,9 +10,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ex.domain.Event;
+import com.ex.domain.Photos;
 import com.ex.domain.ReportCard;
 import com.ex.domain.Student;
 import com.ex.domain.User;
+import com.ex.repo.PhotosRepo;
 import com.ex.repo.ReportCardRepo;
 import com.ex.repo.StudentRepo;
 import com.ex.repo.TeacherRepo;
@@ -32,9 +34,15 @@ public class KinderServiceImpl implements KinderService {
 	private UserRepo userRepo;
 	
 	@Autowired
-	ReportCardRepo reportCardRepo;
+	private ReportCardRepo reportCardRepo;
+	
+	@Autowired
+	private PhotosRepo photoRepo;
 
-	//Student stuff
+	
+	/*
+	 * Students stuff
+	 */
 	@Override
 	public List<Student> getAllStudentsByTeacher(int teacherId) {
 		User teacher = teacherRepo.findById(teacherId);
@@ -67,14 +75,18 @@ public class KinderServiceImpl implements KinderService {
 	}
 	
 	
-	//Login stuff
+	/*
+	 * User stuff
+	 */
 	@Override
 	public User authenticate(User user) {
 		return userRepo.findByEmailAndPassword(user.getEmail(), user.getPassword());
 	}
 	
 	
-	//ReportCard stuff
+	/*
+	 * ReportCard stuff
+	 */
 	@Override
 	public ReportCard createReportCardEntry(ReportCard rc) {
 		rc.setDate(new Timestamp(new Date().getTime()));
@@ -88,7 +100,9 @@ public class KinderServiceImpl implements KinderService {
 	}
 
 	
-	//Event stuff
+	/*
+	 * Event Stuff
+	 */
 	@Override
 	public Page<Event> getEventpage(Integer page, Integer size) {
 		// TODO Auto-generated method stub
@@ -105,6 +119,15 @@ public class KinderServiceImpl implements KinderService {
 	public Event updateEvent(String name) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	
+	/*
+	 * Photos stuff
+	 */
+	@Override
+	public Photos uploadPhoto(Photos photo) {
+		return photoRepo.save(photo);
 	}
 
 }
