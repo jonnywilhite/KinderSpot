@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 
+import com.ex.domain.Attendance;
 import com.ex.domain.Event;
 import com.ex.domain.ReportCard;
 import com.ex.domain.Student;
@@ -31,4 +32,7 @@ public interface KinderService {
 	//Login stuff
 	User authenticate(User user);
 
+	//Attendance stuff
+	public Attendance submitAttendanceSheet(List<Student> absent);
+	public List<Attendance> viewAttendanceSheets(int teacherId);
 }

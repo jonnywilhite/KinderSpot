@@ -9,10 +9,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ex.domain.Attendance;
 import com.ex.domain.Event;
 import com.ex.domain.ReportCard;
 import com.ex.domain.Student;
 import com.ex.domain.User;
+import com.ex.repo.AttendanceRepo;
 import com.ex.repo.ReportCardRepo;
 import com.ex.repo.StudentRepo;
 import com.ex.repo.TeacherRepo;
@@ -33,6 +35,9 @@ public class KinderServiceImpl implements KinderService {
 	
 	@Autowired
 	ReportCardRepo reportCardRepo;
+	
+	@Autowired
+	AttendanceRepo attendanceRepo;
 
 	//Student stuff
 	@Override
@@ -88,6 +93,8 @@ public class KinderServiceImpl implements KinderService {
 	}
 
 	
+	
+
 	//Event stuff
 	@Override
 	public Page<Event> getEventpage(Integer page, Integer size) {
@@ -105,6 +112,20 @@ public class KinderServiceImpl implements KinderService {
 	public Event updateEvent(String name) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	
+	//Attendance stuff
+	@Override
+	public Attendance submitAttendanceSheet(List<Student> absent) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	public List<Attendance> viewAttendanceSheets(int teacherId) {
+		User teacher = teacherRepo.findOne(teacherId);
+		return attendanceRepo.findByTeacher(teacher);
 	}
 
 }
