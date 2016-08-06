@@ -2,7 +2,7 @@ package com.ex.service;
 
 import com.ex.domain.User;
 
-public interface KinderService {
+public interface LoginService {
 
 	User authenticate(User user);
 	

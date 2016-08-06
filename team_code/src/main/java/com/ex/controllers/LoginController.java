@@ -7,18 +7,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ex.domain.User;
-import com.ex.service.KinderService;
+import com.ex.service.LoginService;
 
 @RestController
 public class LoginController {
 	
 	@Autowired
-	private KinderService service;
+	private LoginService service;
 	
 	@RequestMapping(value="home", method=RequestMethod.POST)
 	public User logIn(@RequestBody User user) {
-		return user;
-		//return service.authenticate(user);
+		return service.authenticate(user);
 	}
 
 }
