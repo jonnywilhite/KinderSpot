@@ -6,22 +6,14 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ex.domain.Attendance;
 import com.ex.domain.Event;
-import com.ex.domain.Photos;
 import com.ex.domain.ReportCard;
 import com.ex.domain.Student;
 import com.ex.domain.User;
-import com.ex.domain.Meetings;
-
-import com.ex.repo.EventsRepo;
-import com.ex.repo.MeetingRepo;
-import com.ex.repo.PhotosRepo;
 import com.ex.repo.AttendanceRepo;
 import com.ex.repo.ReportCardRepo;
 import com.ex.repo.StudentRepo;
@@ -42,24 +34,12 @@ public class KinderServiceImpl implements KinderService {
 	private UserRepo userRepo;
 	
 	@Autowired
-	private ReportCardRepo reportCardRepo;
+	ReportCardRepo reportCardRepo;
 	
 	@Autowired
-	private PhotosRepo photoRepo;
-	
-	@Autowired
-	private EventsRepo eventRepo;
-	
-	@Autowired 
-	private MeetingRepo meetingRepo;
-	
-	@Autowired 
-	private AttendanceRepo attendanceRepo;
+	AttendanceRepo attendanceRepo;
 
-	
-	/*
-	 * Students stuff
-	 */
+	//Student stuff
 	@Override
 	public List<Student> getAllStudentsByTeacher(int teacherId) {
 		User teacher = teacherRepo.findById(teacherId);
@@ -92,18 +72,14 @@ public class KinderServiceImpl implements KinderService {
 	}
 	
 	
-	/*
-	 * User stuff
-	 */
+	//Login stuff
 	@Override
 	public User authenticate(User user) {
 		return userRepo.findByEmailAndPassword(user.getEmail(), user.getPassword());
 	}
 	
 	
-	/*
-	 * ReportCard stuff
-	 */
+	//ReportCard stuff
 	@Override
 	public ReportCard createReportCardEntry(ReportCard rc) {
 		rc.setDate(new Timestamp(new Date().getTime()));
@@ -118,79 +94,38 @@ public class KinderServiceImpl implements KinderService {
 
 	
 	
-	/*
-	 * Event Stuff
-	 */
+
+	//Event stuff
 	@Override
 	public Page<Event> getEventpage(Integer page, Integer size) {
-		Pageable pageable =  new PageRequest(page, size);
-		return eventRepo.findByNameOrderByDateDesc(pageable);
-	}
-
-	@Override
-	public Event getEventByEventName(String name) {
-		return eventRepo.findByName(name);
-	}
-
-	@Override
-	public Event createEvent(Event event) {
-		event.setDate(new Timestamp(new Date().getTime()));
-		event.setDescription(event.getDescription());
-		event.setName(event.getName());
-		return eventRepo.save(event) ;
-	}
-	
-	@Override
-	public Event updateEvent(Event room, String eventName) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Event deleteEvent(String name) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Event updateEvent(String name) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
 	
-	//Meeting stuff
-	@Override
-	public Meetings createMeeting(Meetings meeting) {
-		meeting.setDate(new Timestamp (new Date().getTime()));
-		meeting.setReason(meeting.getReason());
-		return meetingRepo.save(meeting);
-	}
-
-	@Override
-	public Meetings getMeetingByDate(Timestamp date) {
-		return meetingRepo.findByDate(date);
-	}
-
-	@Override
-	public Meetings updateMeetingStatus(Meetings meeting, Boolean meetingStatus) {
-		return null;
-	}
-
-	
-
 	//Attendance stuff
 	@Override
-	public Attendance submitAttendanceSheet(Attendance attendance) {
+	public Attendance submitAttendanceSheet(List<Student> absent) {
 		// TODO Auto-generated method stub
-		return attendanceRepo.save(attendance);
+		return null;
 	}
 	
 	@Override
 	public List<Attendance> viewAttendanceSheets(int teacherId) {
 		User teacher = teacherRepo.findOne(teacherId);
 		return attendanceRepo.findByTeacher(teacher);
-	}
-
-	
-	/*
-	 * Photos stuff
-	 */
-	@Override
-	public Photos uploadPhoto(Photos photo) {
-		return photoRepo.save(photo);
 	}
 
 }
