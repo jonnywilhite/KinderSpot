@@ -8,7 +8,7 @@ import com.ex.domain.User;
 
 public interface UserRepo extends JpaRepository<User, Integer> {
 	
-	List<User> findByEmailAndPassword(String email, String password);
+	User findByEmailAndPassword(String email, String password);
 	
 	List<User> findByEmail(String email);
 

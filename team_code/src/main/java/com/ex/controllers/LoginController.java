@@ -19,10 +19,10 @@ public class LoginController {
 	@Autowired
 	private KinderService service;
 	
-	/*@RequestMapping(value="home", method=RequestMethod.POST)
+	@RequestMapping(value="home", method=RequestMethod.POST)
 	public User logIn(@RequestBody User user) {
 		return service.authenticate(user);
-	}*/
+	}
 	
 	//Get user (parent/teacher) by email (email must be unique, so it's same as ID).
 	/*Currently does not handle what to do if there are multiple users with the same email & pass, but that
@@ -31,11 +31,16 @@ public class LoginController {
 	//For whatever reason, it won't work with two back-to-back {} variables, so put "login" in middle.
 	/*Don't forget to use @PathVariables on each parameter, and make sure the @PathVariable names match
 	  the parameters inside the function! */
+	
+	/*
+	
 	@RequestMapping(value="{userEmail}/login/{userPassword}", method=RequestMethod.POST)
 	public List<User> getUserByEmailAndPassword(@PathVariable String userEmail, @PathVariable String userPassword) 
 	{
 		return service.getUserByEmailAndPassword(userEmail, userPassword);
 	}
+	
+	*/
 
 }
 
