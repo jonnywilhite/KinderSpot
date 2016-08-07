@@ -248,4 +248,19 @@ public class KinderServiceImpl implements KinderService {
 		client.putObject(putObjectRequest);
 	}
 
+	
+
+	
+	//Email stuff
+	@Override
+	public void emailParent(int teacherId, int parentId, String subject, String body) {
+		// TODO send the email
+	}
+
+	@Override
+	public void emailAllParents(int teacherId, String subject, String body) {
+		// TODO send the email
+		
+	}
+	
 }
