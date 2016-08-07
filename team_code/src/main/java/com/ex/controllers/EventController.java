@@ -24,8 +24,8 @@ public class EventController {
 	}
 	
 	@RequestMapping (value = "event/{eventName}", method = RequestMethod.GET)
-	public  Event getEventByEventName(String name){
-		return service.getEventByEventName(name);
+	public  Event getEventByEventName(@PathVariable String eventName){
+		return service.getEventByEventName(eventName);
 	}
 	
 	@RequestMapping(value ="event", method = RequestMethod.POST)

@@ -20,9 +20,6 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.amazonaws.services.s3.model.S3Object;
-import com.amazonaws.services.s3.model.GetObjectRequest;
-import com.amazonaws.services.s3.model.S3ObjectInputStream;
 
 import com.ex.domain.Attendance;
 import com.ex.domain.Event;
@@ -209,7 +206,7 @@ public class KinderServiceImpl implements KinderService {
 	 */
 	@Override
 	public Photos uploadPhoto(Photos photo, File file) {
-		AWSCredentials credentials = new BasicAWSCredentials("generic", "credentials");
+		AWSCredentials credentials = new BasicAWSCredentials("AKIAIBXAYMNGWRPDSOAA", "RjgMDOb9UAu83UVcpXqaAdgqIuIG6B98UiiGXDUS");
 		AmazonS3 client = new AmazonS3Client(credentials);
 		String bucketName = "jonathan-gary-lee-wilhite-bucket-this-name-better-not-be-taken";
 		String folderName = "testfolder";
@@ -226,34 +223,14 @@ public class KinderServiceImpl implements KinderService {
 	}
 	
 	@Override
-	public S3ObjectInputStream getAllPhotos() {
-		AWSCredentials credentials = new BasicAWSCredentials("generic", "credentials");
-		AmazonS3 client = new AmazonS3Client(credentials);
-		String bucketName = "jonathan-gary-lee-wilhite-bucket-this-name-better-not-be-taken";
-		String folderName = "testfolder";
-		String SUFFIX = "/";
-		String key = folderName + SUFFIX + "ReceiptWalmart.jpg";
-		
-		S3Object object = client.getObject(new GetObjectRequest(bucketName, key));
-		
-		return object.getObjectContent();
-		
-		/*InputStream objectData = object.getObjectContent();
-		File file = new File("ReceiptWalmart.jpg");
-		try {
-			OutputStream out = new FileOutputStream(file);
-			IOUtils.copy(objectData, out);
-			out.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-		List<Photos> list = photoRepo.findAll();
-		for (Photos p : list) {
-			
-		}*/
+	public List<Photos> getAllPhotos() {
+		return photoRepo.findAll();
+	}
+	
+	@Override
+	public List<Photos> getPhotosByEvent(int eventId) {
+		Event event = eventRepo.findOne(eventId);
+		return photoRepo.findByEvent(event);
 	}
 	
 	public static void createFolder(String bucketName, String folderName, AmazonS3 client) {

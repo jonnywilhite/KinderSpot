@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import com.ex.domain.Attendance;
 import com.ex.domain.Event;
 import com.ex.domain.Meetings;
-import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import com.ex.domain.Photos;
 import com.ex.domain.ReportCard;
 import com.ex.domain.Student;
@@ -37,6 +36,7 @@ public interface KinderService {
 	public Event deleteEvent (String name);
 	public Event updateEvent (Event event, @PathVariable String eventName);
 	
+	
 	//Meeting Stuff 
 	public Meetings createMeeting (Meetings meeting);
 	public Meetings getMeetingByDate (Timestamp date);
@@ -50,12 +50,13 @@ public interface KinderService {
 	
 	//Photos stuff
 	Photos uploadPhoto(Photos photo, File file);
-	//String getAllPhotos();
-	S3ObjectInputStream getAllPhotos();
+	List<Photos> getAllPhotos();
+	List<Photos> getPhotosByEvent(int eventId);
 
 
 	//Attendance stuff
 	public Attendance submitAttendanceSheet(List<Student> absent);
 	public List<Attendance> viewAttendanceSheets(int teacherId);
+	
 	
 }
