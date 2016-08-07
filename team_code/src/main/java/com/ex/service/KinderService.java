@@ -59,7 +59,7 @@ public interface KinderService {
 	public List<Attendance> viewAttendanceSheets(int teacherId);
 	
 	//Email stuff
-	public void emailParent(int teacherId, int parentId, String subject, String body);
+	public void sendEmail(int senderId, int recipientId, String subject, String body);
 	public void emailAllParents(int teacherId, String subject, String body);
 	
 }
