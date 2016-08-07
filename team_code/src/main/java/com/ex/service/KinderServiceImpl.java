@@ -161,7 +161,7 @@ public class KinderServiceImpl implements KinderService {
 	 */
 	@Override
 	public Photos uploadPhoto(Photos photo, File file) {
-		AWSCredentials credentials = new BasicAWSCredentials("generic", "credentials");
+		AWSCredentials credentials = new BasicAWSCredentials("AKIAIBXAYMNGWRPDSOAA", "RjgMDOb9UAu83UVcpXqaAdgqIuIG6B98UiiGXDUS");
 		AmazonS3 client = new AmazonS3Client(credentials);
 		String bucketName = "jonathan-gary-lee-wilhite-bucket-this-name-better-not-be-taken";
 		String folderName = "testfolder";
