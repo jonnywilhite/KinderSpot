@@ -2,9 +2,56 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
+
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
 <title>Front Page</title>
 </head>
+
 <body>
+
+<!--  Dependencies -->
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.1/angular-ui-router.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.0.1/ui-bootstrap-tpls.min.js"></script>
+
+
 <h2>Login Page</h2>
+
+
+<div ng-app="myApp" ng-controller="formCtrl" ng-init="user={}">
+  <form novalidate>
+    Email:<br>
+    <input type="text" ng-model="user.email"><br>
+    Password:<br>
+    <input type="text" ng-model="user.password">
+    <br><br>
+    <button ng-click="login();myEmail=user.email;myPass=user.password">Login</button>
+  </form>
+  <p>form = {{user}}</p>
+  
+  <h3>{{myEmail}} || {{myPass}}</h3>
+</div>
+
+<script>
+var app = angular.module('myApp', []);
+app.controller('formCtrl', function($scope) {
+    $scope.login = function() {
+    	
+    	
+    };
+    $scope.login();
+});
+</script>
+
+
+
+
+
+
+
+
+
+
 </body>
 </html>

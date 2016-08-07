@@ -73,10 +73,18 @@ public class KinderServiceImpl implements KinderService {
 	
 	
 	//Login stuff
-	@Override
+	/*@Override
 	public User authenticate(User user) {
 		return userRepo.findByEmailAndPassword(user.getEmail(), user.getPassword());
+	}*/
+	
+	@Override
+	public List<User> getUserByEmailAndPassword(String email, String password) 
+	{
+		return userRepo.findByEmailAndPassword(email, password);
 	}
+	
+	
 	
 	
 	//ReportCard stuff

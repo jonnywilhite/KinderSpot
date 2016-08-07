@@ -30,9 +30,11 @@ public interface KinderService {
 	
 	
 	//Login stuff
-	User authenticate(User user);
+	//User authenticate(User user);
+	List<User> getUserByEmailAndPassword(String email, String password);
 
 	//Attendance stuff
 	public Attendance submitAttendanceSheet(List<Student> absent);
 	public List<Attendance> viewAttendanceSheets(int teacherId);
+	
 }
