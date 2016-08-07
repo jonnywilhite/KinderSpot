@@ -1,12 +1,14 @@
 package com.ex.service;
 
 
+import java.awt.Image;
 import java.io.File;
-
+import java.net.URI;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
 
+import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import com.ex.domain.Attendance;
 import com.ex.domain.Event;
 import com.ex.domain.Photos;
@@ -39,6 +41,8 @@ public interface KinderService {
 	
 	//Photos stuff
 	Photos uploadPhoto(Photos photo, File file);
+	//String getAllPhotos();
+	S3ObjectInputStream getAllPhotos();
 
 
 	//Attendance stuff

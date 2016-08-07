@@ -2,11 +2,17 @@ package com.ex.service;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -16,8 +22,11 @@ import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.model.S3Object;
+import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import com.ex.domain.Attendance;
 import com.ex.domain.Event;
 import com.ex.domain.Photos;
@@ -161,7 +170,7 @@ public class KinderServiceImpl implements KinderService {
 	 */
 	@Override
 	public Photos uploadPhoto(Photos photo, File file) {
-		AWSCredentials credentials = new BasicAWSCredentials("AKIAIBXAYMNGWRPDSOAA", "RjgMDOb9UAu83UVcpXqaAdgqIuIG6B98UiiGXDUS");
+		AWSCredentials credentials = new BasicAWSCredentials("generic", "credentials");
 		AmazonS3 client = new AmazonS3Client(credentials);
 		String bucketName = "jonathan-gary-lee-wilhite-bucket-this-name-better-not-be-taken";
 		String folderName = "testfolder";
@@ -169,10 +178,43 @@ public class KinderServiceImpl implements KinderService {
 		
 		//client.createBucket(bucketName);
 		//createFolder(bucketName, folderName, client);
-		String fileName = folderName + SUFFIX + photo.getPhoto();
+		photo.setPhoto(folderName + SUFFIX + file.getName());
+		
+		String fileName = photo.getPhoto();
 		client.putObject(new PutObjectRequest(bucketName, fileName, file));
 		
 		return photoRepo.save(photo);
+	}
+	
+	@Override
+	public S3ObjectInputStream getAllPhotos() {
+		AWSCredentials credentials = new BasicAWSCredentials("generic", "credentials");
+		AmazonS3 client = new AmazonS3Client(credentials);
+		String bucketName = "jonathan-gary-lee-wilhite-bucket-this-name-better-not-be-taken";
+		String folderName = "testfolder";
+		String SUFFIX = "/";
+		String key = folderName + SUFFIX + "ReceiptWalmart.jpg";
+		
+		S3Object object = client.getObject(new GetObjectRequest(bucketName, key));
+		
+		return object.getObjectContent();
+		
+		/*InputStream objectData = object.getObjectContent();
+		File file = new File("ReceiptWalmart.jpg");
+		try {
+			OutputStream out = new FileOutputStream(file);
+			IOUtils.copy(objectData, out);
+			out.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		List<Photos> list = photoRepo.findAll();
+		for (Photos p : list) {
+			
+		}*/
 	}
 	
 	public static void createFolder(String bucketName, String folderName, AmazonS3 client) {
