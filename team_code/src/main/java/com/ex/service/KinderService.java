@@ -49,6 +49,6 @@ public interface KinderService {
 	Photos uploadPhoto(Photos photo);
 
 	//Attendance stuff
-	public Attendance submitAttendanceSheet(List<Student> absent);
+	public Attendance submitAttendanceSheet(Attendance attendance);
 	public List<Attendance> viewAttendanceSheets(int teacherId);
 }

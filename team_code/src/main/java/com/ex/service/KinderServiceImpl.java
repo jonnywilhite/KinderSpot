@@ -173,9 +173,9 @@ public class KinderServiceImpl implements KinderService {
 
 	//Attendance stuff
 	@Override
-	public Attendance submitAttendanceSheet(List<Student> absent) {
+	public Attendance submitAttendanceSheet(Attendance attendance) {
 		// TODO Auto-generated method stub
-		return null;
+		return attendanceRepo.save(attendance);
 	}
 	
 	@Override
