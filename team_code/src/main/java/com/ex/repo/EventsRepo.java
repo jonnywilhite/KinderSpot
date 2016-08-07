@@ -8,8 +8,7 @@ import com.ex.domain.Event;
 
 public interface EventsRepo extends JpaRepository <Event, Integer> {
 	
-	Event findByName(String name);
-	Event deleteByName (Event event);
-	Page <Event> findByNameOrderByDateDesc(Pageable page);
+	//Event deleteByName (Event event);
+	//Page <Event> findByNameOrderByDateDesc(Pageable page);
 
 }

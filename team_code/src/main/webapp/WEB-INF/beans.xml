@@ -45,6 +45,16 @@
 			</props>
 		</property>
 	</bean>
+	
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix">
+			<value>/WEB-INF/pages/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
 
 	<!-- Because tx are cool -->
 	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
@@ -58,5 +68,8 @@
 
 	<!-- Find JPA Repositories -->
 	<jpa:repositories base-package="com.ex.repo" />
-
+	
+	<mvc:resources mapping="/resources/**" location="/resources/"
+		cache-period="31556926" />
+	
 </beans>
