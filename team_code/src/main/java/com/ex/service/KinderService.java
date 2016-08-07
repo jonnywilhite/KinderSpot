@@ -1,5 +1,6 @@
 package com.ex.service;
 
+import java.io.File;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -46,7 +47,7 @@ public interface KinderService {
 	
 	
 	//Photos stuff
-	Photos uploadPhoto(Photos photo);
+	Photos uploadPhoto(Photos photo, File file);
 
 	//Attendance stuff
 	public Attendance submitAttendanceSheet(List<Student> absent);

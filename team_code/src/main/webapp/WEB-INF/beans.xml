@@ -19,7 +19,8 @@
 	<!-- Define DataSource -->
 	<bean id="mydataSource" class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
-		<property name="url" value="jdbc:oracle:thin:@#{ systemProperties['RDS_HOSTNAME'] }:#{ systemProperties['RDS_PORT'] }:#{ systemProperties['RDS_DB_NAME'] }"></property>
+		<property name="url"
+			value="jdbc:oracle:thin:@#{ systemProperties['RDS_HOSTNAME'] }:#{ systemProperties['RDS_PORT'] }:#{ systemProperties['RDS_DB_NAME'] }"></property>
 		<property name="username" value="#{ systemProperties['RDS_USERNAME'] }"></property>
 		<property name="password" value="#{ systemProperties['RDS_PASSWORD'] }"></property>
 	</bean>
@@ -50,7 +51,12 @@
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
 
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="268435456" /> <!-- 256 megs -->
+	</bean>
+
 	<!-- Find JPA Repositories -->
 	<jpa:repositories base-package="com.ex.repo" />
-	
+
 </beans>
