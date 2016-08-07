@@ -1,16 +1,17 @@
 package com.ex.service;
 
 
-import java.awt.Image;
 import java.io.File;
-import java.net.URI;
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
+import org.springframework.web.bind.annotation.PathVariable;
 
-import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import com.ex.domain.Attendance;
 import com.ex.domain.Event;
+import com.ex.domain.Meetings;
+import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import com.ex.domain.Photos;
 import com.ex.domain.ReportCard;
 import com.ex.domain.Student;
@@ -31,8 +32,16 @@ public interface KinderService {
 	
 	//Event stuff
 	public Page<Event> getEventpage (Integer page, Integer size);
+	public Event createEvent (Event event);
+	public Event getEventByEventName (String name);
 	public Event deleteEvent (String name);
-	public Event updateEvent (String name);
+	public Event updateEvent (Event event, @PathVariable String eventName);
+	
+	//Meeting Stuff 
+	public Meetings createMeeting (Meetings meeting);
+	public Meetings getMeetingByDate (Timestamp date);
+	public Meetings updateMeetingStatus(Meetings meeting, @PathVariable Boolean meetingStatus);
+	
 	
 	
 	//Login stuff

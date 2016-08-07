@@ -2,7 +2,6 @@ package com.ex.controllers;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.annotation.MultipartConfig;
 
@@ -15,7 +14,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import com.ex.domain.Photos;
-//import com.ex.domain.Photos;
 import com.ex.service.KinderService;
 
 @RestController
