@@ -20,6 +20,10 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.model.S3Object;
+import com.amazonaws.services.s3.model.GetObjectRequest;
+import com.amazonaws.services.s3.model.S3ObjectInputStream;
+
 import com.ex.domain.Attendance;
 import com.ex.domain.Event;
 import com.ex.domain.Meetings;
@@ -161,7 +165,6 @@ public class KinderServiceImpl implements KinderService {
 
 	
 	//Meeting Stuff 
-	
 	@Override
 	public Meetings createMeeting(Meetings meeting) 
 	{
@@ -199,7 +202,6 @@ public class KinderServiceImpl implements KinderService {
 		User teacher = teacherRepo.findOne(teacherId);
 		return attendanceRepo.findByTeacher(teacher);
 	}
-
 	
 	
 	/*
@@ -207,7 +209,7 @@ public class KinderServiceImpl implements KinderService {
 	 */
 	@Override
 	public Photos uploadPhoto(Photos photo, File file) {
-		AWSCredentials credentials = new BasicAWSCredentials("AKIAIBXAYMNGWRPDSOAA", "RjgMDOb9UAu83UVcpXqaAdgqIuIG6B98UiiGXDUS");
+		AWSCredentials credentials = new BasicAWSCredentials("generic", "credentials");
 		AmazonS3 client = new AmazonS3Client(credentials);
 		String bucketName = "jonathan-gary-lee-wilhite-bucket-this-name-better-not-be-taken";
 		String folderName = "testfolder";
@@ -215,10 +217,43 @@ public class KinderServiceImpl implements KinderService {
 		
 		//client.createBucket(bucketName);
 		//createFolder(bucketName, folderName, client);
-		String fileName = folderName + SUFFIX + photo.getPhoto();
+		photo.setPhoto(folderName + SUFFIX + file.getName());
+		
+		String fileName = photo.getPhoto();
 		client.putObject(new PutObjectRequest(bucketName, fileName, file));
 		
 		return photoRepo.save(photo);
+	}
+	
+	@Override
+	public S3ObjectInputStream getAllPhotos() {
+		AWSCredentials credentials = new BasicAWSCredentials("generic", "credentials");
+		AmazonS3 client = new AmazonS3Client(credentials);
+		String bucketName = "jonathan-gary-lee-wilhite-bucket-this-name-better-not-be-taken";
+		String folderName = "testfolder";
+		String SUFFIX = "/";
+		String key = folderName + SUFFIX + "ReceiptWalmart.jpg";
+		
+		S3Object object = client.getObject(new GetObjectRequest(bucketName, key));
+		
+		return object.getObjectContent();
+		
+		/*InputStream objectData = object.getObjectContent();
+		File file = new File("ReceiptWalmart.jpg");
+		try {
+			OutputStream out = new FileOutputStream(file);
+			IOUtils.copy(objectData, out);
+			out.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		List<Photos> list = photoRepo.findAll();
+		for (Photos p : list) {
+			
+		}*/
 	}
 	
 	public static void createFolder(String bucketName, String folderName, AmazonS3 client) {
@@ -235,11 +270,5 @@ public class KinderServiceImpl implements KinderService {
 		// send request to S3 to create folder
 		client.putObject(putObjectRequest);
 	}
-
-	
-	
-	
-
-	
 
 }

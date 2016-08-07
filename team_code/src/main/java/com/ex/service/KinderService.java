@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import com.ex.domain.Attendance;
 import com.ex.domain.Event;
 import com.ex.domain.Meetings;
+import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import com.ex.domain.Photos;
 import com.ex.domain.ReportCard;
 import com.ex.domain.Student;
@@ -49,6 +50,8 @@ public interface KinderService {
 	
 	//Photos stuff
 	Photos uploadPhoto(Photos photo, File file);
+	//String getAllPhotos();
+	S3ObjectInputStream getAllPhotos();
 
 
 	//Attendance stuff

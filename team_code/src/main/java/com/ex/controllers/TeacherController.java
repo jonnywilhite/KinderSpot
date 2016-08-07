@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import com.ex.domain.Photos;
-//import com.ex.domain.Photos;
 import com.ex.service.KinderService;
 
 @RestController
@@ -31,7 +31,6 @@ public class TeacherController {
 		try {
 			
 			key.transferTo(file);
-			photo.setPhoto(file.getPath());
 			photo.setEvent(null);
 			return service.uploadPhoto(photo, file);
 		} catch (IllegalStateException | IOException e) {
@@ -41,6 +40,12 @@ public class TeacherController {
 		
 		return null;
 		
+	}
+	
+	@RequestMapping(value="photos", method=RequestMethod.GET)
+	public S3ObjectInputStream getPhotos() {
+		
+		return service.getAllPhotos();
 	}
 
 }
