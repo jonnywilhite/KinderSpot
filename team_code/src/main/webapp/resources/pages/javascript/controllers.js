@@ -1,10 +1,10 @@
 
 
- /*angular.module("MyApp", []); // Defining a module
-*/
+angular.module("myApp", []); // Defining a module
+
 //Runs the login Controller's POST method, passing in the user's form inputs as parameters. 
 //The function is run when the user clicks the login button.
-angular.module("myApp", []).controller("loginCtrl", function($scope, $http, $location, $window) {
+angular.module("myApp").controller("loginCtrl", function($scope, $http, $location, $window) {
 	
 	var loginData = this;
 	
@@ -50,7 +50,7 @@ angular.module("myApp", []).controller("loginCtrl", function($scope, $http, $loc
 }); //ends app.controller()
 
 
-/*angular.module("myApp").controller("parentHomeCtrl", function($scope, $http, $location, $window) {
+angular.module("myApp").controller("parentHomeCtrl", function($scope, $http, $location, $window) {
 	
 	var parentHomeData = this;
 
@@ -62,6 +62,6 @@ angular.module("myApp", []).controller("loginCtrl", function($scope, $http, $loc
 	$scope.displayUser();
 
 }); //ends parentHomeApp.controller()
-*/
+
 
 
