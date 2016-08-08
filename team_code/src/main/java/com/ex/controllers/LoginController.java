@@ -1,6 +1,10 @@
 package com.ex.controllers;
 
+import java.io.IOException;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,8 +24,11 @@ public class LoginController {
 	private KinderService service;
 	
 	@RequestMapping(value="home", method=RequestMethod.POST)
-	public User logIn(@RequestBody User user) {
-		return service.authenticate(user);
+	public User logIn(@RequestBody User user, HttpServletRequest req, HttpServletResponse resp) throws IOException
+	{
+		User myUser = service.authenticate(user);
+		req.getSession().setAttribute("loggedInUser", myUser); //Saves User into session for later reference.
+		return myUser;
 	}
 	
 	//Get user (parent/teacher) by email (email must be unique, so it's same as ID).
