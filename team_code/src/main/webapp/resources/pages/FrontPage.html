@@ -64,7 +64,7 @@ app.controller('formCtrl', function($scope, $http, $location, $window) {
 		$scope.myPass = pass;
 		
 		$http({
-            url: 'http://localhost:8085/KinderSpot/home',
+            url: '/KinderSpot/home',
             method: "POST",
             data: { "email": $scope.myEmail,
       				"password": $scope.myPass		},
