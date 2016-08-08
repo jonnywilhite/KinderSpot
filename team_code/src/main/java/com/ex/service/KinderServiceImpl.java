@@ -4,8 +4,10 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.InputStream;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -36,6 +38,15 @@ import com.ex.repo.ReportCardRepo;
 import com.ex.repo.StudentRepo;
 import com.ex.repo.TeacherRepo;
 import com.ex.repo.UserRepo;
+
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 @Service
 @Transactional
@@ -248,4 +259,88 @@ public class KinderServiceImpl implements KinderService {
 		client.putObject(putObjectRequest);
 	}
 
+	
+
+	
+	//Email stuff
+	@Override
+	public void sendEmail(int senderId, int recipientId, String subject, String body) {
+		// TODO send the email
+		String senderEmail = teacherRepo.findById(senderId).getEmail();
+		String recipientEmail = teacherRepo.findById(recipientId).getEmail();
+		final String uname = "kinderspotemail@gmail.com";
+	       final String pword = "Kinderspot1234";
+
+	       Properties props = new Properties();
+	       props.put("mail.smtp.starttls.enable", "true");
+	       props.put("mail.smtp.auth", "true");
+	       props.put("mail.smtp.host", "smtp.gmail.com");
+	       props.put("mail.smtp.port", "587");
+
+	       Session session = Session.getInstance(props,
+	         new javax.mail.Authenticator() {
+	           protected PasswordAuthentication getPasswordAuthentication() {
+	               return new PasswordAuthentication(uname, pword);
+	           }
+	         });
+
+	       try {
+
+	           Message message = new MimeMessage(session);
+	           message.setFrom(new InternetAddress("randyma12@gmail.com"));
+	           message.setRecipients(Message.RecipientType.TO,
+	               InternetAddress.parse(recipientEmail));
+	           message.setSubject(subject);
+	           message.setText(body);
+
+	           Transport.send(message);
+	           System.out.println("Successfully sent email to " + recipientEmail);
+
+
+	       } catch (MessagingException e) {
+	           throw new RuntimeException(e);
+	       }
+	}
+
+	@Override
+	public void emailAllParents(int teacherId, String subject, String body) {
+		List<Student> studentList = studentRepo.findByTeacherAndActiveTrue(teacherRepo.findById(teacherId));
+		for (int i = 0; i < studentList.size(); i++){
+		
+		final String uname = "kinderspotemail@gmail.com";
+	       final String pword = "Kinderspot1234";
+
+	       Properties props = new Properties();
+	       props.put("mail.smtp.starttls.enable", "true");
+	       props.put("mail.smtp.auth", "true");
+	       props.put("mail.smtp.host", "smtp.gmail.com");
+	       props.put("mail.smtp.port", "587");
+
+	       Session session = Session.getInstance(props,
+	         new javax.mail.Authenticator() {
+	           protected PasswordAuthentication getPasswordAuthentication() {
+	               return new PasswordAuthentication(uname, pword);
+	           }
+	         });
+
+	       try {
+
+	           Message message = new MimeMessage(session);
+	           message.setFrom(new InternetAddress("randyma12@gmail.com"));
+	           message.setRecipients(Message.RecipientType.TO,
+	               InternetAddress.parse(studentList.get(i).getParent().getEmail()));
+	           message.setSubject(subject);
+	           message.setText(body);
+
+	           Transport.send(message);
+	           System.out.println("Successfully sent email to "+ studentList.get(i).getParent().getEmail());
+
+
+	       } catch (MessagingException e) {
+	           throw new RuntimeException(e);
+	       }
+		}
+		
+	}
+	
 }

@@ -58,5 +58,8 @@ public interface KinderService {
 	public Attendance submitAttendanceSheet(List<Student> absent);
 	public List<Attendance> viewAttendanceSheets(int teacherId);
 	
+	//Email stuff
+	public void sendEmail(int senderId, int recipientId, String subject, String body);
+	public void emailAllParents(int teacherId, String subject, String body);
 	
 }

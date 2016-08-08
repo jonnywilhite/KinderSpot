@@ -19,7 +19,7 @@ package com.ex.controllers;
  	private KinderService service;
  	
  	@RequestMapping (value ="meeting", method = RequestMethod.POST)
- 	public Meetings createMeeting(Meetings meeting){
+ 	public Meetings createMeeting(@RequestBody Meetings meeting){
  		return service.createMeeting(meeting);
  	}
  	
