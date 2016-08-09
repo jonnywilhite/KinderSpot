@@ -1,8 +1,9 @@
 package com.ex.controllers;
 
  import java.sql.Timestamp;
+import java.util.List;
 
- import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Autowired;
  import org.springframework.web.bind.annotation.PathVariable;
  import org.springframework.web.bind.annotation.RequestBody;
  import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,12 +25,12 @@ package com.ex.controllers;
  	}
  	
  	@RequestMapping (value= "meeting", method = RequestMethod.GET)
- 	public Meetings getMeetingByDate(Timestamp date) {
- 		return service.getMeetingByDate(date);
+ 	public List<Meetings> getAllMeetings() {
+ 		return service.getAllMeetings();
  	}
  	
  	@RequestMapping(value = "meeting/{meetingStatus}", method = RequestMethod.PUT)
  	public Meetings updateMeetingStatus(@RequestBody Meetings meeting, @PathVariable Boolean meetingStatus){
- 		return null; 
+ 		return service.updateMeetingStatus(meeting, meetingStatus);
  	}
  }

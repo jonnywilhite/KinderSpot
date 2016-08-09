@@ -30,7 +30,7 @@ public interface KinderService {
 	
 	
 	//Event stuff
-	public Page<Event> getEventpage (Integer page, Integer size);
+	public  List <Event> getAllEvents ();
 	public Event createEvent (Event event);
 	public Event getEventByEventName (String name);
 	public Event deleteEvent (String name);
@@ -39,7 +39,7 @@ public interface KinderService {
 	
 	//Meeting Stuff 
 	public Meetings createMeeting (Meetings meeting);
-	public Meetings getMeetingByDate (Timestamp date);
+	public List <Meetings> getAllMeetings ();
 	public Meetings updateMeetingStatus(Meetings meeting, @PathVariable Boolean meetingStatus);
 	
 	

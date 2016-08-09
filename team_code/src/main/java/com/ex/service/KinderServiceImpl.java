@@ -144,10 +144,9 @@ public class KinderServiceImpl implements KinderService {
 
 	//Event stuff
 	 	@Override
-	 	public Page<Event> getEventpage(Integer page, Integer size) {
-			// TODO Auto-generated method stub
-    		Pageable pageable =  new PageRequest(page, size);
-			return eventRepo.findByNameOrderByDateDesc(pageable);
+	 	public List<Event> getAllEvents() {
+    		
+			return eventRepo.findAll();
 		}
 	
 		@Override
@@ -184,17 +183,22 @@ public class KinderServiceImpl implements KinderService {
 			}
 		
 			@Override
-			public Meetings getMeetingByDate(Timestamp date) {
-				return meetingRepo.findByDate(date);
+			public List<Meetings> getAllMeetings() {
+				return meetingRepo.findAll();
 			}
 		
 			@Override
 			public Meetings updateMeetingStatus(Meetings meeting, Boolean meetingStatus) {
-		 		return null;
+				
+				Meetings meetingStat = new Meetings ();
+				
+				meetingStat.settApprove(true);
+				
+		 		return meetingRepo.save(meetingStat);
 		 	}
 	
 	
-	
+
 	
 	
 	
