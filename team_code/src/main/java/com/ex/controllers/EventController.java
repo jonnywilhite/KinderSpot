@@ -1,6 +1,8 @@
 
 package com.ex.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,8 +21,8 @@ public class EventController {
 	private KinderService service;
 	
 	@RequestMapping(value = "event", method=RequestMethod.GET)
-	public Page<Event> getEventPage(Integer page, Integer size){
-		return service.getEventpage(page, size);
+	public List<Event> getAllEvents(){
+		return service.getAllEvents();
 	}
 	
 	@RequestMapping (value = "event/{eventName}", method = RequestMethod.GET)

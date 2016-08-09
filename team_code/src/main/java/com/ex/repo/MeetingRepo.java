@@ -10,10 +10,9 @@ import com.ex.domain.Meetings;
 
 public interface MeetingRepo extends JpaRepository <Meetings, Integer> {
 
-	Meetings findByDate (Timestamp date);
-	//Meetings createMeeting (Meetings meeting);
-	Page<Meetings> findByTApproveTrueOrderByDateDesc (Pageable page); 
 
+	//Meetings updateBytApprove (Boolean approve);
+	
 	//Meetings createMeeting (Meetings meeting);
 	//Page<Meetings> findByTApproveTrueOrderByDateDesc (Pageable page); 
 
