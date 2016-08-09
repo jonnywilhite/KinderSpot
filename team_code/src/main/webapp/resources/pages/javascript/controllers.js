@@ -20,7 +20,12 @@ angular.module("myApp")
 		 url: '/parentHome',
 		 templateUrl: 'ParentHome.html',
 		 controller: 'parentHomeCtrl as parentHomeData'
-	 });//ends .state (second)
+	 })//ends .state 
+	 .state('teacherHomeState', {
+		 url: '/teacherHome',
+		 templateUrl: 'TeacherHome.html',
+		 controller: 'teacherHomeCtrl as teacherHomeData'
+	 });//ends .state 
 	 
 	 
 }); //ends angular.module("myApp").config...
@@ -73,7 +78,7 @@ angular.module("myApp").controller("loginCtrl", function($scope, $http, $locatio
         			//$location.url('parentHomeState');
         			$state.go('parentHomeState');
         		else
-        			$window.location.href = 'TeacherHome.html';
+        			$state.go('teacherHomeState');
         	}
         }, 
         function(response) { // optional
@@ -116,6 +121,27 @@ angular.module("myApp").controller("parentHomeCtrl", function($scope, $http, sha
 	$scope.displayUser();
 
 }); //ends parentHomeApp.controller()
+
+
+angular.module("myApp").controller("teacherHomeCtrl", function($scope, $http, sharedProperties) {
+	
+	var teacherHomeData = this;
+	var loggedUser = sharedProperties.getProperty();
+
+	$scope.displayUser = function() {
+		//console.log("loggedUser is: " + loggedUser.firstName);
+		$scope.loggedInUser = loggedUser.firstName; //loggedInUser is the ng-model in ParentHome.html
+	}
+	
+	$scope.displayUser();
+
+}); //ends teacherHomeApp.controller()
+
+
+
+
+
+
 
 
 
