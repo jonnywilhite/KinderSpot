@@ -1,10 +1,41 @@
 
 
-angular.module("myApp", []); // Defining a module
+angular.module("myApp", ['ui.router']); // Defining a module
+
+
+
+angular.module("myApp")
+.config(function($stateProvider, $urlRouterProvider){
+	 
+	 //$urlRouterProvider.otherwise('/FrontPage');
+	 
+	 $stateProvider
+	 .state('FrontPageState', { //This state is probably set up wrong & unused as of right now.
+		 url: '/FrontPage',
+		 templateUrl: '/resources/pages/FrontPage.html',
+		 controller : 'loginCtrl as loginData'
+		 
+	 }) //ends $stateProvider.state()
+	 .state('parentHomeState', {
+		 url: '/parentHome',
+		 templateUrl: 'ParentHome.html',
+		 controller: 'parentHomeCtrl as parentHomeData'
+	 });//ends .state (second)
+	 
+	 
+}); //ends angular.module("myApp").config...
+
+
+
+
+
+
+
+
 
 //Runs the login Controller's POST method, passing in the user's form inputs as parameters. 
 //The function is run when the user clicks the login button.
-angular.module("myApp").controller("loginCtrl", function($scope, $http, $location, $window) {
+angular.module("myApp").controller("loginCtrl", function($scope, $http, $location, $window, $state, sharedProperties) {
 	
 	var loginData = this;
 	
@@ -32,13 +63,17 @@ angular.module("myApp").controller("loginCtrl", function($scope, $http, $locatio
         	else
         	{
         		//sucessful login
-        		$scope.userMessage = "Logging in...";
+        		$scope.userMessage = "Logged in.";
+        		sharedProperties.setProperty(response.data);
+        		sharedProperties.getProperty();
         		
         		//Checks user's role and sends them to appropriate login home page.
         		if(response.data.userRole.name === "Parent")
-        			$window.location.href = '/KinderSpot/resources/pages/ParentHome.html';
+        			//$window.location.href = '/KinderSpot/resources/pages/ParentHome.html';
+        			//$location.url('parentHomeState');
+        			$state.go('parentHomeState');
         		else
-        			$window.location.href = '/KinderSpot/resources/pages/TeacherHome.html';
+        			$window.location.href = 'TeacherHome.html';
         	}
         }, 
         function(response) { // optional
@@ -47,16 +82,35 @@ angular.module("myApp").controller("loginCtrl", function($scope, $http, $locatio
         });
 		
 	}//ends $scope.login()
+	
 }); //ends app.controller()
 
 
-angular.module("myApp").controller("parentHomeCtrl", function($scope, $http, $location, $window) {
+angular.module("myApp")
+.service('sharedProperties', function () {
+    var property = {firstName: 'First'};
+
+    return {
+        getProperty: function () {
+        	//console.log("Getting property: " + property.lastName);
+            return property;
+        },
+        setProperty: function(value) {
+            property = value;
+            //console.log("Setting property: " + property);
+        }
+    };
+});
+
+
+angular.module("myApp").controller("parentHomeCtrl", function($scope, $http, sharedProperties) {
 	
 	var parentHomeData = this;
+	var loggedUser = sharedProperties.getProperty();
 
 	$scope.displayUser = function() {
-		
-		console.log("Hello user!");
+		//console.log("loggedUser is: " + loggedUser.firstName);
+		$scope.loggedInUser = loggedUser.firstName; //loggedInUser is the ng-model in ParentHome.html
 	}
 	
 	$scope.displayUser();
