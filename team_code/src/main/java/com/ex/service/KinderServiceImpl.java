@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.auth.EnvironmentVariableCredentialsProvider;
+import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.ObjectMetadata;
@@ -218,7 +219,8 @@ public class KinderServiceImpl implements KinderService {
 	 */
 	@Override
 	public Photos uploadPhoto(Photos photo, File file) {
-		AWSCredentials credentials = new EnvironmentVariableCredentialsProvider().getCredentials();
+		AWSCredentials credentials = new ProfileCredentialsProvider().getCredentials();
+		System.out.println(credentials.getAWSAccessKeyId());
 		AmazonS3 client = new AmazonS3Client(credentials);
 		String bucketName = "jonathan-gary-lee-wilhite-bucket-this-name-better-not-be-taken";
 		String folderName = "testfolder";
