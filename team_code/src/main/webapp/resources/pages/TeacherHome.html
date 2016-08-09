@@ -12,12 +12,37 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.1/angular-ui-router.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.0.1/ui-bootstrap-tpls.min.js"></script>
 
-<div ng-app="myApp" ng-controller="teacherHomeCtrl" ng-model="loggedInUser">
+<div ng-app="myApp" ng-controller="teacherHomeCtrl"></div>
+
+<!-- These values are referenced in the controllers to get database values to be displayed below
+     in {{expressions}}. -->
+<input type="hidden" ng-model="loggedInUser" />
+<input type="hidden" ng-model="myStudents" />
 
 <h2>Teacher Home: welcome {{loggedInUser}}</h2>
 
+
+<!-- Loops through our students list obtained from the database, then displayed below. -->
+<h2>My students:</h2>
+<table>
+  <tr ng-repeat="x in myStudents">
+    <td>{{ x.firstname }}</td>
+  </tr>
+</table>
+
 <!-- Custom Script -->
 <script type="text/javascript" src="javascript/controllers.js"></script> 
+
+
+
+
+
+
+
+
+
+
+
 
 
 

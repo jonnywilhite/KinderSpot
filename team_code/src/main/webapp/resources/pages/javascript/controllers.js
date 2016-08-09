@@ -7,15 +7,14 @@ angular.module("myApp", ['ui.router']); // Defining a module
 angular.module("myApp")
 .config(function($stateProvider, $urlRouterProvider){
 	 
-	 //$urlRouterProvider.otherwise('/FrontPage');
+	 $urlRouterProvider.otherwise('/loginHome');
 	 
 	 $stateProvider
-	 .state('FrontPageState', { //This state is probably set up wrong & unused as of right now.
-		 url: '/FrontPage',
-		 templateUrl: '/resources/pages/FrontPage.html',
-		 controller : 'loginCtrl as loginData'
-		 
-	 }) //ends $stateProvider.state()
+	 .state('loginState', {
+		 url: '/loginHome',
+		 templateUrl: 'Login.html',
+		 controller: 'loginCtrl as loginData'
+	 })//ends .state 
 	 .state('parentHomeState', {
 		 url: '/parentHome',
 		 templateUrl: 'ParentHome.html',
@@ -59,7 +58,6 @@ angular.module("myApp").controller("loginCtrl", function($scope, $http, $locatio
         .then(function(response) {
         	//success
             //console.log("email: " + response.data.email);
-        	//console.log("password: " + response.data.password);
         	if(response.data.email === undefined && response.data.password === undefined)
         	{
         		//failed login
@@ -74,8 +72,6 @@ angular.module("myApp").controller("loginCtrl", function($scope, $http, $locatio
         		
         		//Checks user's role and sends them to appropriate login home page.
         		if(response.data.userRole.name === "Parent")
-        			//$window.location.href = '/KinderSpot/resources/pages/ParentHome.html';
-        			//$location.url('parentHomeState');
         			$state.go('parentHomeState');
         		else
         			$state.go('teacherHomeState');
@@ -91,6 +87,7 @@ angular.module("myApp").controller("loginCtrl", function($scope, $http, $locatio
 }); //ends app.controller()
 
 
+//This service module is used to pass objects between controllers. Passes logged in teacher/parent object.
 angular.module("myApp")
 .service('sharedProperties', function () {
     var property = {firstName: 'First'};
@@ -127,13 +124,37 @@ angular.module("myApp").controller("teacherHomeCtrl", function($scope, $http, sh
 	
 	var teacherHomeData = this;
 	var loggedUser = sharedProperties.getProperty();
-
+	var studentsList = {};
+	
+	//Displays teacher object info on View.
 	$scope.displayUser = function() {
-		//console.log("loggedUser is: " + loggedUser.firstName);
 		$scope.loggedInUser = loggedUser.firstName; //loggedInUser is the ng-model in ParentHome.html
 	}
-	
 	$scope.displayUser();
+	
+	
+	$scope.showStudents = function(){
+		
+		$http({
+            url: '/KinderSpot/1/students',
+            method: "GET",
+            headers: {'Content-Type': 'application/json'}
+        })
+        .then(function(response) {
+        	//success
+        	//studentsList = response.data;
+        	$scope.myStudents = response.data;
+            //console.log("students: " + studentsList[0].firstname);
+        }, 
+        function(response) { // optional
+        		console.log("Failed.");
+        });
+	}//ends showStudents()
+	$scope.showStudents();
+	
+	
+	
+	
 
 }); //ends teacherHomeApp.controller()
 
