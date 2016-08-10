@@ -18,7 +18,7 @@
      in {{expressions}}. -->
 <input type="hidden" ng-model="loggedInUser" />
 <input type="hidden" ng-model="myStudents" />
-<input type = "hidden" ng-model ="myEvents"/>
+<input type="hidden" ng-model ="myMeetings"/>
 <h2>Teacher Home: welcome {{loggedInUser}}</h2>
 
 
@@ -30,10 +30,10 @@
   </tr>
 </table>
 
-<h2>My Events:</h2>
+<h2>My Meetings:</h2>
 <table>
-	<tr ng-repeat =" m in myEvents" >
-		<td>{{m.name}}</td>
+	<tr ng-repeat ="m in myMeetings" >
+		<td>{{ m.reason }}</td>
 	</tr>
 </table>
 

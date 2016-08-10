@@ -114,13 +114,12 @@ angular.module("myApp").controller("parentHomeCtrl", function($scope, $http, sha
 }); //ends parentHomeApp.controller()
 
 
-angular.module("myApp").controller("teacherHomeCtrl", function($scope, $http, sharedProperties) {
+angular.module("myApp").controller("teacherHomeCtrl", function($scope, $http, sharedProperties) 
+{
 	
 	var teacherHomeData = this;
 	var loggedUser = sharedProperties.getProperty();
-	//var studentsList = {};
-	var eventList = {};
-	
+	//var studentsList = {};	
 	//Displays teacher object info on View.
 	$scope.displayUser = function() {
 		$scope.loggedInUser = loggedUser.firstName; //loggedInUser is the ng-model in ParentHome.html
@@ -128,10 +127,9 @@ angular.module("myApp").controller("teacherHomeCtrl", function($scope, $http, sh
 	$scope.displayUser();
 	
 	
-	$scope.showStudents = function(){
-		
-		$http({
-
+	$scope.showStudents = function()
+	{
+			$http({
             url: '/KinderSpot/' + loggedUser.id + '/students',
             method: "GET",
             headers: {'Content-Type': 'application/json'}
@@ -140,34 +138,55 @@ angular.module("myApp").controller("teacherHomeCtrl", function($scope, $http, sh
         	//success
         	//studentsList = response.data;
         	$scope.myStudents = response.data;
+        	console.log(response.data)
             //console.log("students: " + studentsList[0].firstname);
         }, 
         function(response) { // optional
         		console.log("Failed.");
         });
 	}//ends showStudents()
-	$scope.showStudents()
+	$scope.showStudents();
 	
-	$scope.showEvents = function (){
-		
+	$scope.showEvents = function()
+	{
 		$http({
-		url:'/KinderSpot/meeting',
-		method: "GET",
-		hearders: {'Content-Type': 'application/json'}
-	
+			url: '/KinderSpot/meeting',
+			method: "GET",
+            headers: {'Content-Type': 'application/json'}
 		})
-		.then(function(response){
-			
-			$scope.myEvents = response.data; 			
+		.then(function(response){	
+			$scope.myMeetings = response.data;
+			console.log(response.data)
 		},
-		function (response){
+		function(response){
 			console.log("Failed.");
-		});
-		
+		});	
 	}
 	$scope.showEvents();
-	
-}); 
+});
+
+
+
+//angular.module("myApp").service('meetingService', function($http){
+//	
+//	var myservice = this;
+//	
+//	myservice.previousMeeting = [];
+//	
+//	myservice.spoons = function (){
+//	 var promise = $http({
+//			method: "GET",
+//			url: "Kinderspot/meeting"	
+//		});
+//		return promise;
+//	};
+//
+//});
+
+
+
+
+
 
 
 
