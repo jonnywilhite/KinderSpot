@@ -24,16 +24,10 @@ angular.module("myApp")
 		 url: '/teacherHome',
 		 templateUrl: 'TeacherHome.html',
 		 controller: 'teacherHomeCtrl as teacherHomeData'
-	 });//ends .state 
-	 
+	 })//ends .state 
+
 	 
 }); //ends angular.module("myApp").config...
-
-
-
-
-
-
 
 
 
@@ -124,7 +118,8 @@ angular.module("myApp").controller("teacherHomeCtrl", function($scope, $http, sh
 	
 	var teacherHomeData = this;
 	var loggedUser = sharedProperties.getProperty();
-	var studentsList = {};
+	//var studentsList = {};
+	var eventList = {};
 	
 	//Displays teacher object info on View.
 	$scope.displayUser = function() {
@@ -136,7 +131,7 @@ angular.module("myApp").controller("teacherHomeCtrl", function($scope, $http, sh
 	$scope.showStudents = function(){
 		
 		$http({
-            url: '/KinderSpot/1/students',
+            url: "/KinderSpot/1/students",
             method: "GET",
             headers: {'Content-Type': 'application/json'}
         })
@@ -150,13 +145,31 @@ angular.module("myApp").controller("teacherHomeCtrl", function($scope, $http, sh
         		console.log("Failed.");
         });
 	}//ends showStudents()
-	$scope.showStudents();
+	$scope.showStudents()
 	
+	$scope.showEvents = function (){
+		
+		$http({
+		url:'/KinderSpot/meeting',
+		method: "GET",
+		hearders: {'Content-Type': 'application/json'}
 	
+		})
+		.then(function(response){
+			
+			$scope.myEvents = response.data; 			
+		},
+		function (response){
+			console.log("Failed.");
+		});
+		
+	}
+	$scope.showEvents();
 	
-	
+}); 
 
-}); //ends teacherHomeApp.controller()
+
+
 
 
 
