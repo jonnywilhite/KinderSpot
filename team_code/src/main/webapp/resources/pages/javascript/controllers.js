@@ -110,6 +110,11 @@ angular.module("myApp").controller("parentHomeCtrl", function($scope, $http, sha
 	}
 	
 	$scope.displayUser();
+	
+	$scope.emailTeacher = function() {
+		
+	}
+	$scope.emailTeacher();
 
 }); //ends parentHomeApp.controller()
 
