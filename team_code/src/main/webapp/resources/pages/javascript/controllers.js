@@ -136,7 +136,7 @@ angular.module("myApp").controller("teacherHomeCtrl", function($scope, $http, sh
 	$scope.showStudents = function(){
 		
 		$http({
-            url: '/KinderSpot/1/students',
+            url: '/KinderSpot/' + loggedUser.id + '/students',
             method: "GET",
             headers: {'Content-Type': 'application/json'}
         })
