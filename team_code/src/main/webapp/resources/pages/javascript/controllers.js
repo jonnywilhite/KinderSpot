@@ -153,7 +153,7 @@ angular.module("myApp").controller("parentHomeCtrl", function($scope, $http, sha
 });
 
 
-angular.module("myApp").controller("teacherHomeCtrl", function($scope, $http, sharedProperties) {
+angular.module("myApp").controller("teacherHomeCtrl", function($scope, $http, sharedProperties, studentProperties, $state) {
 
 	var teacherHomeData = this;
 	var loggedUser = sharedProperties.getProperty();
@@ -252,7 +252,7 @@ angular.module("myApp").controller("teacherHomeCtrl", function($scope, $http, sh
 		})
 		.then(function(response){	
 			$scope.myEvents = response.data;
-			console.log(response.data)
+			console.log(response.data);
 		},
 		function(response){
 			console.log("Failed.");
@@ -300,7 +300,7 @@ angular.module("myApp").controller("teacherHomeCtrl", function($scope, $http, sh
 //});
 
 
-angular.module("myApp").controller("viewStudentCtrl", function($scope, sharedProperties, studentProperties) {
+angular.module("myApp").controller("viewStudentCtrl", function($scope, $http, sharedProperties, studentProperties) {
 	var viewStudentData = this;
 	
 	$scope.showStudent = function() {
@@ -308,6 +308,23 @@ angular.module("myApp").controller("viewStudentCtrl", function($scope, sharedPro
 	}
 	
 	$scope.showStudent();
+	
+	$scope.showGrade = function() {
+		$http({
+			url: "http://localhost:8085/KinderSpot/report-cards/" + $scope.currentStudent.id,
+			method: "GET",
+			headers: {'Content-Type': 'application/json'}
+		})
+		.then(function(response) {
+			$scope.currentReportCard = response.data;
+		},
+		function(response) {
+			console.log(response);
+		})
+	}
+	
+	$scope.showGrade();
+	
 });
 
 /*angular.module("myApp").service("MyService", function($http) {

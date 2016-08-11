@@ -8,7 +8,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
-import org.hibernate.annotations.Parent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -148,7 +147,12 @@ public class KinderServiceImpl implements KinderService {
 		User teacher = teacherRepo.findOne(teacherId);
 		return reportCardRepo.findByTeacher(teacher);
 	}
-
+	
+	@Override
+	public ReportCard getReportCardByStudent(int studentId) {
+		Student student = studentRepo.findOne(studentId);
+		return reportCardRepo.findByStudent(student);
+	}
 	
 	
 

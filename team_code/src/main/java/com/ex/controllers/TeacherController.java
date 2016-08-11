@@ -18,7 +18,7 @@ import com.ex.domain.Photos;
 import com.ex.service.KinderService;
 
 @RestController
-@MultipartConfig(fileSizeThreshold = 20971520)
+@MultipartConfig(fileSizeThreshold = 20_971_520)
 public class TeacherController {
 	
 	@Autowired

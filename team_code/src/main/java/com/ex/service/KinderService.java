@@ -4,7 +4,6 @@ package com.ex.service;
 import java.io.File;
 import java.util.List;
 
-import org.hibernate.annotations.Parent;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.ex.domain.Attendance;
@@ -29,6 +28,7 @@ public interface KinderService {
 	//ReportCard stuff
 	ReportCard createReportCardEntry(ReportCard rc);
 	List<ReportCard> getAllReportCardsByTeacher(int teacherId);
+	ReportCard getReportCardByStudent(int studentId);
 	
 	
 	//Event stuff
