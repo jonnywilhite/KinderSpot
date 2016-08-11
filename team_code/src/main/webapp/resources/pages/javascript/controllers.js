@@ -152,7 +152,7 @@ angular.module("myApp").controller("teacherHomeCtrl", function($scope, $http, sh
 	}//ends showStudents()
 	$scope.showStudents();
 	
-	$scope.showEvents = function()
+	$scope.showMeetings = function()
 	{
 		$http({
 			url: '/KinderSpot/meeting',
@@ -167,7 +167,28 @@ angular.module("myApp").controller("teacherHomeCtrl", function($scope, $http, sh
 			console.log("Failed.");
 		});	
 	}
+	$scope.showMeetings();
+	
+	$scope.showEvents = function()
+	{
+		$http({
+			url: '/KinderSpot/event',
+			method: "GET",
+            headers: {'Content-Type': 'application/json'}
+		})
+		.then(function(response){	
+			$scope.myEvents = response.data;
+			console.log(response.data)
+		},
+		function(response){
+			console.log("Failed.");
+		});	
+	}
 	$scope.showEvents();
+	
+	
+	
+	
 });
 
 

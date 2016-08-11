@@ -19,6 +19,8 @@
 <input type="hidden" ng-model="loggedInUser" />
 <input type="hidden" ng-model="myStudents" />
 <input type="hidden" ng-model ="myMeetings"/>
+<input type="hidden" ng-model ="myEvents"/>
+
 <h2>Teacher Home: welcome {{loggedInUser}}</h2>
 
 
@@ -32,8 +34,30 @@
 
 <h2>My Meetings:</h2>
 <table>
+<tr>
+	<th>Type</th>
+	<th>Date Scheduled</th>
+</tr>
+
 	<tr ng-repeat ="m in myMeetings" >
 		<td>{{ m.reason }}</td>
+		<td>{{ m.date | date:'medium' }}</td>
+	</tr>
+</table>
+
+
+<h2>My Events:</h2>
+<table>
+<tr>
+ <th>Event</th>
+ <th>Description</th>
+ <th>Date</th>
+
+</tr>
+	<tr ng-repeat ="e in myEvents" >
+		<td>{{ e.name }}</td>
+		<td>{{ e.description }}</td>
+		<td>{{ e.date |date:'medium'}}</td>
 	</tr>
 </table>
 
