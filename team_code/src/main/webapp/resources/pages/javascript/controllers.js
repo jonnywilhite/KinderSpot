@@ -325,6 +325,12 @@ angular.module("myApp").controller("viewStudentCtrl", function($scope, $http, sh
 	
 	$scope.showGrade();
 	
+	$scope.showAttendance = function() {
+		$http({
+			url: "http://localhost:8085/KinderSpot/attendance/" + $scope.currentStudent.id,
+		})
+	}
+	
 });
 
 /*angular.module("myApp").service("MyService", function($http) {

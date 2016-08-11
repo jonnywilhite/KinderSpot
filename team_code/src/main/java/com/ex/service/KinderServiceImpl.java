@@ -5,7 +5,9 @@ import java.io.File;
 import java.io.InputStream;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,7 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 
 import com.ex.domain.Attendance;
+import com.ex.domain.AttendanceStudent;
 import com.ex.domain.Event;
 import com.ex.domain.Meetings;
 import com.ex.domain.Photos;
@@ -27,6 +30,7 @@ import com.ex.domain.ReportCard;
 import com.ex.domain.Student;
 import com.ex.domain.User;
 import com.ex.repo.AttendanceRepo;
+import com.ex.repo.AttendanceStudentRepo;
 import com.ex.repo.EventsRepo;
 import com.ex.repo.MeetingRepo;
 import com.ex.repo.PhotosRepo;
@@ -71,6 +75,9 @@ public class KinderServiceImpl implements KinderService {
 	
 	@Autowired 
 	private MeetingRepo meetingRepo;
+	
+	@Autowired
+	private AttendanceStudentRepo attendanceStudentRepo;
 
 	
 	/*
@@ -231,6 +238,19 @@ public class KinderServiceImpl implements KinderService {
 	public List<Attendance> viewAttendanceSheets(int teacherId) {
 		User teacher = teacherRepo.findOne(teacherId);
 		return attendanceRepo.findByTeacher(teacher);
+	}
+	
+	@Override
+	public Map<Timestamp, AttendanceStudent> viewAttendanceEntriesByStudent(int studentId) {
+		Student student = studentRepo.findOne(studentId);
+		List<AttendanceStudent> list = attendanceStudentRepo.findByStudent(student);
+		
+		Map<Timestamp, AttendanceStudent> map = new Hashtable<>();
+		for (AttendanceStudent as : list) {
+			map.put(as.getAttendance().getDate(), as);
+		}
+		
+		return map;
 	}
 	
 	

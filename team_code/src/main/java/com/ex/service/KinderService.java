@@ -2,11 +2,14 @@ package com.ex.service;
 
 
 import java.io.File;
+import java.sql.Timestamp;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.ex.domain.Attendance;
+import com.ex.domain.AttendanceStudent;
 import com.ex.domain.Event;
 import com.ex.domain.Meetings;
 import com.ex.domain.Photos;
@@ -59,6 +62,7 @@ public interface KinderService {
 	//Attendance stuff
 	public Attendance submitAttendanceSheet(List<Student> absent);
 	public List<Attendance> viewAttendanceSheets(int teacherId);
+	public Map<Timestamp, AttendanceStudent> viewAttendanceEntriesByStudent(int studentId);
 	
 	//Email stuff
 	public void sendEmail(int senderId, int recipientId, String subject, String body);

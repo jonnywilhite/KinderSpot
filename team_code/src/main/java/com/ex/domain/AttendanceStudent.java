@@ -17,11 +17,13 @@ public class AttendanceStudent implements Serializable {
 	private static final long serialVersionUID = 8909459415030833362L;
 
 	@Id
+	@Column(name="as_id")
+	private int id;
+	
 	@ManyToOne
 	@JoinColumn(name="A_ID")
 	private Attendance attendance;
 	
-	@Id
 	@ManyToOne
 	@JoinColumn(name="s_id")
 	private Student student;
