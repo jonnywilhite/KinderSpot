@@ -19,6 +19,7 @@ import com.ex.domain.User;
 public interface KinderService {
 	
 	//Student stuff
+	Student getStudentById(int studentId);
 	List<Student> getAllStudentsByTeacher(int teacherId);
 	List<Student> deleteStudentsInClassByTeacher(int teacherId);
 	List<Student> deleteStudentsInClassByTeacher(int teacherId, int[] studentIds);

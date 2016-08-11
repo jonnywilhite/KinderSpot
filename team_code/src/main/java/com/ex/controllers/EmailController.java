@@ -29,7 +29,7 @@ public class EmailController
 	public void sendEmailToTeacher(@PathVariable String userId, @RequestBody Email email) throws IOException
 	{
 		System.out.println(userId + "Subject: "+ email.getSubject() + "\n" + email.getBody());
-		service.get
+		
 		//service.sendEmail(userId, recipientId, subject, body);
 		
 		

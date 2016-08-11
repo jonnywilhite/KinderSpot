@@ -17,6 +17,11 @@ public class StudentController {
 	@Autowired
 	private KinderService service;
 	
+	@RequestMapping(value="students/{studentId}", method=RequestMethod.GET)
+	public Student getStudentById(@PathVariable int studentId) {
+		return service.getStudentById(studentId);
+	}
+	
 	@RequestMapping(value="{teacherId}/students", method=RequestMethod.GET)
 	public List<Student> getStudentsInClass(@PathVariable int teacherId) {
 		return service.getAllStudentsByTeacher(teacherId);
