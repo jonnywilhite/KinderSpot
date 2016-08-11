@@ -176,8 +176,10 @@ public class KinderServiceImpl implements KinderService {
 	//Meeting Stuff 
 	@Override
 	public Meetings createMeeting(Meetings meeting) 
-	{
+	{			
+	
 				meeting.setDate(new Timestamp (new Date().getTime()));
+				meeting.setTeacher(meeting.getTeacher());
 				meeting.setReason(meeting.getReason());
 				return meetingRepo.save(meeting);
 			}

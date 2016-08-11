@@ -20,14 +20,17 @@
 
 <h2>Login Page</h2>
 
-<!-- The html form elements. The Login button will run the function in the controller below. -->
+<!-- The html form elements. The Login button will run the function in the controller below.
+	 create a controller object called 'user'(user ={})	 -->
 <div ng-app="myApp" ng-controller="loginCtrl" ng-init="user={}" ng-model="userMessage">
   <form novalidate>
     Email:<br>
+    <!-- c  -->
     <input type="text" ng-model="user.email"><br>
     Password:<br>
     <input type="password"  ng-model="user.password">
     <br><br>
+    <!-- S -->
     <button ng-click="login(user.email, user.password)">Login</button>
   </form>
   
