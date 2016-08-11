@@ -16,10 +16,17 @@
 
 
 
-<div ng-app="myApp" ng-controller="parentHomeCtrl" ng-model="loggedInUser">
+<div ng-app="myApp" ng-controller="parentHomeCtrl" ng-init="user={}" ng-model="loggedInUser">
 
 <h2>Parent Home: Welcome {{loggedInUser}}</h2>
-
+<form novalidate>
+    Subject:<br>
+    <input type="text" ng-model="user.subject" required><br>
+    Body:<br>
+    <textarea rows="5" ng-model="user.body" autocomplete="off" required></textarea>
+    <br><br>
+    <button ng-click="emailTeacher(user.subject, user.body)">Send</button>
+  </form>
 
 
 </div>

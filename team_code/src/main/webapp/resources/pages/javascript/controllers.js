@@ -112,7 +112,7 @@ angular.module("myApp").controller("parentHomeCtrl", function($scope, $http, sha
 	$scope.displayUser();
 	
 	$scope.emailTeacher = function() {
-		
+		console.log("It twerked fam")
 	}
 	$scope.emailTeacher();
 
