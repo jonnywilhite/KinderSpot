@@ -25,9 +25,20 @@ angular.module("myApp")
 		 templateUrl: 'TeacherHome.html',
 		 controller: 'teacherHomeCtrl as teacherHomeData'
 	 })//ends .state 
-
+	 .state('viewStudentState', {
+		 url: '/view-student',
+		 templateUrl: 'ViewStudent.html',
+		 controller: 'viewStudentCtrl as viewStudentData'
+	 });//ends .state
+	 
 	 
 }); //ends angular.module("myApp").config...
+
+
+
+
+
+
 
 
 
@@ -85,6 +96,7 @@ angular.module("myApp").controller("loginCtrl", function($scope, $http, $locatio
 angular.module("myApp")
 .service('sharedProperties', function () {
     var property = {firstName: 'First'};
+    var student = {};
 
     return {
         getProperty: function () {
@@ -114,12 +126,11 @@ angular.module("myApp").controller("parentHomeCtrl", function($scope, $http, sha
 }); //ends parentHomeApp.controller()
 
 
-angular.module("myApp").controller("teacherHomeCtrl", function($scope, $http, sharedProperties) {
+angular.module("myApp").controller("teacherHomeCtrl", function($scope, $http, $state, sharedProperties) {
 	
 	var teacherHomeData = this;
 	var loggedUser = sharedProperties.getProperty();
-	//var studentsList = {};
-	var eventList = {};
+	var studentsList = {};
 	
 	//Displays teacher object info on View.
 	$scope.displayUser = function() {
@@ -131,8 +142,7 @@ angular.module("myApp").controller("teacherHomeCtrl", function($scope, $http, sh
 	$scope.showStudents = function(){
 		
 		$http({
-
-            url: '/KinderSpot/' + loggedUser.id + '/students',
+            url: '/KinderSpot/1/students',
             method: "GET",
             headers: {'Content-Type': 'application/json'}
         })
@@ -146,32 +156,34 @@ angular.module("myApp").controller("teacherHomeCtrl", function($scope, $http, sh
         		console.log("Failed.");
         });
 	}//ends showStudents()
-	$scope.showStudents()
+	$scope.showStudents();
 	
-	$scope.showEvents = function (){
-		
+	$scope.viewStudent = function(id) {
+
 		$http({
-		url:'/KinderSpot/meeting',
-		method: "GET",
-		hearders: {'Content-Type': 'application/json'}
-	
+			url: '/KinderSpot/students/' + id,
+			method: "GET",
+			headers: {'Content-Type': 'application/json'}
 		})
-		.then(function(response){
-			
-			$scope.myEvents = response.data; 			
+		.then(function(response) {
+			sharedProperties.student = response.data;
+			console.log(sharedProperties.student);
 		},
-		function (response){
-			console.log("Failed.");
+		function(response) {
+			console.log("failed");
 		});
 		
+		$state.go('viewStudentState');
 	}
-	$scope.showEvents();
 	
-}); 
 
+}); //ends teacherHomeApp.controller()
 
-
-
+angular.module("myApp").controller("viewStudentCtrl", function($scope, sharedProperties) {
+	var viewStudentData = this;
+	
+	var currentStudent = sharedProperties.student;
+});
 
 
 

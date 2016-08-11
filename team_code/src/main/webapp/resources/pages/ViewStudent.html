@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	rel="stylesheet">
+
+</head>
+<body ng-app="myApp">
+	<!--  Dependencies -->
+	<script
+		src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.1/angular-ui-router.min.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.0.1/ui-bootstrap-tpls.min.js"></script>
+
+	
+
+	<div ng-controller="viewStudentCtrl">
+		<input type="hidden" ng-model="currentStudent" />
+		<h2>View Student:</h2>
+		<h2 ng-bind="currentStudent.firstName"></h2>
+	
+	</div>
+
+
+</body>
+</html>

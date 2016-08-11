@@ -4,21 +4,15 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.InputStream;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.amazonaws.auth.AWSCredentials;
-import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.auth.EnvironmentVariableCredentialsProvider;
 import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
@@ -82,6 +76,11 @@ public class KinderServiceImpl implements KinderService {
 	/*
 	 * Student stuff(non-Javadoc)
 	 */
+	@Override
+	public Student getStudentById(int studentId) {
+		return studentRepo.findOne(studentId);
+	}
+	
 	@Override
 	public List<Student> getAllStudentsByTeacher(int teacherId) {
 		User teacher = teacherRepo.findById(teacherId);
@@ -273,7 +272,7 @@ public class KinderServiceImpl implements KinderService {
 	@Override
 	public void sendEmail(int senderId, int recipientId, String subject, String body) {
 		// TODO send the email
-		String senderEmail = teacherRepo.findById(senderId).getEmail();
+		//String senderEmail = teacherRepo.findById(senderId).getEmail();
 		String recipientEmail = teacherRepo.findById(recipientId).getEmail();
 		final String uname = "kinderspotemail@gmail.com";
 	       final String pword = "Kinderspot1234";

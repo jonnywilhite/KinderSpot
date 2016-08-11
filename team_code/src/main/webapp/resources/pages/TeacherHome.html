@@ -25,8 +25,13 @@
 <!-- Loops through our students list obtained from the database, then displayed below. -->
 <h2>My students:</h2>
 <table>
+  <tr>
+    <th>Name</th>
+    <th>Parent</th>
+  </tr>
   <tr ng-repeat="x in myStudents">
-    <td>{{ x.firstname }}</td>
+    <td id="{{x.id}}" ng-click="viewStudent(x.id)">{{x.firstName}}</td>
+    <td>{{ x.parent.firstName }}</td> 
   </tr>
 </table>
 
