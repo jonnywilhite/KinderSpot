@@ -22,11 +22,22 @@
 	<div ng-controller="viewStudentCtrl">
 		<input type="hidden" ng-model="currentStudent" />
 		<input type="hidden" ng-model="currentReportCard">
-		<h2>View Student:</h2>
-		<h2 ng-bind="currentStudent.firstName"></h2>
+		<input type="hidden" ng-model="currentAttendance">
+		<h2>View Student: <span ng-bind="currentStudent.firstName"></span></h2>
 		
-		<h2>Grade: </h2>
-		<h2 ng-bind="currentReportCard.grade"></h2>
+		<h2>Grade: <span ng-bind="currentReportCard.grade"></span></h2>
+		
+		<h2>Recent attendance:</h2>
+		<table>
+			<tr>
+				<th>Date</th>
+				<th>Present</th>
+			</tr>
+			<tr ng-repeat="att in currentAttendance">
+				<td ng-bind="att.attendance.date | date : mediumDate"></td>
+				<td ng-bind="att.present"></td>
+			</tr>
+		</table>
 		
 	
 	</div>

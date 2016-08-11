@@ -5,9 +5,7 @@ import java.io.File;
 import java.io.InputStream;
 import java.sql.Timestamp;
 import java.util.Date;
-import java.util.Hashtable;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -241,16 +239,10 @@ public class KinderServiceImpl implements KinderService {
 	}
 	
 	@Override
-	public Map<Timestamp, AttendanceStudent> viewAttendanceEntriesByStudent(int studentId) {
+	public List<AttendanceStudent> viewAttendanceEntriesByStudent(int studentId) {
 		Student student = studentRepo.findOne(studentId);
 		List<AttendanceStudent> list = attendanceStudentRepo.findByStudent(student);
-		
-		Map<Timestamp, AttendanceStudent> map = new Hashtable<>();
-		for (AttendanceStudent as : list) {
-			map.put(as.getAttendance().getDate(), as);
-		}
-		
-		return map;
+		return list;
 	}
 	
 	

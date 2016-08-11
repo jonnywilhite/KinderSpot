@@ -2,9 +2,7 @@ package com.ex.service;
 
 
 import java.io.File;
-import java.sql.Timestamp;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -62,7 +60,7 @@ public interface KinderService {
 	//Attendance stuff
 	public Attendance submitAttendanceSheet(List<Student> absent);
 	public List<Attendance> viewAttendanceSheets(int teacherId);
-	public Map<Timestamp, AttendanceStudent> viewAttendanceEntriesByStudent(int studentId);
+	public List<AttendanceStudent> viewAttendanceEntriesByStudent(int studentId);
 	
 	//Email stuff
 	public void sendEmail(int senderId, int recipientId, String subject, String body);

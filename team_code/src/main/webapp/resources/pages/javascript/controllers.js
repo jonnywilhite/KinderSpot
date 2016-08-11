@@ -328,8 +328,18 @@ angular.module("myApp").controller("viewStudentCtrl", function($scope, $http, sh
 	$scope.showAttendance = function() {
 		$http({
 			url: "http://localhost:8085/KinderSpot/attendance/" + $scope.currentStudent.id,
+			method: "GET",
+			headers: {'Content-Type': 'application/json'}
 		})
-	}
+		.then(function(response) {
+			$scope.currentAttendance = response.data;
+		},
+		function(response) {
+			console.log(response);
+		});
+	};
+	
+	$scope.showAttendance();
 	
 });
 

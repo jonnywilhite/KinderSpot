@@ -1,8 +1,6 @@
 package com.ex.controllers;
 
-import java.sql.Timestamp;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,7 +24,7 @@ public class AttendanceController {
 	}
 	
 	@RequestMapping(value="attendance/{studentId}", method=RequestMethod.GET)
-	public Map<Timestamp, AttendanceStudent> viewAllAttendanceEntriesForStudent(@PathVariable int studentId) {
+	public List<AttendanceStudent> viewAllAttendanceEntriesForStudent(@PathVariable int studentId) {
 		return service.viewAttendanceEntriesByStudent(studentId);
 	}
 
