@@ -96,7 +96,6 @@ angular.module("myApp").controller("loginCtrl", function($scope, $http, $locatio
 angular.module("myApp")
 .service('sharedProperties', function () {
 	var property = {firstName: 'First'};
-	var student = {};
 
 	return {
 		getProperty: function () {
@@ -154,7 +153,7 @@ angular.module("myApp").controller("parentHomeCtrl", function($scope, $http, sha
 });
 
 
-angular.module("myApp").controller("teacherHomeCtrl", function($scope, $http, sharedProperties) 
+angular.module("myApp").controller("teacherHomeCtrl", function($scope, $http, $state, sharedProperties, studentProperties) 
 		{
 
 	var teacherHomeData = this;
@@ -195,14 +194,14 @@ angular.module("myApp").controller("teacherHomeCtrl", function($scope, $http, sh
 			headers: {'Content-Type': 'application/json'}
 		})
 		.then(function(response) {
-			sharedProperties.student = response.data;
-			console.log(sharedProperties.student);
+			studentProperties.setStudent(response.data);
+			$state.go('viewStudentState');
 		},
 		function(response) {
 			console.log("failed");
 		});
 
-		$state.go('viewStudentState');
+		
 	}
 
 	$scope.showMeetings = function()
@@ -238,7 +237,7 @@ angular.module("myApp").controller("teacherHomeCtrl", function($scope, $http, sh
 		});	
 	}
 
-		});
+});
 
 
 
@@ -259,10 +258,37 @@ angular.module("myApp").controller("teacherHomeCtrl", function($scope, $http, sh
 //});
 
 
-angular.module("myApp").controller("viewStudentCtrl", function($scope, sharedProperties) {
+angular.module("myApp").controller("viewStudentCtrl", function($scope, sharedProperties, studentProperties) {
 	var viewStudentData = this;
+	
+	$scope.showStudent = function() {
+		$scope.currentStudent = studentProperties.getStudent();
+	}
+	
+	$scope.showStudent();
+});
 
-	var currentStudent = sharedProperties.student;
+/*angular.module("myApp").service("MyService", function($http) {
+
+	var myService = this;
+	myService.student = {};
+
+});*/
+
+angular.module("myApp")
+.service('studentProperties', function () {
+	var student = {};
+
+	return {
+		getStudent: function () {
+			console.log("Getting student ");
+			return student;
+		},
+		setStudent: function(value) {
+			student = value;
+			console.log("Setting student");
+		}
+	};
 });
 
 
