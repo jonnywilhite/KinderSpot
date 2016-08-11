@@ -24,6 +24,13 @@ body {
 	padding: 30px;
 	transform: translate(0%, 65%);  
 }
+
+h2, h3, #innerForm {
+	font-family: marker
+}
+
+@font-face { font-family: marker; src: url("/KinderSpot/resources/fonts/PWMarker.ttf") }
+
 </style>
 
 </head>
@@ -41,7 +48,7 @@ body {
 <!-- The html form elements. The Login button will run the function in the controller below. -->
 <div ng-app="myApp" ng-controller="loginCtrl" ng-init="user={}" ng-model="userMessage" id="loginForm">
   <h2>Login Page</h2>
-  <form novalidate>
+  <form novalidate id="innerForm">
     Email:<br>
     <input type="text" ng-model="user.email"><br>
     Password:<br>
