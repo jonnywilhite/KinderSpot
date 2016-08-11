@@ -111,8 +111,27 @@ angular.module("myApp").controller("parentHomeCtrl", function($scope, $http, sha
 	
 	$scope.displayUser();
 	
-	$scope.emailTeacher = function() {
-		console.log("It twerked fam")
+	$scope.emailTeacher = function(subject, body) {
+		$scope.mySubject = subject;
+		$scope.myBody = body;
+		
+		$http({
+            url: '/KinderSpot/' + loggedUser.id + '/email',
+            method: "POST",
+            data: { "subject": $scope.mySubject,
+  				"body": $scope.myBody		},
+            headers: {'Content-Type': 'application/json'}
+        })
+        .then(function(response) {
+        	//success
+        	//studentsList = response.data;
+        	$scope.myStudents = response.data;
+        	console.log(response.data)
+            //console.log("students: " + studentsList[0].firstname);
+        }, 
+        function(response) { // optional
+        		console.log("Failed.");
+        });
 	}
 	$scope.emailTeacher();
 
