@@ -19,7 +19,9 @@
 <input type="hidden" ng-model="loggedInUser" />
 <input type="hidden" ng-model="myStudents" />
 <input type="hidden" ng-model ="myMeetings"/>
+<input type="hidden" ng-model ="myMeetings"/>
 <input type="hidden" ng-model ="myEvents"/>
+
 
 <h2>Teacher Home: welcome {{loggedInUser}}</h2>
 
@@ -38,6 +40,11 @@
 </table>
 
 <h2>My Meetings:</h2>
+<h3>Create New Meeting</h3>
+<input type ="text" ng-model ="createNewMeeting.description" />
+
+
+
 <table>
 <tr>
 	<th>Type</th>
