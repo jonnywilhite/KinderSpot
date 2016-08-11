@@ -155,7 +155,7 @@ angular.module("myApp").controller("parentHomeCtrl", function($scope, $http, sha
 
 
 angular.module("myApp").controller("teacherHomeCtrl", function($scope, $http, sharedProperties) 
-		{
+{
 
 	var teacherHomeData = this;
 	var loggedUser = sharedProperties.getProperty();
@@ -222,6 +222,29 @@ angular.module("myApp").controller("teacherHomeCtrl", function($scope, $http, sh
 	}
 	$scope.showMeetings();
 
+	
+	$scope.createMeeting = function (reason)
+	{
+		$scope.meetingReason = reason; 
+
+		$http({ 
+			url:'/KinderSpot/meeting',
+			method: "POST",
+			data: {"reason": $scope.meetingReason },
+			headers: {'Content-Type':'application/json'}
+		})
+		.then(function(response){
+			$scope.createNewMeeting = response.data;
+		},
+		function(response){
+			console.log("Failed.")
+		});		
+	}
+	
+	
+
+
+
 	$scope.showEvents = function()
 	{
 		$http({
@@ -237,8 +260,28 @@ angular.module("myApp").controller("teacherHomeCtrl", function($scope, $http, sh
 			console.log("Failed.");
 		});	
 	}
+	$scope.showEvents();
+});
 
-		});
+
+
+
+//angular.module('datepickerBasicUsage',
+//	    ['ngMaterial', 'ngMessages']).controller('AppCtrl', function($scope) {
+//	  $scope.myDate = new Date();
+//	  $scope.minDate = new Date(
+//	      $scope.myDate.getFullYear(),
+//	      $scope.myDate.getMonth() - 2,
+//	      $scope.myDate.getDate());
+//	  $scope.maxDate = new Date(
+//	      $scope.myDate.getFullYear(),
+//	      $scope.myDate.getMonth() + 2,
+//	      $scope.myDate.getDate());
+//	  $scope.onlyWeekendsPredicate = function(date) {
+//	    var day = date.getDay();
+//	    return day === 0 || day === 6;
+//	  }
+//	});
 
 
 
