@@ -28,16 +28,21 @@
 		<h2>Grade: <span ng-bind="viewStudentData.currentReportCard.grade"></span></h2>
 		
 		<h2>Recent attendance:</h2>
-		<table>
-			<tr>
-				<th>Date</th>
-				<th>Present</th>
-			</tr>
-			<tr ng-repeat="att in viewStudentData.currentAttendance">
-				<td ng-bind="att.attendance.date | date : mediumDate"></td>
-				<td ng-bind="att.present"></td>
-			</tr>
-		</table>
+		
+		<div class="row">
+			<div class="col-sm-6">
+				<table class="table">
+					<tr>
+						<th>Date</th>
+						<th>Present</th>
+					</tr>
+					<tr ng-repeat="att in viewStudentData.currentAttendance">
+						<td ng-bind="att.attendance.date | date : mediumDate"></td>
+						<td ng-bind="att.present"></td>
+					</tr>
+				</table>
+			</div>
+		</div>
 		
 	
 	</div>

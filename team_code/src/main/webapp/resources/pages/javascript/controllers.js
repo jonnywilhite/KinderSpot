@@ -138,7 +138,6 @@ angular.module("myApp").controller("parentHomeCtrl", function($http, sharedPrope
         	//success
         	//studentsList = response.data;
         	parentHomeData.myStudents = response.data;
-        	console.log(response.data)
             //console.log("students: " + studentsList[0].firstname);
         }, 
         function(response) { // optional
@@ -176,7 +175,6 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 			//success
 			//studentsList = response.data;
 			teacherHomeData.myStudents = response.data;
-			console.log(response.data)
 			//console.log("students: " + studentsList[0].firstname);
 		}, 
 		function(response) { // optional
@@ -212,7 +210,6 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 		})
 		.then(function(response){	
 			teacherHomeData.myMeetings = response.data;
-			console.log(response.data)
 		},
 		function(response){
 			console.log("Failed.");
