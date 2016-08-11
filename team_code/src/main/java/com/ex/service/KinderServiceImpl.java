@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
+import org.hibernate.annotations.Parent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -77,6 +78,11 @@ public class KinderServiceImpl implements KinderService {
 	 * Student stuff(non-Javadoc)
 	 */
 	@Override
+	public List<Student> getAllStudents(){
+		return studentRepo.findAll();
+	}
+	
+	@Override
 	public Student getStudentById(int studentId) {
 		return studentRepo.findOne(studentId);
 	}
@@ -123,6 +129,11 @@ public class KinderServiceImpl implements KinderService {
 	
 	
 	
+	@Override
+	public User findById(int id) {
+		return userRepo.findById(id);
+	}
+
 	/*
 	 * ReportCard stuff
 	 */
@@ -307,6 +318,7 @@ public class KinderServiceImpl implements KinderService {
 	           throw new RuntimeException(e);
 	       }
 	}
+
 
 	@Override
 	public void emailAllParents(int teacherId, String subject, String body) {

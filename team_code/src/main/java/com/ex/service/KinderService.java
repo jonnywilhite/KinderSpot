@@ -2,10 +2,9 @@ package com.ex.service;
 
 
 import java.io.File;
-import java.sql.Timestamp;
 import java.util.List;
 
-import org.springframework.data.domain.Page;
+import org.hibernate.annotations.Parent;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.ex.domain.Attendance;
@@ -18,7 +17,9 @@ import com.ex.domain.User;
 
 public interface KinderService {
 	
+	
 	//Student stuff
+	List<Student> getAllStudents();
 	Student getStudentById(int studentId);
 	List<Student> getAllStudentsByTeacher(int teacherId);
 	List<Student> deleteStudentsInClassByTeacher(int teacherId);
@@ -47,7 +48,7 @@ public interface KinderService {
 	
 	//Login stuff
 	User authenticate(User user);
-	
+	User findById(int id);
 	
 	//Photos stuff
 	Photos uploadPhoto(Photos photo, File file);
