@@ -6,6 +6,26 @@
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
 <title>Login Page</title>
+
+
+<style>
+body {
+	background-image:
+		url("/KinderSpot/resources/themes/crayonBackground.jpg");
+	background-size: 100% 225%;
+	background-repeat: no-repeat;
+}
+
+#loginForm {
+	text-align: center;
+	margin: auto;
+	width: 60%;
+	border: 3px solid #73AD21; 
+	padding: 30px;
+	transform: translate(0%, 65%);  
+}
+</style>
+
 </head>
 
 <body ng-app="myApp">
@@ -18,11 +38,15 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.0.1/ui-bootstrap-tpls.min.js"></script>
 
 
-<h2>Login Page</h2>
+
 
 <!-- The html form elements. The Login button will run the function in the controller below.
 	 create a controller object called 'user'(user ={})	 -->
-<div ng-app="myApp" ng-controller="loginCtrl" ng-init="user={}" ng-model="userMessage">
+
+<!-- The html form elements. The Login button will run the function in the controller below. -->
+<div ng-app="myApp" ng-controller="loginCtrl" ng-init="user={}" ng-model="userMessage" id="loginForm">
+  <h2>Login Page</h2>
+
   <form novalidate>
     Email:<br>
     <!-- c  -->

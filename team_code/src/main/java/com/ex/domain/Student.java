@@ -21,10 +21,10 @@ public class Student {
 	private int id;
 	
 	@Column(name="s_firstname")
-	private String firstname;
+	private String firstName;
 	
 	@Column(name="s_lastname")
-	private String lastname;
+	private String lastName;
 	
 	@Column(name="s_active")
 	private boolean active;
@@ -39,11 +39,11 @@ public class Student {
 	
 	public Student() {}
 
-	public Student(int id, String firstname, String lastname, boolean active, User teacher, User parent) {
+	public Student(int id, String firstName, String lastName, boolean active, User teacher, User parent) {
 		super();
 		this.id = id;
-		this.firstname = firstname;
-		this.lastname = lastname;
+		this.firstName = firstName;
+		this.lastName = lastName;
 		this.active = active;
 		this.teacher = teacher;
 		this.parent = parent;
@@ -57,20 +57,20 @@ public class Student {
 		this.id = id;
 	}
 
-	public String getFirstname() {
-		return firstname;
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
+	public void setFirstname(String firstName) {
+		this.firstName = firstName;
 	}
 
-	public String getLastname() {
-		return lastname;
+	public String getLastName() {
+		return lastName;
 	}
 
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
+	public void setLastname(String lastName) {
+		this.lastName = lastName;
 	}
 
 	public boolean isActive() {
