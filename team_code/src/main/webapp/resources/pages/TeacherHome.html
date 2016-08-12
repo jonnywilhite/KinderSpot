@@ -44,6 +44,7 @@ th, tr {
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.1/angular-ui-router.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.0.1/ui-bootstrap-tpls.min.js"></script>
+<script src="bower_components/angular-modal-service/dst/angular-modal-service.min.js"></script>
 
 	<!-- These values are referenced in the controllers to get database values to be displayed below
      in {{expressions}}. -->
@@ -51,6 +52,7 @@ th, tr {
 	<input type="hidden" ng-model="teacherHomeData.myStudents" />
 	<input type="hidden" ng-model="teacherHomeData.myMeetings" />
 	<input type="hidden" ng-model="teacherHomeData.myEvents" />
+	
 
 	<div ng-app="myApp" ng-controller="teacherHomeCtrl">
 		<nav class="w3-sidenav w3-black w3-card-2" style="width: 130px">
@@ -81,6 +83,35 @@ th, tr {
 				<td>{{ x.parent.firstName }}</td>
 			</tr>
 		</table>
+		
+		<div ng-controller="ModalDemoCtrl">
+    		<script type="text/ng-template" id="myModalContent.html">
+        		<div class="modal-header">
+            		<h3 class="modal-title" style="color: black">Attendance</h3>
+        		</div>
+        		<div class="modal-body">
+            		<table class="table">
+						<tr>
+							<th>Name</th>
+							<th>Present</th>
+						</tr>
+						<tr ng-repeat="student in teacherHomeData.myStudents">
+							<td ng-bind="student.firstName + ' ' + student.lastName" ng-model="teacherHomeData.myAttendanceEntry.name"></td>
+							<td>
+								<input type="checkbox" ng-model="teacherHomeData.myAttendanceEntry.present">
+							</td>
+						</tr>
+					</table>
+        		</div>
+        		<div class="modal-footer">
+            		<button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+            		<button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+        		</div>
+    		</script>
+
+    		<button type="button" class="btn btn-default" ng-click="open()">Submit Attendance</button>
+		</div>
+		
 		</div>
 
 

@@ -1,5 +1,5 @@
 
-angular.module("myApp", ['ui.router']); // Defining a module
+angular.module("myApp", ['ui.router', 'angularModalService', 'ui.bootstrap']); // Defining a module
 
 
 
@@ -152,7 +152,7 @@ angular.module("myApp").controller("parentHomeCtrl", function($http, sharedPrope
 });
 
 
-angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProperties, studentProperties, $state) {
+angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProperties, studentProperties, $state, ModalService) {
 
 	var teacherHomeData = this;
 	var loggedUser = sharedProperties.getProperty();
@@ -324,8 +324,7 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 		document.getElementById('meetingsDiv').style.display = "none";
 		
 		document.getElementById(divId).style.display = "inline";
-	}
-	
+	};
 	
 }); //ends teacherHomeCtrl
 
@@ -429,3 +428,64 @@ angular.module("myApp")
 		}
 	};
 });
+
+
+/*angular.module("myApp").controller('ModalController', function($scope, close) {
+	  
+	$scope.close = function(result) {
+		close(result, 500); // close, but give 500ms for bootstrap to animate
+	};
+
+});*/
+
+angular.module('myApp').controller('ModalDemoCtrl', function ($scope, $uibModal, $log) {
+
+	  $scope.items = ['item1', 'item2', 'item3'];
+
+	  $scope.animationsEnabled = true;
+
+	  $scope.open = function (size) {
+
+	    var modalInstance = $uibModal.open({
+	      animation: $scope.animationsEnabled,
+	      templateUrl: 'myModalContent.html',
+	      controller: 'ModalInstanceCtrl',
+	      size: size,
+	      resolve: {
+	        items: function () {
+	          return $scope.items;
+	        }
+	      }
+	    });
+
+	    modalInstance.result.then(function (selectedItem) {
+	      $scope.selected = selectedItem;
+	    }, function () {
+	      $log.info('Modal dismissed at: ' + new Date());
+	    });
+	  };
+
+	  $scope.toggleAnimation = function () {
+	    $scope.animationsEnabled = !$scope.animationsEnabled;
+	  };
+
+	});
+
+	// Please note that $uibModalInstance represents a modal window (instance) dependency.
+	// It is not the same as the $uibModal service used above.
+
+	angular.module('myApp').controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, items) {
+
+	  $scope.items = items;
+	  $scope.selected = {
+	    item: $scope.items[0]
+	  };
+
+	  $scope.ok = function () {
+	    $uibModalInstance.close($scope.selected.item);
+	  };
+
+	  $scope.cancel = function () {
+	    $uibModalInstance.dismiss('cancel');
+	  };
+	});
