@@ -260,7 +260,7 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 	
 	
 	//email stuff
-	parentHomeData.emailParent = function(subject, body) {
+	teacherHomeData.emailParent = function(subject, body) {
 		parentHomeData.mySubject = subject;
 		parentHomeData.myBody = body;
 		
