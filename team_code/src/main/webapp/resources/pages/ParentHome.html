@@ -3,17 +3,34 @@
 <head>
 <meta charset="ISO-8859-1">
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
 <title>Parent Homepage</title>
 </head>
 
 <style>
 
-/* body {
-	background-image: url("/KinderSpot/resources/themes/crayon3.jpg");
+body {
+	background-image: url("/KinderSpot/resources/themes/greenBoard.jpg");
 	/* background-size: 100% 175%; */
 	background-size: cover;
 	background-repeat: no-repeat;
-} */
+} 
+
+@font-face { font-family: chalky; src: url("/KinderSpot/resources/fonts/SimplyChalky.ttf") }
+@font-face { font-family: lemonMilk; src: url("/KinderSpot/resources/fonts/LemonMilk.otf") }
+@font-face { font-family: marker; src: url("/KinderSpot/resources/fonts/PWMarker.ttf") }
+@font-face { font-family: chalkboard; src: url("/KinderSpot/resources/fonts/chalkboard.ttf") }
+@font-face { font-family: brokenchalk; src: url("/KinderSpot/resources/fonts/BrokenChalk.ttf") }
+
+h3, h2 {
+	font-family: chalky;
+	color: white; 
+}
+
+th, tr {
+	font-family: chalky; 
+	color: white;
+}
 
 </style>
 
@@ -26,17 +43,32 @@
 
 
 
-<div ng-app="myApp" ng-controller="parentHomeCtrl" ng-init="user={}" ng-model="loggedInUser">
+<div ng-app="myApp" ng-controller="parentHomeCtrl" ng-init="user={}">
 
-<h2>Parent Home: Welcome {{parentHomeData.loggedInUser}}</h2>
+<!-- These values are referenced in the controllers to get database values to be displayed below
+     in {{expressions}}. -->
+	<input type="hidden" ng-model="loggedInUser" />
+	<input type="hidden" ng-model="parentHomeData.myChild" />
+
+
+<h2>Parent Home: {{parentHomeData.loggedInUser}}</h2>
+
+<div id="emailDiv" style="display:none">
 <form novalidate>
-    Subject:<br>
+    <h3>Subject:</h3><br>
     <input type="text" ng-model="user.subject" required><br>
-    Body:<br>
+    <h3>Body:</h3><br>
     <textarea rows="5" ng-model="user.body" autocomplete="off" required></textarea>
     <br><br>
-    <button ng-click="parentHomeData.emailTeacher(user.subject, user.body)">Send</button>
-  </form>
+    <button class="w3-btn w3-transparent w3-border w3-round-large" ng-click="parentHomeData.emailTeacher(user.subject, user.body)">Send</button>
+</form>
+</div>
+
+
+<div id="myChildDiv" style="display:inline">
+
+
+</div>
 
 
 </div>

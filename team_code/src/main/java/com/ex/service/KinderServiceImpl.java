@@ -86,9 +86,16 @@ public class KinderServiceImpl implements KinderService {
 		return studentRepo.findAll();
 	}
 	
+	
 	@Override
 	public Student getStudentById(int studentId) {
 		return studentRepo.findOne(studentId);
+	}
+	
+	@Override
+	public List<Student> getStudentByParent(int parentId) {
+		User parent = userRepo.findById(parentId);
+		return studentRepo.findByParentAndActiveTrue(parent);
 	}
 	
 	@Override
@@ -388,5 +395,6 @@ public class KinderServiceImpl implements KinderService {
 		}
 		
 	}
+
 	
 }
