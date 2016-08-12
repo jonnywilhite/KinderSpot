@@ -19,7 +19,6 @@
 <input type="hidden" ng-model="loggedInUser" />
 <input type="hidden" ng-model="teacherHomeData.myStudents" />
 <input type="hidden" ng-model ="teacherHomeData.myMeetings"/>
-<input type="hidden" ng-model ="teacherHomeData.myMeetings"/>
 <input type="hidden" ng-model ="teacherHomeData.myEvents"/>
 
 
@@ -74,6 +73,23 @@
 		<td>{{ e.date |date:'medium'}}</td>
 	</tr>
 </table>
+
+<br><br>
+
+<form id="studentform" novalidate>
+	Recipient:<br>
+	<select name="studentlist" form="studentform" ng-model="user.recipient" required>
+		<option ng-repeat ="x in teacherHomeData.myStudents" value="{{x.id}}">
+			{{x.firstname}}
+		</option>
+	</select>
+    Subject:<br>
+    <input type="text" ng-model="user.subject" required><br>
+    Body:<br>
+    <textarea rows="5" ng-model="user.body" autocomplete="off" required></textarea>
+    <br><br>
+    <button ng-click="parentHomeData.emailParent(user.recipient, user.subject, user.body)">Send</button>
+</form>
 
 <!-- Custom Script -->
 <script type="text/javascript" src="javascript/controllers.js"></script> 

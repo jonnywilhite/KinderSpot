@@ -250,6 +250,30 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 		});	
 	}
 	teacherHomeData.showEvents();
+	
+	
+	//email stuff
+	parentHomeData.emailParent = function(subject, body) {
+		parentHomeData.mySubject = subject;
+		parentHomeData.myBody = body;
+		
+		$http({
+            url: '/KinderSpot/' + loggedUser.id + '/email',
+            method: "POST",
+            data: { "subject": parentHomeData.mySubject,
+  				"body": parentHomeData.myBody		},
+            headers: {'Content-Type': 'application/json'}
+        })
+        .then(function(response) {
+        	//success
+        	//studentsList = response.data;
+        	parentHomeData.myStudents = response.data;
+            //console.log("students: " + studentsList[0].firstname);
+        }, 
+        function(response) { // optional
+        		console.log("Failed.");
+        });
+	};
 });
 
 
