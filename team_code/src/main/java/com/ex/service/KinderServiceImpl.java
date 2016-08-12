@@ -8,7 +8,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
-import org.hibernate.annotations.Parent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +20,7 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 
 import com.ex.domain.Attendance;
+import com.ex.domain.AttendanceStudent;
 import com.ex.domain.Event;
 import com.ex.domain.Meetings;
 import com.ex.domain.Photos;
@@ -28,6 +28,7 @@ import com.ex.domain.ReportCard;
 import com.ex.domain.Student;
 import com.ex.domain.User;
 import com.ex.repo.AttendanceRepo;
+import com.ex.repo.AttendanceStudentRepo;
 import com.ex.repo.EventsRepo;
 import com.ex.repo.MeetingRepo;
 import com.ex.repo.PhotosRepo;
@@ -72,6 +73,9 @@ public class KinderServiceImpl implements KinderService {
 	
 	@Autowired 
 	private MeetingRepo meetingRepo;
+	
+	@Autowired
+	private AttendanceStudentRepo attendanceStudentRepo;
 
 	
 	/*
@@ -148,7 +152,12 @@ public class KinderServiceImpl implements KinderService {
 		User teacher = teacherRepo.findOne(teacherId);
 		return reportCardRepo.findByTeacher(teacher);
 	}
-
+	
+	@Override
+	public ReportCard getReportCardByStudent(int studentId) {
+		Student student = studentRepo.findOne(studentId);
+		return reportCardRepo.findByStudent(student);
+	}
 	
 	
 
@@ -227,6 +236,13 @@ public class KinderServiceImpl implements KinderService {
 	public List<Attendance> viewAttendanceSheets(int teacherId) {
 		User teacher = teacherRepo.findOne(teacherId);
 		return attendanceRepo.findByTeacher(teacher);
+	}
+	
+	@Override
+	public List<AttendanceStudent> viewAttendanceEntriesByStudent(int studentId) {
+		Student student = studentRepo.findOne(studentId);
+		List<AttendanceStudent> list = attendanceStudentRepo.findByStudent(student);
+		return list;
 	}
 	
 	

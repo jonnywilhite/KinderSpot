@@ -4,10 +4,10 @@ package com.ex.service;
 import java.io.File;
 import java.util.List;
 
-import org.hibernate.annotations.Parent;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.ex.domain.Attendance;
+import com.ex.domain.AttendanceStudent;
 import com.ex.domain.Event;
 import com.ex.domain.Meetings;
 import com.ex.domain.Photos;
@@ -29,6 +29,7 @@ public interface KinderService {
 	//ReportCard stuff
 	ReportCard createReportCardEntry(ReportCard rc);
 	List<ReportCard> getAllReportCardsByTeacher(int teacherId);
+	ReportCard getReportCardByStudent(int studentId);
 	
 	
 	//Event stuff
@@ -59,6 +60,7 @@ public interface KinderService {
 	//Attendance stuff
 	public Attendance submitAttendanceSheet(List<Student> absent);
 	public List<Attendance> viewAttendanceSheets(int teacherId);
+	public List<AttendanceStudent> viewAttendanceEntriesByStudent(int studentId);
 	
 	//Email stuff
 	public void sendEmail(int senderId, int recipientId, String subject, String body);

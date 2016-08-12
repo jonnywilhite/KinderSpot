@@ -17,13 +17,13 @@
 <!-- These values are referenced in the controllers to get database values to be displayed below
      in {{expressions}}. -->
 <input type="hidden" ng-model="loggedInUser" />
-<input type="hidden" ng-model="myStudents" />
-<input type="hidden" ng-model ="myMeetings"/>
-<input type="hidden" ng-model ="myMeetings"/>
-<input type="hidden" ng-model ="myEvents"/>
+<input type="hidden" ng-model="teacherHomeData.myStudents" />
+<input type="hidden" ng-model ="teacherHomeData.myMeetings"/>
+<input type="hidden" ng-model ="teacherHomeData.myMeetings"/>
+<input type="hidden" ng-model ="teacherHomeData.myEvents"/>
 
 
-<h2>Teacher Home: welcome {{loggedInUser}}</h2>
+<h2>Teacher Home: welcome {{teacherHomeData.loggedInUser}}</h2>
 
 
 <!-- Loops through our students list obtained from the database, then displayed below. -->
@@ -33,8 +33,8 @@
     <th>Name</th>
     <th>Parent</th>
   </tr>
-  <tr ng-repeat="x in myStudents">
-    <td id="{{x.id}}" ng-click="viewStudent(x.id)">{{x.firstName}}</td>
+  <tr ng-repeat="x in teacherHomeData.myStudents">
+    <td id="{{x.id}}" ng-click="teacherHomeData.viewStudent(x.id)">{{x.firstName}}</td>
     <td>{{ x.parent.firstName }}</td> 
   </tr>
 </table>
@@ -43,7 +43,7 @@
 <div ng-app="myApp" ng-controller="loginCtrl" ng-init="teach={}" ng-model="userMessage" id="loginForm">
 <h2>My Meetings:</h2>
 <h3>Create New Meeting</h3>
-<input type ="text" ng-model ="createNewMeeting.description" />
+<input type ="text" ng-model ="teacherHomeData.createNewMeeting.description" />
 
 </div>
 
@@ -53,7 +53,7 @@
 	<th>Date Scheduled</th>
 </tr>
 
-	<tr ng-repeat ="m in myMeetings" >
+	<tr ng-repeat ="m in teacherHomeData.myMeetings" >
 		<td>{{ m.reason }}</td>
 		<td>{{ m.date | date:'medium' }}</td>
 	</tr>
@@ -68,7 +68,7 @@
  <th>Date</th>
 
 </tr>
-	<tr ng-repeat ="e in myEvents" >
+	<tr ng-repeat ="e in teacherHomeData.myEvents" >
 		<td>{{ e.name }}</td>
 		<td>{{ e.description }}</td>
 		<td>{{ e.date |date:'medium'}}</td>
