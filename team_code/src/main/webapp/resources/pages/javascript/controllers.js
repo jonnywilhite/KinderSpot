@@ -231,9 +231,6 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 	}
 
 
-
-
-
 	teacherHomeData.showEvents = function()
 	{
 		$http({

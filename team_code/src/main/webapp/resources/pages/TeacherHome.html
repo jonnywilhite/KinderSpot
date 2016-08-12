@@ -40,11 +40,11 @@
 </table>
 
 
-<div ng-app="myApp" ng-controller="loginCtrl" ng-init="teach={}" ng-model="userMessage" id="loginForm">
+<div ng-app="myApp" ng-controller="teacherHomeCtrl" ng-init="teach={}" ng-model="userMessage" id="loginForm">
 <h2>My Meetings:</h2>
 <h3>Create New Meeting</h3>
-<input type ="text" ng-model ="teacherHomeData.createNewMeeting.description" />
-
+<input type ="text" ng-model ="teach.reason" />
+<button ng-click = "teacherHomeData.createMeeting(teach.reason)">Create Meeting</button>
 </div>
 
 <table>
