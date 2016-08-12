@@ -2,6 +2,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
 <title>Teacher Homepage</title>
@@ -11,7 +12,8 @@
 
  body {
 	background-image: url("/KinderSpot/resources/themes/greenBoard.jpg");
-	background-size: 100% 175%;
+	/* background-size: 100% 175%; */
+	background-size: cover;
 	background-repeat: no-repeat;
 } 
 
@@ -36,96 +38,122 @@ th, tr {
 </head>
 <body>
 
+
+
 <!--  Dependencies -->
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.1/angular-ui-router.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.0.1/ui-bootstrap-tpls.min.js"></script>
 
-<div ng-app="myApp" ng-controller="teacherHomeCtrl"></div>
-
-<!-- These values are referenced in the controllers to get database values to be displayed below
+	<!-- These values are referenced in the controllers to get database values to be displayed below
      in {{expressions}}. -->
-<input type="hidden" ng-model="loggedInUser" />
-<input type="hidden" ng-model="teacherHomeData.myStudents" />
-<input type="hidden" ng-model ="teacherHomeData.myMeetings"/>
-<input type="hidden" ng-model ="teacherHomeData.myEvents"/>
+	<input type="hidden" ng-model="loggedInUser" />
+	<input type="hidden" ng-model="teacherHomeData.myStudents" />
+	<input type="hidden" ng-model="teacherHomeData.myMeetings" />
+	<input type="hidden" ng-model="teacherHomeData.myEvents" />
+
+	<div ng-app="myApp" ng-controller="teacherHomeCtrl">
+		<nav class="w3-sidenav w3-black w3-card-2" style="width: 130px">
+			<div class="w3-container">
+				<h5>Menu</h5>
+			</div>
+			<a href="" class="tablink" ng-click="teacherHomeData.showDisplay('studentsDiv')">Class</a> 
+			<a href="" class="tablink" ng-click="teacherHomeData.showDisplay('meetingsDiv')">Meetings</a> 
+			<a href="" class="tablink" ng-click="teacherHomeData.showDisplay('eventsDiv')">Events</a>
+			<a href="" class="tablink" ng-click="teacherHomeData.showDisplay('emailDiv')">Email</a>
+		</nav>
+
+		<!-- Div container below needed to push everything to the right of the sidenav. -->
+		<div style="margin-left:140px">
+		<h2>Teacher Home: welcome {{teacherHomeData.loggedInUser}}</h2>
 
 
-<h2>Teacher Home: welcome {{teacherHomeData.loggedInUser}}</h2>
+		<div id="studentsDiv" style="display:none" class="w3-container city w3-animate-left">
+		<!-- Loops through our students list obtained from the database, then displayed below. -->
+		<h2>My students:</h2>
+		<table class="">
+			<tr>
+				<th>Name</th>
+				<th>Parent</th>
+			</tr>
+			<tr ng-repeat="x in teacherHomeData.myStudents">
+				<td id="{{x.id}}" ng-click="teacherHomeData.viewStudent(x.id)">{{x.firstName}}</td>
+				<td>{{ x.parent.firstName }}</td>
+			</tr>
+		</table>
+		</div>
 
 
-<!-- Loops through our students list obtained from the database, then displayed below. -->
-<h2>My students:</h2>
-<table class="">
-  <tr>
-    <th>Name</th>
-    <th>Parent</th>
-  </tr>
-  <tr ng-repeat="x in teacherHomeData.myStudents">
-    <td id="{{x.id}}" ng-click="teacherHomeData.viewStudent(x.id)">{{x.firstName}}</td>
-    <td>{{ x.parent.firstName }}</td> 
-  </tr>
-</table>
+		<div id="meetingsDiv" style="display:none" class="w3-container city w3-animate-left">
+		<div ng-app="myApp" ng-controller="teacherHomeCtrl" ng-init="teach={}"
+			ng-model="userMessage" id="loginForm">
+			<h2>My Meetings:</h2>
+			<h3>Create New Meeting</h3>
+			<input type="text" ng-model="teach.reason" />
+			<button ng-click="teacherHomeData.createMeeting(teach.reason)">Create Meeting</button>
+		</div>
+
+		<table class="">
+			<tr>
+				<th>Type</th>
+				<th>Date Scheduled</th>
+			</tr>
+			<tr ng-repeat="m in teacherHomeData.myMeetings">
+				<td>{{ m.reason }}</td>
+				<td>{{ m.date | date:'medium' }}</td>
+			</tr>
+		</table>
+		</div>
+
+		<div id="eventsDiv" style="display:none" class="w3-container city w3-animate-left">
+		<h2>My Events:</h2>
+		<table class="">
+			<tr>
+				<th>Event</th>
+				<th>Description</th>
+				<th>Date</th>
+
+			</tr>
+			<tr ng-repeat="e in teacherHomeData.myEvents">
+				<td>{{ e.name }}</td>
+				<td>{{ e.description }}</td>
+				<td>{{ e.date |date:'medium'}}</td>
+			</tr>
+		</table>
+		<br><br>
+		</div>
+
+		<div id="emailDiv" style="display:none" class="w3-container city w3-animate-left">
+		<form id="studentform" novalidate
+			style="font-family: chalky; color: white">
+			Recipient:<br> <select name="studentlist" form="studentform"
+				ng-model="user.recipient" required>
+				<option ng-repeat="x in teacherHomeData.myStudents" value="{{x.id}}">
+					{{x.firstname}}</option>
+			</select> Subject:<br> <input type="text" ng-model="user.subject"
+				style="color: black" required><br> Body:<br>
+			<textarea rows="5" ng-model="user.body" style="color: black"
+				autocomplete="off" required></textarea>
+			<br><br>
+			<button ng-click="parentHomeData.emailParent(user.recipient, user.subject, user.body)">Send</button>
+		</form>
+		</div>
+		</div>
+	</div>
 
 
-<div ng-app="myApp" ng-controller="teacherHomeCtrl" ng-init="teach={}" ng-model="userMessage" id="loginForm">
-<h2>My Meetings:</h2>
-<h3>Create New Meeting</h3>
-<input type ="text" ng-model ="teach.reason" />
-<button ng-click = "teacherHomeData.createMeeting(teach.reason)">Create Meeting</button>
-</div>
-
-
-
-<table class="">
-
-<tr>
-	<th>Type</th>
-	<th>Date Scheduled</th>
-</tr>
-
-	<tr ng-repeat ="m in teacherHomeData.myMeetings" >
-		<td>{{ m.reason }}</td>
-		<td>{{ m.date | date:'medium' }}</td>
-	</tr>
-</table>
-
-
-<h2>My Events:</h2>
-<table class="">
-<tr>
- <th>Event</th>
- <th>Description</th>
- <th>Date</th>
-
-</tr>
-	<tr ng-repeat ="e in teacherHomeData.myEvents" >
-		<td>{{ e.name }}</td>
-		<td>{{ e.description }}</td>
-		<td>{{ e.date |date:'medium'}}</td>
-	</tr>
-</table>
-
-<br><br>
-
-<form id="studentform" novalidate style="font-family: chalky; color: white">
-	Recipient:<br>
-	<select name="studentlist" form="studentform" ng-model="user.recipient" required>
-		<option ng-repeat ="x in teacherHomeData.myStudents" value="{{x.id}}">
-			{{x.firstname}}
-		</option>
-	</select>
-    Subject:<br>
-    <input type="text" ng-model="user.subject" style="color: black" required><br>
-    Body:<br>
-    <textarea rows="5" ng-model="user.body" style="color: black" autocomplete="off" required></textarea>
-    <br><br>
-    <button ng-click="parentHomeData.emailParent(user.recipient, user.subject, user.body)">Send</button>
-</form>
-
-<!-- Custom Script -->
-<script type="text/javascript" src="javascript/controllers.js"></script> 
+	<!-- Custom Script -->
+	<script type="text/javascript" src="javascript/controllers.js"></script>
 
 
 </body>
 </html>
+
+
+
+
+
+
+
+
+

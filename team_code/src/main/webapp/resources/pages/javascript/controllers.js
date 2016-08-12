@@ -156,7 +156,8 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 
 	var teacherHomeData = this;
 	var loggedUser = sharedProperties.getProperty();
-	//var studentsList = {};	
+	
+	
 	//Displays teacher object info on View.
 	teacherHomeData.displayUser = function() {
 		teacherHomeData.loggedInUser = loggedUser.firstName; //loggedInUser is the ng-model in ParentHome.html
@@ -198,8 +199,6 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 		function(response) {
 			console.log("failed");
 		});
-
-		
 	}
 
 	teacherHomeData.showMeetings = function()
@@ -239,9 +238,6 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 	}
 
 	
-
-
-
 	teacherHomeData.showEvents = function()
 	{
 		$http({
@@ -280,8 +276,26 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
         function(response) { // optional
         		console.log("Failed.");
         });
-	};
-});
+	};//ends emailParent()
+	
+	
+	//Takes in a div ID from the View, and makes it visible to user. Activates when user clicks on sidenav.
+	teacherHomeData.showDisplay = function(divId){
+		
+		/*
+		 Hides all ID's, then displays the user input. The result is that only one of the teacher
+		 sections is displayed at a time. Without this, you'd have an element show up, but never leave.
+		*/
+		document.getElementById('studentsDiv').style.display = "none";
+		document.getElementById('eventsDiv').style.display = "none";
+		document.getElementById('emailDiv').style.display = "none";
+		document.getElementById('meetingsDiv').style.display = "none";
+		
+		document.getElementById(divId).style.display = "inline";
+	}
+	
+	
+}); //ends teacherHomeCtrl
 
 
 
@@ -363,7 +377,7 @@ angular.module("myApp").controller("viewStudentCtrl", function($http, sharedProp
 	
 	viewStudentData.showAttendance();
 	
-});
+}); //ends viewStudentCtrl
 
 /*angular.module("myApp").service("MyService", function($http) {
 	var myService = this;
