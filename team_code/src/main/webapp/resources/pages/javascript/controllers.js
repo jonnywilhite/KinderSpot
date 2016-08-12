@@ -260,21 +260,24 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 	
 	
 	//email stuff
-	teacherHomeData.emailParent = function(subject, body) {
-		parentHomeData.mySubject = subject;
-		parentHomeData.myBody = body;
+	teacherHomeData.emailParent = function(recipient, subject, body) {
+		teacherHomeData.myRecipient = recipient;
+		teacherHomeData.mySubject = subject;
+		teacherHomeData.myBody = body;
 		
 		$http({
-            url: '/KinderSpot/' + loggedUser.id + '/email',
+            url: '/KinderSpot/' + loggedUser.id + '/emailParent',
             method: "POST",
-            data: { "subject": parentHomeData.mySubject,
-  				"body": parentHomeData.myBody		},
+            data: { "subject": teacherHomeData.mySubject,
+  				"body": teacherHomeData.myBody, 	
+  				"recipient": teacherHomeData.myRecipient},
             headers: {'Content-Type': 'application/json'}
         })
         .then(function(response) {
         	//success
         	//studentsList = response.data;
-        	parentHomeData.myStudents = response.data;
+        	teacherHomeData.myStudents = response.data;
+        	console.log("Hello")
             //console.log("students: " + studentsList[0].firstname);
         }, 
         function(response) { // optional

@@ -109,18 +109,18 @@ th, tr {
 <br><br>
 
 <form id="studentform" novalidate style="font-family: chalky; color: white">
-	Recipient:<br>
-	<select name="studentlist" form="studentform" ng-model="user.recipient" required>
+	Recipient: <select style = "color: black" name="studentlist" form="studentform" ng-model="user.recipient" required>
 		<option ng-repeat ="x in teacherHomeData.myStudents" value="{{x.id}}">
-			{{x.firstname}}
+			{{x.parent.firstName}}
 		</option>
 	</select>
+	<br>
     Subject:<br>
     <input type="text" ng-model="user.subject" style="color: black" required><br>
     Body:<br>
     <textarea rows="5" ng-model="user.body" style="color: black" autocomplete="off" required></textarea>
     <br><br>
-    <button ng-click="parentHomeData.emailParent(user.recipient, user.subject, user.body)">Send</button>
+    <button ng-click="teacherHomeData.emailParent(user.recipient, user.subject, user.body)">Send</button>
 </form>
 
 <!-- Custom Script -->

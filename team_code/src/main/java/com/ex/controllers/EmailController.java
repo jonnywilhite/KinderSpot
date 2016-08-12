@@ -40,17 +40,17 @@ public class EmailController
 		}
 		System.out.println("Teacher Id: " + teacherId);
 		service.sendEmail(id, teacherId, email.getSubject(), email.getBody());
-		//service.sendEmail(userId, recipientId, subject, body);
-		
-		
-		
-		
-		//resp.sendRedirect("resources/pages/FrontPage.html");
-		
-		/*If you want to use the old way to redirect to a .jsp, it's configured in the beans.xml to still
-		  work with that technique. Just replace "@RestController" with "@Controller", replace "void" return
-		  to "String", and instead of the above code, use "return 'jspName'. */
 	}
 	
+	@RequestMapping(value="/{userId}/emailParent", method = RequestMethod.POST)
+	public void sendEmailToParent(@PathVariable String userId, @RequestBody Email email) throws IOException
+	{
+		int recipientId = Integer.parseInt(email.getRecipient());
+		
+		int id = Integer.parseInt(userId);
+		
+		System.out.println("Recipient Id: " + recipientId);
+		service.sendEmail(id, recipientId+1, email.getSubject(), email.getBody());
+	}
 	
 }
