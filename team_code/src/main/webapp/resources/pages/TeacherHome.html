@@ -3,7 +3,36 @@
 <head>
 <meta charset="ISO-8859-1">
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
 <title>Teacher Homepage</title>
+
+
+<style>
+
+ body {
+	background-image: url("/KinderSpot/resources/themes/bb.PNG");
+	background-size: 100% 175%;
+	background-repeat: no-repeat;
+} 
+
+@font-face { font-family: chalky; src: url("/KinderSpot/resources/fonts/SimplyChalky.ttf") }
+@font-face { font-family: lemonMilk; src: url("/KinderSpot/resources/fonts/LemonMilk.otf") }
+@font-face { font-family: marker; src: url("/KinderSpot/resources/fonts/PWMarker.ttf") }
+@font-face { font-family: chalkboard; src: url("/KinderSpot/resources/fonts/chalkboard.ttf") }
+@font-face { font-family: brokenchalk; src: url("/KinderSpot/resources/fonts/BrokenChalk.ttf") }
+
+h3, h2 {
+	font-family: chalky;
+	color: white; 
+}
+
+th, tr {
+	font-family: chalky; 
+	color: white;
+}
+
+</style>
+
 </head>
 <body>
 
@@ -19,7 +48,6 @@
 <input type="hidden" ng-model="loggedInUser" />
 <input type="hidden" ng-model="teacherHomeData.myStudents" />
 <input type="hidden" ng-model ="teacherHomeData.myMeetings"/>
-<input type="hidden" ng-model ="teacherHomeData.myMeetings"/>
 <input type="hidden" ng-model ="teacherHomeData.myEvents"/>
 
 
@@ -28,7 +56,7 @@
 
 <!-- Loops through our students list obtained from the database, then displayed below. -->
 <h2>My students:</h2>
-<table>
+<table class="">
   <tr>
     <th>Name</th>
     <th>Parent</th>
@@ -47,7 +75,10 @@
 <button ng-click = "teacherHomeData.createMeeting(teach.reason)">Create Meeting</button>
 </div>
 
-<table>
+
+
+<table class="">
+
 <tr>
 	<th>Type</th>
 	<th>Date Scheduled</th>
@@ -61,7 +92,7 @@
 
 
 <h2>My Events:</h2>
-<table>
+<table class="">
 <tr>
  <th>Event</th>
  <th>Description</th>
@@ -74,6 +105,23 @@
 		<td>{{ e.date |date:'medium'}}</td>
 	</tr>
 </table>
+
+<br><br>
+
+<form id="studentform" novalidate>
+	Recipient:<br>
+	<select name="studentlist" form="studentform" ng-model="user.recipient" required>
+		<option ng-repeat ="x in teacherHomeData.myStudents" value="{{x.id}}">
+			{{x.firstname}}
+		</option>
+	</select>
+    Subject:<br>
+    <input type="text" ng-model="user.subject" required><br>
+    Body:<br>
+    <textarea rows="5" ng-model="user.body" autocomplete="off" required></textarea>
+    <br><br>
+    <button ng-click="parentHomeData.emailParent(user.recipient, user.subject, user.body)">Send</button>
+</form>
 
 <!-- Custom Script -->
 <script type="text/javascript" src="javascript/controllers.js"></script> 
