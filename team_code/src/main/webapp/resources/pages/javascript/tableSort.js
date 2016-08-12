@@ -1,7 +1,5 @@
 
 
-
-
 	var stIsIE = /*@cc_on!@*/false;
 
 	sorttable = {
