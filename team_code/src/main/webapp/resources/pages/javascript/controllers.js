@@ -231,11 +231,14 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 			headers: {'Content-Type':'application/json'}
 		})
 		.then(function(response){
+			
 			teacherHomeData.createNewMeeting = response.data;
 		},
 		function(response){
 			console.log("Failed.")
 		});		
+		
+		
 	}
 
 	
@@ -257,6 +260,32 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 		});	
 	}
 	teacherHomeData.showEvents();
+	
+	
+	teacherHomeData.createEvents = function (eventName, description)
+	{
+		teacherHomeData.newEvent = event; 
+		teacherHomeData.description = description;
+
+		$http({ 
+			url:'/KinderSpot/event',
+			method: "POST",
+			data: {"name": teacherHomeData.newEvent,
+					"description": teacherHomeData.description
+					},
+			
+			headers: {'Content-Type':'application/json'}
+		})
+		.then(function(response){
+			
+			teacherHomeData.createNewEvent = response.data;
+		},
+		function(response){
+			console.log("Failed.")
+		});		
+		
+		
+	}
 	
 	
 	//email stuff

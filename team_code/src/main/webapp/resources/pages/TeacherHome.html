@@ -10,7 +10,7 @@
 <style>
 
  body {
-	background-image: url("/KinderSpot/resources/themes/bb.PNG");
+	background-image: url("/KinderSpot/resources/themes/greenBoard.jpg");
 	background-size: 100% 175%;
 	background-repeat: no-repeat;
 } 
@@ -68,19 +68,11 @@ th, tr {
 </table>
 
 
-<div ng-app="myApp" ng-controller="teacherHomeCtrl" ng-init="teach={}" ng-model="userMessage" id="loginForm">
-<h2>My Meetings:</h2>
-<h3>Create New Meeting</h3>
-<input type ="text" ng-model ="teach.reason" />
-<button ng-click = "teacherHomeData.createMeeting(teach.reason)">Create Meeting</button>
-</div>
-
-
-
 <table class="">
 
 <tr>
-	<th>Type</th>
+	<th>Parent </th>
+	<th> Meeting Type</th>
 	<th>Date Scheduled</th>
 </tr>
 
@@ -91,7 +83,15 @@ th, tr {
 </table>
 
 
+<div ng-app="myApp" ng-controller="teacherHomeCtrl" ng-init="teach={}" ng-model="" id="loginForm">
 <h2>My Events:</h2>
+<h3>Create New Event</h3>
+<input type ="text" ng-model ="teach.event" />
+<input type = "text" ng-model = "teach.description"/>
+<button ng-click = "teacherHomeData.createEvents(teach.event, teach.description)">Create Event</button>
+</div>
+
+
 <table class="">
 <tr>
  <th>Event</th>
