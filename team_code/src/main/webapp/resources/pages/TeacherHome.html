@@ -63,6 +63,7 @@ th, tr {
 			<a href="" class="tablink" ng-click="teacherHomeData.showDisplay('meetingsDiv')">Meetings</a> 
 			<a href="" class="tablink" ng-click="teacherHomeData.showDisplay('eventsDiv')">Events</a>
 			<a href="" class="tablink" ng-click="teacherHomeData.showDisplay('emailDiv')">Email</a>
+			<a href="#" class="tablink" ng-click="">Logout</a>
 		</nav>
 
 		<!-- Div container below needed to push everything to the right of the sidenav. -->
@@ -73,13 +74,16 @@ th, tr {
 		<div id="studentsDiv" style="display:none" class="w3-container city w3-animate-left">
 		<!-- Loops through our students list obtained from the database, then displayed below. -->
 		<h2>My students:</h2>
-		<table class="">
+		<table class="w3-table w3-border w3-bordered" style="width:75%">
 			<tr>
 				<th>Name</th>
+				<th>Student Link</th>
 				<th>Parent</th>
 			</tr>
 			<tr ng-repeat="x in teacherHomeData.myStudents">
-				<td id="{{x.id}}" ng-click="teacherHomeData.viewStudent(x.id)">{{x.firstName}}</td>
+				<td>{{x.firstName}}</td>
+				<td><button class="w3-btn w3-transparent w3-border w3-round-large" 
+					ng-click="teacherHomeData.viewStudent(x.id)">View</button></td>
 				<td>{{ x.parent.firstName }}</td>
 			</tr>
 		</table>

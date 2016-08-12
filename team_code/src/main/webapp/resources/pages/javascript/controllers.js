@@ -38,9 +38,6 @@ angular.module("myApp")
 
 
 
-
-
-
 //Runs the login Controller's POST method, passing in the user's form inputs as parameters. 
 //The function is run when the user clicks the login button.
 angular.module("myApp").controller("loginCtrl", function($http, $location, $window, $state, sharedProperties) {
@@ -176,7 +173,6 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 			//success
 			//studentsList = response.data;
 			teacherHomeData.myStudents = response.data;
-			console.log(response.data)
 			//console.log("students: " + studentsList[0].firstname);
 		}, 
 		function(response) { // optional
@@ -210,7 +206,6 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 		})
 		.then(function(response){	
 			teacherHomeData.myMeetings = response.data;
-			console.log(response.data)
 		},
 		function(response){
 			console.log("Failed.");
@@ -365,6 +360,7 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 //};
 
 //});
+
 
 
 angular.module("myApp").controller("viewStudentCtrl", function($http, sharedProperties, studentProperties) {
