@@ -58,11 +58,11 @@ h2, h3, #innerForm {
     <input type="password"  ng-model="user.password" class="w3-input w3-border w3-sand w3-hover-green">
     <br><br>
     <!-- S -->
-    <button ng-click="login(user.email, user.password)" class="w3-btn w3-green">Login</button>
+    <button ng-click="loginData.login(user.email, user.password)" class="w3-btn w3-green">Login</button>
   </form>
   
   <!-- Dynamically displays "Invalid login. Try again", when user logs in with wrong info. -->
-  <h3>{{userMessage}}</h3>
+  <h3>{{loginData.userMessage}}</h3>
   
 </div>
 

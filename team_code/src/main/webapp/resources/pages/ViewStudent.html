@@ -20,24 +20,29 @@
 	
 
 	<div ng-controller="viewStudentCtrl">
-		<input type="hidden" ng-model="currentStudent" />
-		<input type="hidden" ng-model="currentReportCard">
-		<input type="hidden" ng-model="currentAttendance">
-		<h2>View Student: <span ng-bind="currentStudent.firstName"></span></h2>
+		<input type="hidden" ng-model="viewStudentData.currentStudent" />
+		<input type="hidden" ng-model="viewStudentData.currentReportCard">
+		<input type="hidden" ng-model="viewStudentData.currentAttendance">
+		<h2>View Student: <span ng-bind="viewStudentData.currentStudent.firstName"></span></h2>
 		
-		<h2>Grade: <span ng-bind="currentReportCard.grade"></span></h2>
+		<h2>Grade: <span ng-bind="viewStudentData.currentReportCard.grade"></span></h2>
 		
 		<h2>Recent attendance:</h2>
-		<table>
-			<tr>
-				<th>Date</th>
-				<th>Present</th>
-			</tr>
-			<tr ng-repeat="att in currentAttendance">
-				<td ng-bind="att.attendance.date | date : mediumDate"></td>
-				<td ng-bind="att.present"></td>
-			</tr>
-		</table>
+		
+		<div class="row">
+			<div class="col-sm-6">
+				<table class="table">
+					<tr>
+						<th>Date</th>
+						<th>Present</th>
+					</tr>
+					<tr ng-repeat="att in viewStudentData.currentAttendance">
+						<td ng-bind="att.attendance.date | date : mediumDate"></td>
+						<td ng-bind="att.present"></td>
+					</tr>
+				</table>
+			</div>
+		</div>
 		
 	
 	</div>
