@@ -302,9 +302,13 @@ public class KinderServiceImpl implements KinderService {
 	public void sendEmail(int senderId, int recipientId, String subject, String body) {
 		// TODO send the email
 		//String senderEmail = teacherRepo.findById(senderId).getEmail();
-		String recipientEmail = teacherRepo.findById(recipientId).getEmail();
+		String recipientEmail = userRepo.findById(recipientId).getEmail();
 		final String uname = "kinderspotemail@gmail.com";
 	       final String pword = "Kinderspot1234";
+	       
+	       String emailHeader = "Hello " + userRepo.findById(recipientId).getFirstName() + ",\n\n";
+	       String emailSignature = "\n\n" + userRepo.findById(senderId).getFirstName();
+	       body = emailHeader + body + emailSignature;
 
 	       Properties props = new Properties();
 	       props.put("mail.smtp.starttls.enable", "true");
@@ -345,6 +349,10 @@ public class KinderServiceImpl implements KinderService {
 		
 		final String uname = "kinderspotemail@gmail.com";
 	       final String pword = "Kinderspot1234";
+	       
+	       String emailHeader = "To all parents,\n\n";
+	       String emailSignature = "\n\n" + userRepo.findById(teacherId).getFirstName();
+	       body = emailHeader + body + emailSignature;
 
 	       Properties props = new Properties();
 	       props.put("mail.smtp.starttls.enable", "true");

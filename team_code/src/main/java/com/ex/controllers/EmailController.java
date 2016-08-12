@@ -53,7 +53,6 @@ public class EmailController
 			service.sendEmail(id, recipientId+1, email.getSubject(), email.getBody());
 		}
 		else{
-			System.out.println("SHOW ME WHAT YOU GOT");
 			service.emailAllParents(id, email.getSubject(), email.getBody());
 		}
 		
