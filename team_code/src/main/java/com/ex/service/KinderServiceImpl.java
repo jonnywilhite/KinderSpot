@@ -367,6 +367,8 @@ public class KinderServiceImpl implements KinderService {
 	               InternetAddress.parse(studentList.get(i).getParent().getEmail()));
 	           message.setSubject(subject);
 	           message.setText(body);
+	           
+	           System.out.println("Sending email to " + studentList.get(i).getParent().getEmail());
 
 	           Transport.send(message);
 	           System.out.println("Successfully sent email to "+ studentList.get(i).getParent().getEmail());

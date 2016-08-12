@@ -45,12 +45,19 @@ public class EmailController
 	@RequestMapping(value="/{userId}/emailParent", method = RequestMethod.POST)
 	public void sendEmailToParent(@PathVariable String userId, @RequestBody Email email) throws IOException
 	{
-		int recipientId = Integer.parseInt(email.getRecipient());
-		
+		int recipientId = 0;
 		int id = Integer.parseInt(userId);
+		if (!email.getRecipient().equals( "All")){
+			recipientId = Integer.parseInt(email.getRecipient());
+			
+			service.sendEmail(id, recipientId+1, email.getSubject(), email.getBody());
+		}
+		else{
+			System.out.println("SHOW ME WHAT YOU GOT");
+			service.emailAllParents(id, email.getSubject(), email.getBody());
+		}
 		
-		System.out.println("Recipient Id: " + recipientId);
-		service.sendEmail(id, recipientId+1, email.getSubject(), email.getBody());
+		
 	}
 	
 }
