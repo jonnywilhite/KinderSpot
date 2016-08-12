@@ -130,8 +130,12 @@ angular.module("myApp").controller("parentHomeCtrl", function($scope, $http, sha
         .then(function(response) {
         	//success
         	//studentsList = response.data;
+<<<<<<< HEAD
         	$scope.myStudents = response.data;
         	console.log(response.data)
+=======
+        	parentHomeData.myStudents = response.data;
+>>>>>>> 9d065f450101f4c6ea85b8873a49341ca5a3b418
             //console.log("students: " + studentsList[0].firstname);
         }, 
         function(response) { // optional
@@ -169,8 +173,12 @@ angular.module("myApp").controller("teacherHomeCtrl", function($scope, $http, sh
 		.then(function(response) {
 			//success
 			//studentsList = response.data;
+<<<<<<< HEAD
 			$scope.myStudents = response.data;
 			console.log(response.data)
+=======
+			teacherHomeData.myStudents = response.data;
+>>>>>>> 9d065f450101f4c6ea85b8873a49341ca5a3b418
 			//console.log("students: " + studentsList[0].firstname);
 		}, 
 		function(response) { // optional
@@ -205,8 +213,12 @@ angular.module("myApp").controller("teacherHomeCtrl", function($scope, $http, sh
 			headers: {'Content-Type': 'application/json'}
 		})
 		.then(function(response){	
+<<<<<<< HEAD
 			$scope.myMeetings = response.data;
 			console.log(response.data)
+=======
+			teacherHomeData.myMeetings = response.data;
+>>>>>>> 9d065f450101f4c6ea85b8873a49341ca5a3b418
 		},
 		function(response){
 			console.log("Failed.");
