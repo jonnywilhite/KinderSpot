@@ -34,30 +34,22 @@ angular.module("myApp")
 
 }); //ends angular.module("myApp").config...
 
-
-
-
-
-
-
-
-
 //Runs the login Controller's POST method, passing in the user's form inputs as parameters. 
 //The function is run when the user clicks the login button.
-angular.module("myApp").controller("loginCtrl", function($http, $location, $window, $state, sharedProperties) {
+angular.module("myApp").controller("loginCtrl", function($scope, $http, $location, $window, $state, sharedProperties) {
 
 	var loginData = this;
 
 	//Gets the email and password from the user's form submit. Then runs the Login Controller's POST method.
-	loginData.login = function(email, pass){
-		loginData.myEmail = email;
-		loginData.myPass = pass;
+	$scope.login = function(email, pass){
+		$scope.myEmail = email;
+		$scope.myPass = pass;
 
 		$http({
 			url: '/KinderSpot/home',
 			method: "POST",
-			data: { "email": loginData.myEmail,
-				"password": loginData.myPass		},
+			data: { "email": $scope.myEmail,
+				"password": $scope.myPass		},
 				headers: {'Content-Type': 'application/json'}
 		})
 		.then(function(response) {
@@ -66,12 +58,12 @@ angular.module("myApp").controller("loginCtrl", function($http, $location, $wind
 			if(response.data.email === undefined && response.data.password === undefined)
 			{
 				//failed login
-				loginData.userMessage = "Invalid login. Try again.";
+				$scope.userMessage = "Invalid login. Try again.";
 			}
 			else
 			{
 				//sucessful login
-				loginData.userMessage = "Logged in.";
+				$scope.userMessage = "Logged in.";
 				sharedProperties.setProperty(response.data);
 				sharedProperties.getProperty();
 
@@ -87,7 +79,7 @@ angular.module("myApp").controller("loginCtrl", function($http, $location, $wind
 			console.log("Failed.");
 		});
 
-	}//ends loginData.login()
+	}//ends $scope.login()
 
 }); //ends app.controller()
 
@@ -96,6 +88,7 @@ angular.module("myApp").controller("loginCtrl", function($http, $location, $wind
 angular.module("myApp")
 .service('sharedProperties', function () {
 	var property = {firstName: 'First'};
+	var student = {};
 
 	return {
 		getProperty: function () {
@@ -110,34 +103,34 @@ angular.module("myApp")
 });
 
 
-angular.module("myApp").controller("parentHomeCtrl", function($http, sharedProperties) {
+angular.module("myApp").controller("parentHomeCtrl", function($scope, $http, sharedProperties) {
 
 	var parentHomeData = this;
 	var loggedUser = sharedProperties.getProperty();
 
-	parentHomeData.displayUser = function() {
+	$scope.displayUser = function() {
 		//console.log("loggedUser is: " + loggedUser.firstName);
-		parentHomeData.loggedInUser = loggedUser.firstName; //loggedInUser is the ng-model in ParentHome.html
+		$scope.loggedInUser = loggedUser.firstName; //loggedInUser is the ng-model in ParentHome.html
 	}
 
-	parentHomeData.displayUser();
+	$scope.displayUser();
 
 	
-	parentHomeData.emailTeacher = function(subject, body) {
-		parentHomeData.mySubject = subject;
-		parentHomeData.myBody = body;
+	$scope.emailTeacher = function(subject, body) {
+		$scope.mySubject = subject;
+		$scope.myBody = body;
 		
 		$http({
             url: '/KinderSpot/' + loggedUser.id + '/email',
             method: "POST",
-            data: { "subject": parentHomeData.mySubject,
-  				"body": parentHomeData.myBody		},
+            data: { "subject": $scope.mySubject,
+  				"body": $scope.myBody		},
             headers: {'Content-Type': 'application/json'}
         })
         .then(function(response) {
         	//success
         	//studentsList = response.data;
-        	parentHomeData.myStudents = response.data;
+        	$scope.myStudents = response.data;
         	console.log(response.data)
             //console.log("students: " + studentsList[0].firstname);
         }, 
@@ -149,23 +142,24 @@ angular.module("myApp").controller("parentHomeCtrl", function($http, sharedPrope
 
 	}; //ends parentHomeApp.controller()
 
-	parentHomeData.emailTeacher();
+	$scope.emailTeacher();
 });
 
 
-angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProperties, studentProperties, $state) {
+angular.module("myApp").controller("teacherHomeCtrl", function($scope, $http, sharedProperties) 
+{
 
 	var teacherHomeData = this;
 	var loggedUser = sharedProperties.getProperty();
 	//var studentsList = {};	
 	//Displays teacher object info on View.
-	teacherHomeData.displayUser = function() {
-		teacherHomeData.loggedInUser = loggedUser.firstName; //loggedInUser is the ng-model in ParentHome.html
+	$scope.displayUser = function() {
+		$scope.loggedInUser = loggedUser.firstName; //loggedInUser is the ng-model in ParentHome.html
 	}
-	teacherHomeData.displayUser();
+	$scope.displayUser();
 
 
-	teacherHomeData.showStudents = function()
+	$scope.showStudents = function()
 	{
 		$http({
 			url: '/KinderSpot/' + loggedUser.id + '/students',
@@ -175,7 +169,7 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 		.then(function(response) {
 			//success
 			//studentsList = response.data;
-			teacherHomeData.myStudents = response.data;
+			$scope.myStudents = response.data;
 			console.log(response.data)
 			//console.log("students: " + studentsList[0].firstname);
 		}, 
@@ -183,9 +177,9 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 			console.log("Failed.");
 		});
 	}//ends showStudents()
-	teacherHomeData.showStudents();
+	$scope.showStudents();
 
-	teacherHomeData.viewStudent = function(id) {
+	$scope.viewStudent = function(id) {
 
 		$http({
 			url: '/KinderSpot/students/' + id,
@@ -193,17 +187,17 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 			headers: {'Content-Type': 'application/json'}
 		})
 		.then(function(response) {
-			studentProperties.setStudent(response.data);
-			$state.go('viewStudentState');
+			sharedProperties.student = response.data;
+			console.log(sharedProperties.student);
 		},
 		function(response) {
 			console.log("failed");
 		});
 
-		
+		$state.go('viewStudentState');
 	}
 
-	teacherHomeData.showMeetings = function()
+	$scope.showMeetings = function()
 	{
 		$http({
 			url: '/KinderSpot/meeting',
@@ -211,28 +205,28 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 			headers: {'Content-Type': 'application/json'}
 		})
 		.then(function(response){	
-			teacherHomeData.myMeetings = response.data;
+			$scope.myMeetings = response.data;
 			console.log(response.data)
 		},
 		function(response){
 			console.log("Failed.");
 		});	
 	}
-	teacherHomeData.showMeetings();
+	$scope.showMeetings();
 
 	
-	teacherHomeData.createMeeting = function (reason)
+	$scope.createMeeting = function (reason)
 	{
-		teacherHomeData.meetingReason = reason; 
+		$scope.meetingReason = reason; 
 
 		$http({ 
 			url:'/KinderSpot/meeting',
 			method: "POST",
-			data: {"reason": teacherHomeData.meetingReason },
+			data: {"reason": $scope.meetingReason },
 			headers: {'Content-Type':'application/json'}
 		})
 		.then(function(response){
-			teacherHomeData.createNewMeeting = response.data;
+			$scope.createNewMeeting = response.data;
 		},
 		function(response){
 			console.log("Failed.")
@@ -243,7 +237,7 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 
 
 
-	teacherHomeData.showEvents = function()
+	$scope.showEvents = function()
 	{
 		$http({
 			url: '/KinderSpot/event',
@@ -251,13 +245,14 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 			headers: {'Content-Type': 'application/json'}
 		})
 		.then(function(response){	
-			teacherHomeData.myEvents = response.data;
+			$scope.myEvents = response.data;
+			console.log(response.data)
 		},
 		function(response){
 			console.log("Failed.");
 		});	
 	}
-	teacherHomeData.showEvents();
+	$scope.showEvents();
 });
 
 
@@ -299,68 +294,10 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 //});
 
 
-angular.module("myApp").controller("viewStudentCtrl", function($http, sharedProperties, studentProperties) {
+angular.module("myApp").controller("viewStudentCtrl", function($scope, sharedProperties) {
 	var viewStudentData = this;
-	
-	viewStudentData.showStudent = function() {
-		viewStudentData.currentStudent = studentProperties.getStudent();
-	}
-	
-	viewStudentData.showStudent();
-	
-	viewStudentData.showGrade = function() {
-		$http({
-			url: "http://localhost:8085/KinderSpot/report-cards/" + viewStudentData.currentStudent.id,
-			method: "GET",
-			headers: {'Content-Type': 'application/json'}
-		})
-		.then(function(response) {
-			viewStudentData.currentReportCard = response.data;
-		},
-		function(response) {
-			console.log(response);
-		})
-	}
-	
-	viewStudentData.showGrade();
-	
-	viewStudentData.showAttendance = function() {
-		$http({
-			url: "http://localhost:8085/KinderSpot/attendance/" + viewStudentData.currentStudent.id,
-			method: "GET",
-			headers: {'Content-Type': 'application/json'}
-		})
-		.then(function(response) {
-			viewStudentData.currentAttendance = response.data;
-		},
-		function(response) {
-			console.log(response);
-		});
-	};
-	
-	viewStudentData.showAttendance();
-	
-});
 
-/*angular.module("myApp").service("MyService", function($http) {
-
-	var myService = this;
-	myService.student = {};
-
-});*/
-
-angular.module("myApp")
-.service('studentProperties', function () {
-	var student = {};
-
-	return {
-		getStudent: function () {
-			return student;
-		},
-		setStudent: function(value) {
-			student = value;
-		}
-	};
+	var currentStudent = sharedProperties.student;
 });
 
 
