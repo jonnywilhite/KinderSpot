@@ -1,5 +1,4 @@
 
-
 angular.module("myApp", ['ui.router']); // Defining a module
 
 
@@ -33,6 +32,14 @@ angular.module("myApp")
 
 
 }); //ends angular.module("myApp").config...
+
+
+
+
+
+
+
+
 
 //Runs the login Controller's POST method, passing in the user's form inputs as parameters. 
 //The function is run when the user clicks the login button.
@@ -88,7 +95,6 @@ angular.module("myApp").controller("loginCtrl", function($http, $location, $wind
 angular.module("myApp")
 .service('sharedProperties', function () {
 	var property = {firstName: 'First'};
-	var student = {};
 
 	return {
 		getProperty: function () {
@@ -115,29 +121,30 @@ angular.module("myApp").controller("parentHomeCtrl", function($http, sharedPrope
 
 	parentHomeData.displayUser();
 
-
+	
 	parentHomeData.emailTeacher = function(subject, body) {
 		parentHomeData.mySubject = subject;
 		parentHomeData.myBody = body;
-
+		
 		$http({
-			url: '/KinderSpot/' + loggedUser.id + '/email',
-			method: "POST",
-			data: { "subject": parentHomeData.mySubject,
-				"body": parentHomeData.myBody		},
-				headers: {'Content-Type': 'application/json'}
-		})
-		.then(function(response) {
-			//success
-			//studentsList = response.data;
-			parentHomeData.myStudents = response.data;
-			//console.log("students: " + studentsList[0].firstname);
-		}, 
-		function(response) { // optional
-			console.log("Failed.");
-		});
+            url: '/KinderSpot/' + loggedUser.id + '/email',
+            method: "POST",
+            data: { "subject": parentHomeData.mySubject,
+  				"body": parentHomeData.myBody		},
+            headers: {'Content-Type': 'application/json'}
+        })
+        .then(function(response) {
+        	//success
+        	//studentsList = response.data;
+        	parentHomeData.myStudents = response.data;
+        	console.log(response.data)
+            //console.log("students: " + studentsList[0].firstname);
+        }, 
+        function(response) { // optional
+        		console.log("Failed.");
+        });
 
-
+	
 
 	}; //ends parentHomeApp.controller()
 
@@ -145,8 +152,7 @@ angular.module("myApp").controller("parentHomeCtrl", function($http, sharedPrope
 });
 
 
-angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProperties) 
-		{
+angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProperties, studentProperties, $state) {
 
 	var teacherHomeData = this;
 	var loggedUser = sharedProperties.getProperty();
@@ -169,6 +175,7 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 			//success
 			//studentsList = response.data;
 			teacherHomeData.myStudents = response.data;
+			console.log(response.data)
 			//console.log("students: " + studentsList[0].firstname);
 		}, 
 		function(response) { // optional
@@ -185,14 +192,14 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 			headers: {'Content-Type': 'application/json'}
 		})
 		.then(function(response) {
-			sharedProperties.student = response.data;
-			console.log(sharedProperties.student);
+			studentProperties.setStudent(response.data);
+			$state.go('viewStudentState');
 		},
 		function(response) {
 			console.log("failed");
 		});
 
-		$state.go('viewStudentState');
+		
 	}
 
 	teacherHomeData.showMeetings = function()
@@ -204,6 +211,7 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 		})
 		.then(function(response){	
 			teacherHomeData.myMeetings = response.data;
+			console.log(response.data)
 		},
 		function(response){
 			console.log("Failed.");
@@ -211,7 +219,7 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 	}
 	teacherHomeData.showMeetings();
 
-
+	
 	teacherHomeData.createMeeting = function (reason)
 	{
 		teacherHomeData.meetingReason = reason; 
@@ -229,8 +237,8 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 			console.log("Failed.")
 		});		
 	}
-
-
+	
+	
 
 
 
@@ -243,34 +251,33 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 		})
 		.then(function(response){	
 			teacherHomeData.myEvents = response.data;
-			console.log(response.data)
 		},
 		function(response){
 			console.log("Failed.");
 		});	
 	}
 	teacherHomeData.showEvents();
-		});
+});
 
 
 
 
 //angular.module('datepickerBasicUsage',
-//['ngMaterial', 'ngMessages']).controller('AppCtrl', function($scope) {
-//$scope.myDate = new Date();
-//$scope.minDate = new Date(
-//$scope.myDate.getFullYear(),
-//$scope.myDate.getMonth() - 2,
-//$scope.myDate.getDate());
-//$scope.maxDate = new Date(
-//$scope.myDate.getFullYear(),
-//$scope.myDate.getMonth() + 2,
-//$scope.myDate.getDate());
-//$scope.onlyWeekendsPredicate = function(date) {
-//var day = date.getDay();
-//return day === 0 || day === 6;
-//}
-//});
+//	    ['ngMaterial', 'ngMessages']).controller('AppCtrl', function($scope) {
+//	  $scope.myDate = new Date();
+//	  $scope.minDate = new Date(
+//	      $scope.myDate.getFullYear(),
+//	      $scope.myDate.getMonth() - 2,
+//	      $scope.myDate.getDate());
+//	  $scope.maxDate = new Date(
+//	      $scope.myDate.getFullYear(),
+//	      $scope.myDate.getMonth() + 2,
+//	      $scope.myDate.getDate());
+//	  $scope.onlyWeekendsPredicate = function(date) {
+//	    var day = date.getDay();
+//	    return day === 0 || day === 6;
+//	  }
+//	});
 
 
 
@@ -291,17 +298,15 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 //});
 
 
-angular.module("myApp").controller("viewStudentCtrl", function(sharedProperties) {
+angular.module("myApp").controller("viewStudentCtrl", function($http, sharedProperties, studentProperties) {
 	var viewStudentData = this;
-
-	var currentStudent = sharedProperties.student;
-
+	
 	viewStudentData.showStudent = function() {
 		viewStudentData.currentStudent = studentProperties.getStudent();
 	}
-
+	
 	viewStudentData.showStudent();
-
+	
 	viewStudentData.showGrade = function() {
 		$http({
 			url: "http://localhost:8085/KinderSpot/report-cards/" + viewStudentData.currentStudent.id,
@@ -315,9 +320,9 @@ angular.module("myApp").controller("viewStudentCtrl", function(sharedProperties)
 			console.log(response);
 		})
 	}
-
+	
 	viewStudentData.showGrade();
-
+	
 	viewStudentData.showAttendance = function() {
 		$http({
 			url: "http://localhost:8085/KinderSpot/attendance/" + viewStudentData.currentStudent.id,
@@ -331,11 +336,15 @@ angular.module("myApp").controller("viewStudentCtrl", function(sharedProperties)
 			console.log(response);
 		});
 	};
-
+	
 	viewStudentData.showAttendance();
-
+	
 });
 
+/*angular.module("myApp").service("MyService", function($http) {
+	var myService = this;
+	myService.student = {};
+});*/
 
 angular.module("myApp")
 .service('studentProperties', function () {
@@ -350,7 +359,3 @@ angular.module("myApp")
 		}
 	};
 });
-
-
-
-
