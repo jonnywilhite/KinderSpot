@@ -49,7 +49,8 @@ th, tr {
      in {{expressions}}. -->
 	<input type="hidden" ng-model="loggedInUser" />
 	<input type="hidden" ng-model="parentHomeData.myChild" />
-
+	<input type="hidden" ng-model="parentHomeData.currentReportCard">
+	
 
 <h2>Parent Home: {{parentHomeData.loggedInUser.firstName}}</h2>
 
@@ -68,6 +69,7 @@ th, tr {
 <div id="myChildDiv" style="display:inline">
 
 <h2>My child: {{parentHomeData.myChild.firstName}}</h2>
+<h2>Grade: {{parentHomeData.currentReportCard.grade}} </h2>
 
 </div>
 

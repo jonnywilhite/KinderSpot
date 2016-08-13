@@ -129,13 +129,32 @@ angular.module("myApp").controller("parentHomeCtrl", function($http, sharedPrope
         .then(function(response) {
         	//success
         	parentHomeData.myChild = response.data[0];
-        	//console.log("my child: " + response.data[0].firstName);
+        	currStudentId = response.data[0].id; //Needed to pass to function below.
+        	//console.log("my child: " + response.data[0].id);
+        	parentHomeData.showGrade(response.data[0].id);
         }, 
         function(response) { // optional
         		console.log("Failed.");
         });
 	}
 	parentHomeData.getMyChild();
+	
+	
+	parentHomeData.showGrade = function(myId) {
+		$http({
+			url: "/KinderSpot/report-cards/" + currStudentId,
+			method: "GET",
+			headers: {'Content-Type': 'application/json'}
+		})
+		.then(function(response) {
+			//console.log("id passed in is: " + currStudentId);
+			parentHomeData.currentReportCard = response.data;
+			//console.log("currReporCard = " + parentHomeData.currentReportCard);
+		},
+		function(response) {
+			console.log(response);
+		})
+	}
 
 	
 	parentHomeData.emailTeacher = function(subject, body) {
@@ -151,9 +170,7 @@ angular.module("myApp").controller("parentHomeCtrl", function($http, sharedPrope
         })
         .then(function(response) {
         	//success
-        	//studentsList = response.data;
         	parentHomeData.myStudents = response.data;
-        	console.log(response.data)
             //console.log("students: " + studentsList[0].firstname);
         }, 
         function(response) { // optional
@@ -419,6 +436,7 @@ angular.module("myApp").controller("viewStudentCtrl", function($http, sharedProp
 	
 	viewStudentData.showStudent();
 	
+	
 	viewStudentData.showGrade = function() {
 		$http({
 			url: "/KinderSpot/report-cards/" + viewStudentData.currentStudent.id,
@@ -432,7 +450,6 @@ angular.module("myApp").controller("viewStudentCtrl", function($http, sharedProp
 			console.log(response);
 		})
 	}
-	
 	viewStudentData.showGrade();
 	
 	viewStudentData.showAttendance = function() {
