@@ -1,6 +1,4 @@
-
 angular.module("myApp", ['ui.router', 'angularModalService', 'ui.bootstrap']); // Defining a module
-
 
 
 angular.module("myApp").config(function($stateProvider, $urlRouterProvider){

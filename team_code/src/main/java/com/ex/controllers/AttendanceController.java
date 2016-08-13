@@ -1,5 +1,6 @@
 package com.ex.controllers;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,9 @@ public class AttendanceController {
 	
 	@RequestMapping(value="{teacherId}/attendance", method=RequestMethod.GET)
 	public List<Attendance> viewAllAttendanceSheets(@PathVariable int teacherId) {
-		return service.viewAttendanceSheets(teacherId);
+		List<Attendance> l = service.viewAttendanceSheets(teacherId);
+		Collections.reverse(l);
+		return l;
 	}
 	
 	@RequestMapping(value="attendance/{studentId}", method=RequestMethod.GET)

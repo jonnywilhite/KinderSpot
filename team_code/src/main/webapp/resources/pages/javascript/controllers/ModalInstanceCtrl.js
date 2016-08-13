@@ -1,6 +1,7 @@
-angular.module('myApp').controller('ModalInstanceCtrl', ['$scope', '$uibModalInstance', 'studentsService', '$http', 'sharedProperties', function ($scope, $uibModalInstance, studentsService, $http, sharedProperties) {
+angular.module('myApp').controller('ModalInstanceCtrl', ['$scope', '$uibModalInstance', 'studentsService', '$http', 'sharedProperties', 'attendanceService', function ($scope, $uibModalInstance, studentsService, $http, sharedProperties, attendanceService) {
 
 	var loggedUser = sharedProperties.getProperty();
+	
 	$scope.myStudents = studentsService.getStudents();
 	$scope.myStudents.forEach(function(student) {
 		student.present = true;
@@ -27,7 +28,7 @@ angular.module('myApp').controller('ModalInstanceCtrl', ['$scope', '$uibModalIns
 			data: list
 		})
 		.then(function(response) {
-
+			attendanceService.setMessage("You've already submitted today's attendance!");
 		},
 		function(response) {
 
