@@ -30,9 +30,9 @@ public class EventController {
 		return service.getEventByEventName(eventName);
 	}
 	
-	@RequestMapping(value ="event", method = RequestMethod.POST)
-	public Event createEvent (@RequestBody Event event) {
-		return service.createEvent(event);
+	@RequestMapping(value ="event/{eventName}", method = RequestMethod.POST)
+	public Event createEvent (@RequestBody Event event, @PathVariable String eventName) {
+		return service.createEvent(event, eventName);
 	}
 
 	@RequestMapping(value ="event/{eventName}", method =RequestMethod.PUT)

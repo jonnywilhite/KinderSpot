@@ -120,28 +120,54 @@ th, tr {
 
 
 		<div id="meetingsDiv" style="display:none" class="w3-container city w3-animate-left">
-		<div ng-app="myApp" ng-controller="teacherHomeCtrl" ng-init="teach={}"
-			ng-model="userMessage" id="loginForm">
+		<form id="meetingForm" novalidatestyle="font-family: chalky; color: white">
 			<h2>My Meetings:</h2>
+			<h3>Select Parent</h3>
+			
+			<select form = "parentForm" ng-model = "teach.parent" required> 
+				<option ng-repeat ="x in teacherHomeData.myStudents" value ="{{x.id + 1}}">{{x.parent.firstName}}</option>
+			</select>
+			
 			<h3>Create New Meeting</h3>
 			<input type="text" ng-model="teach.reason" />
-			<button ng-click="teacherHomeData.createMeeting(teach.reason)">Create Meeting</button>
-		</div>
+			<br>
+			<br>
+			<button ng-click="teacherHomeData.createMeeting(teach.parent, teach.reason)">Create Meeting</button>
+			
+			</form>
+		
 
 		<table class="">
 			<tr>
+				<th>Parent</th>
 				<th>Type</th>
 				<th>Date Scheduled</th>
 			</tr>
 			<tr ng-repeat="m in teacherHomeData.myMeetings">
+				<td>{{m.parent.firstName}}</td>
 				<td>{{ m.reason }}</td>
 				<td>{{ m.date | date:'medium' }}</td>
 			</tr>
 		</table>
 		</div>
 
+
 		<div id="eventsDiv" style="display:none" class="w3-container city w3-animate-left">
+		<form id = "eventForm" novalidatestyle = "font-family :chalky; color: white">
 		<h2>My Events:</h2>
+		
+		<h3>Event Name</h3>
+
+		<input type = "text" ng-model = "event.name"/>
+	
+		<h3>Description</h3>
+		
+		<input type = "text" ng-model ="event.description"/>
+		<br>
+		<br>
+		<button ng-click = "teacherHomeData.createEvents(event.name, event.description)">Post New Event</button>
+		
+		</form>
 		<table class="">
 			<tr>
 				<th>Event</th>
@@ -155,7 +181,6 @@ th, tr {
 				<td>{{ e.date |date:'medium'}}</td>
 			</tr>
 		</table>
-		<br><br>
 		</div>
 
 		<div id="emailDiv" style="display:none" class="w3-container city w3-animate-left">

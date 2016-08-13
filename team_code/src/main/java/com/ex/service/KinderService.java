@@ -34,14 +34,14 @@ public interface KinderService {
 	
 	//Event stuff
 	public  List <Event> getAllEvents ();
-	public Event createEvent (Event event);
+	public Event createEvent (Event event, @PathVariable String eventName);
 	public Event getEventByEventName (String name);
 	public Event deleteEvent (String name);
 	public Event updateEvent (Event event, @PathVariable String eventName);
 	
 	
 	//Meeting Stuff 
-	public Meetings createMeeting (Meetings meeting);
+	public Meetings createMeeting (Meetings meeting, @PathVariable int parentId);
 	public List <Meetings> getAllMeetings ();
 	public Meetings updateMeetingStatus(Meetings meeting, @PathVariable Boolean meetingStatus);
 	

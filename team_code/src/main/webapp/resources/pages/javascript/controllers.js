@@ -214,14 +214,20 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 	teacherHomeData.showMeetings();
 
 	
-	teacherHomeData.createMeeting = function (reason)
+	teacherHomeData.createMeeting = function (parent,reason)
 	{
+		teacherHomeData.selectParent = parent;
 		teacherHomeData.meetingReason = reason; 
-
+		console.log(parent);
 		$http({ 
-			url:'/KinderSpot/meeting',
+			url:'/KinderSpot/meeting/' + parent ,
 			method: "POST",
-			data: {"reason": teacherHomeData.meetingReason },
+			data: { "reason": teacherHomeData.meetingReason,
+					"parent":{
+						"id": teacherHomeData.selectParent
+					}
+					
+					},
 			headers: {'Content-Type':'application/json'}
 		})
 		.then(function(response){
@@ -255,11 +261,13 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 	
 	teacherHomeData.createEvents = function (eventName, description)
 	{
-		teacherHomeData.newEvent = event; 
+		teacherHomeData.newEvent = eventName; 
 		teacherHomeData.description = description;
+		console.log(eventName);
+		console.log(description);
 
 		$http({ 
-			url:'/KinderSpot/event',
+			url:'/KinderSpot/event/' + eventName,
 			method: "POST",
 			data: {"name": teacherHomeData.newEvent,
 					"description": teacherHomeData.description

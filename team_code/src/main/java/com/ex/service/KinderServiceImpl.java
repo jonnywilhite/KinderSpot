@@ -174,10 +174,11 @@ public class KinderServiceImpl implements KinderService {
 		}
 	
 		@Override
-		public Event createEvent(Event event) {
+		public Event createEvent(Event event, String name) {
+			
 			event.setDate(new Timestamp(new Date().getTime()));
 			event.setDescription(event.getDescription());
-			event.setName(event.getName());
+			event.setName(name);
 			return eventRepo.save(event) ;
 		}
 		
@@ -194,21 +195,25 @@ public class KinderServiceImpl implements KinderService {
 	
 	//Meeting Stuff 
 	@Override
-	public Meetings createMeeting(Meetings meeting) 
+	public Meetings createMeeting(Meetings meeting, int id) 
 	{			
+				User parent = new User ();
+				parent.setId(id);
+				
 	
 				meeting.setDate(new Timestamp (new Date().getTime()));
-				meeting.setParent(meeting.getParent());
+				meeting.setParent(parent);
 				meeting.setReason(meeting.getReason());
 				return meetingRepo.save(meeting);
 			}
-		
-			@Override
-			public List<Meetings> getAllMeetings() {
-				return meetingRepo.findAll();
-			}
-		
-			@Override
+
+	@Override
+	public List<Meetings> getAllMeetings() {
+		return meetingRepo.findAll();
+	}
+	
+	
+		@Override
 			public Meetings updateMeetingStatus(Meetings meeting, Boolean meetingStatus) {
 				
 				Meetings meetingStat = new Meetings ();
@@ -388,5 +393,7 @@ public class KinderServiceImpl implements KinderService {
 		}
 		
 	}
+
+	
 	
 }
