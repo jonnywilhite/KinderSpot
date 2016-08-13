@@ -113,10 +113,29 @@ angular.module("myApp").controller("parentHomeCtrl", function($http, sharedPrope
 
 	parentHomeData.displayUser = function() {
 		//console.log("loggedUser is: " + loggedUser.firstName);
-		parentHomeData.loggedInUser = loggedUser.firstName; //loggedInUser is the ng-model in ParentHome.html
+		parentHomeData.loggedInUser = loggedUser; //loggedInUser is the ng-model in ParentHome.html
+		//console.log("parentHomeData.loggedInUser = " + parentHomeData.loggedInUser);
 	}
-
 	parentHomeData.displayUser();
+	
+	
+	parentHomeData.getMyChild = function(){
+		
+		$http({
+            url: '/KinderSpot/' + loggedUser.id + '/getchildren',
+            method: "GET",
+            headers: {'Content-Type': 'application/json'}
+        })
+        .then(function(response) {
+        	//success
+        	parentHomeData.myChild = response.data[0];
+        	//console.log("my child: " + response.data[0].firstName);
+        }, 
+        function(response) { // optional
+        		console.log("Failed.");
+        });
+	}
+	parentHomeData.getMyChild();
 
 	
 	parentHomeData.emailTeacher = function(subject, body) {
@@ -140,13 +159,11 @@ angular.module("myApp").controller("parentHomeCtrl", function($http, sharedPrope
         function(response) { // optional
         		console.log("Failed.");
         });
-
-	
-
-	}; //ends parentHomeApp.controller()
+	}; //ends email function 
 
 	parentHomeData.emailTeacher();
-});
+	
+});//ends parentHomeApp.controller()
 
 
 angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProperties, studentProperties, $state, $uibModal, studentsService)  {

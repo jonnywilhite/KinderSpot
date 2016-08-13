@@ -51,7 +51,7 @@ th, tr {
 	<input type="hidden" ng-model="parentHomeData.myChild" />
 
 
-<h2>Parent Home: {{parentHomeData.loggedInUser}}</h2>
+<h2>Parent Home: {{parentHomeData.loggedInUser.firstName}}</h2>
 
 <div id="emailDiv" style="display:none">
 <form novalidate>
@@ -67,6 +67,7 @@ th, tr {
 
 <div id="myChildDiv" style="display:inline">
 
+<h2>My child: {{parentHomeData.myChild.firstName}}</h2>
 
 </div>
 
