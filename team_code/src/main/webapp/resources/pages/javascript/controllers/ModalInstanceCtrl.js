@@ -5,6 +5,8 @@ angular.module('myApp').controller('ModalInstanceCtrl', ['$scope', '$uibModalIns
 	$scope.myStudents.forEach(function(student) {
 		student.present = true;
 	});
+	
+	$scope.date = new Date();
 
 	$scope.ok = function () {
 		$uibModalInstance.close();
