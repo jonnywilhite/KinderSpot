@@ -515,6 +515,7 @@ angular.module('myApp').controller('ModalInstanceCtrl', ['$scope', '$uibModalIns
 
 	$scope.ok = function () {
 		$uibModalInstance.close();
+		console.log($scope.myStudents);
 	};
 
 	$scope.cancel = function () {

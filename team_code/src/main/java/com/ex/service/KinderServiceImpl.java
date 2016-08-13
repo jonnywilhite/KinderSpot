@@ -239,8 +239,16 @@ public class KinderServiceImpl implements KinderService {
 	 * Attendance stuff
 	 */
 	@Override
-	public Attendance submitAttendanceSheet(List<Student> absent) {
-		// TODO Auto-generated method stub
+	public Attendance submitAttendanceSheet(List<AttendanceStudent> attendance, int teacherId) {
+		Attendance attendanceSheet = new Attendance();
+		attendanceSheet.setDate(new Timestamp(new Date().getTime()));
+		attendanceSheet.setTeacher(teacherRepo.findById(teacherId));
+		attendanceRepo.save(attendanceSheet);
+		
+		for (AttendanceStudent as : attendance) {
+			as.setAttendance(attendanceSheet);
+			attendanceStudentRepo.save(as);
+		}
 		return null;
 	}
 	

@@ -59,7 +59,7 @@ public interface KinderService {
 
 
 	//Attendance stuff
-	public Attendance submitAttendanceSheet(List<Student> absent);
+	public Attendance submitAttendanceSheet(List<AttendanceStudent> attendanceSheet, int teacherId);
 	public List<Attendance> viewAttendanceSheets(int teacherId);
 	public List<AttendanceStudent> viewAttendanceEntriesByStudent(int studentId);
 	
