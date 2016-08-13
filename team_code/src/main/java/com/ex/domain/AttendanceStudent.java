@@ -3,9 +3,12 @@ package com.ex.domain;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
@@ -18,6 +21,8 @@ public class AttendanceStudent implements Serializable {
 
 	@Id
 	@Column(name="as_id")
+	@SequenceGenerator(allocationSize=1, name="attendanceStudentSequence", sequenceName="as_sequence")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="attendanceStudentSequence")
 	private int id;
 	
 	@ManyToOne

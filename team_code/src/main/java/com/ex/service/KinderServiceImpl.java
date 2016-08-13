@@ -245,12 +245,14 @@ public class KinderServiceImpl implements KinderService {
 	 */
 	@Override
 	public Attendance submitAttendanceSheet(List<AttendanceStudent> attendance, int teacherId) {
+		
 		Attendance attendanceSheet = new Attendance();
 		attendanceSheet.setDate(new Timestamp(new Date().getTime()));
 		attendanceSheet.setTeacher(teacherRepo.findById(teacherId));
 		attendanceRepo.save(attendanceSheet);
 		
 		for (AttendanceStudent as : attendance) {
+			as.setStudent(studentRepo.findOne(as.getStudent().getId()));
 			as.setAttendance(attendanceSheet);
 			attendanceStudentRepo.save(as);
 		}
