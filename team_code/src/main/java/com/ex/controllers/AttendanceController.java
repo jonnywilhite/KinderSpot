@@ -33,6 +33,11 @@ public class AttendanceController {
 		return service.viewAttendanceSheetForDate(teacherId, new Date(date));
 	}
 	
+	@RequestMapping(value="{teacherId}/attendance/{date}", method=RequestMethod.PUT)
+	public Attendance updateAttendanceSheetForDate(@PathVariable int teacherId, @PathVariable long date, @RequestBody List<AttendanceStudent> attendanceSheet) {
+		return service.updateAttendanceSheetForDate(teacherId, new Date(date), attendanceSheet);
+	}
+	
 	@RequestMapping(value="attendance/{studentId}", method=RequestMethod.GET)
 	public List<AttendanceStudent> viewAllAttendanceEntriesForStudent(@PathVariable int studentId) {
 		return service.viewAttendanceEntriesByStudent(studentId);

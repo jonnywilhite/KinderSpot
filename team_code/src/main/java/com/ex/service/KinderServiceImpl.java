@@ -298,6 +298,17 @@ public class KinderServiceImpl implements KinderService {
 		return attendanceStudentRepo.findByAttendance(a);
 	}
 	
+	@Override
+	public Attendance updateAttendanceSheetForDate(int teacherId, Date date, List<AttendanceStudent> attendanceSheet) {
+		List<AttendanceStudent> oldList = viewAttendanceSheetForDate(teacherId, date);
+		Attendance oldAtt = oldList.get(0).getAttendance();
+		for (AttendanceStudent as : oldList) {
+			attendanceStudentRepo.delete(as);
+		}
+		attendanceRepo.delete(oldAtt);
+		return submitAttendanceSheet(attendanceSheet, teacherId);
+	}
+	
 	
 	/*
 	 * Photos stuff
