@@ -4,9 +4,18 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.InputStream;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,9 +27,10 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-
 import com.ex.domain.Attendance;
 import com.ex.domain.AttendanceStudent;
+import com.ex.domain.Badge;
+import com.ex.domain.BadgeStudent;
 import com.ex.domain.Event;
 import com.ex.domain.Meetings;
 import com.ex.domain.Photos;
@@ -29,6 +39,7 @@ import com.ex.domain.Student;
 import com.ex.domain.User;
 import com.ex.repo.AttendanceRepo;
 import com.ex.repo.AttendanceStudentRepo;
+import com.ex.repo.BadgeStudentRepo;
 import com.ex.repo.EventsRepo;
 import com.ex.repo.MeetingRepo;
 import com.ex.repo.PhotosRepo;
@@ -36,15 +47,6 @@ import com.ex.repo.ReportCardRepo;
 import com.ex.repo.StudentRepo;
 import com.ex.repo.TeacherRepo;
 import com.ex.repo.UserRepo;
-
-
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 
 @Service
 @Transactional
@@ -73,6 +75,9 @@ public class KinderServiceImpl implements KinderService {
 	
 	@Autowired 
 	private MeetingRepo meetingRepo;
+	
+	@Autowired
+	private BadgeStudentRepo badgeStudentRepo;
 	
 	@Autowired
 	private AttendanceStudentRepo attendanceStudentRepo;
@@ -408,5 +413,29 @@ public class KinderServiceImpl implements KinderService {
 		}
 		
 	}
+
+
+	
+	//Badge Stuff
+	@Override
+	public List<Badge> getBadgesByStudent(int studentId) {
+		List<BadgeStudent> list = badgeStudentRepo.findByStudent(studentRepo.findOne(studentId));
+		List<Badge> badgeList = new ArrayList<>();
+		for (int i = 0; i < list.size(); i++){
+			badgeList.add(list.get(i).getBadge());
+		}
+		
+		return badgeList;
+	}
+
+
+	@Override
+	public void assignBadgeToStudent(int studentId, int badgeId) {
+		
+	}
+	
+	
+	
+	
 	
 }

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.ex.domain.Attendance;
 import com.ex.domain.AttendanceStudent;
+import com.ex.domain.Badge;
 import com.ex.domain.Event;
 import com.ex.domain.Meetings;
 import com.ex.domain.Photos;
@@ -67,5 +68,7 @@ public interface KinderService {
 	public void sendEmail(int senderId, int recipientId, String subject, String body);
 	public void emailAllParents(int teacherId, String subject, String body);
 	
-	
+	//Badge stuff
+	public List<Badge> getBadgesByStudent(int studentId);
+	public void assignBadgeToStudent(int studentId, int badgeId);
 }

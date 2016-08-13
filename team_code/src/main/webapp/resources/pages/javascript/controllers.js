@@ -522,6 +522,21 @@ angular.module("myApp").controller("viewStudentCtrl", function($http, sharedProp
 	
 	viewStudentData.showAttendance();
 	
+	viewStudentData.showBadges = function() {
+		$http({
+			url: "/KinderSpot/badges/" + viewStudentData.currentStudent.id,
+			method: "GET",
+			headers: {'Content-Type': 'application/json'}
+		})
+		.then(function(response) {
+			viewStudentData.currentBadges = response.data;
+		},
+		function(response) {
+			console.log("asdfasdfsadf");
+		});
+	};
+	viewStudentData.showBadges();
+	
 }); //ends viewStudentCtrl
 
 /*angular.module("myApp").service("MyService", function($http) {
