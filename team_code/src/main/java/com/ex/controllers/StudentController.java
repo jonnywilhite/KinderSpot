@@ -22,6 +22,16 @@ public class StudentController {
 		return service.getStudentById(studentId);
 	}
 	
+	@RequestMapping(value="all/students", method=RequestMethod.GET)
+	public List<Student> getAllStudents() {
+		return service.getAllStudents();
+	}
+	
+	@RequestMapping(value="{parentId}/getchildren", method=RequestMethod.GET)
+	public List<Student> getStudentByParent(@PathVariable int parentId) {
+		return service.getStudentByParent(parentId);
+	}
+	
 	@RequestMapping(value="{teacherId}/students", method=RequestMethod.GET)
 	public List<Student> getStudentsInClass(@PathVariable int teacherId) {
 		return service.getAllStudentsByTeacher(teacherId);

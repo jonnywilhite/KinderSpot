@@ -21,6 +21,7 @@ public interface KinderService {
 	//Student stuff
 	List<Student> getAllStudents();
 	Student getStudentById(int studentId);
+	List<Student> getStudentByParent(int parentId);
 	List<Student> getAllStudentsByTeacher(int teacherId);
 	List<Student> deleteStudentsInClassByTeacher(int teacherId);
 	List<Student> deleteStudentsInClassByTeacher(int teacherId, int[] studentIds);
@@ -65,5 +66,6 @@ public interface KinderService {
 	//Email stuff
 	public void sendEmail(int senderId, int recipientId, String subject, String body);
 	public void emailAllParents(int teacherId, String subject, String body);
+	
 	
 }
