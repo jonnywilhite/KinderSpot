@@ -2,11 +2,18 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">     
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
-<title>Teacher Homepage</title>
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">
 
+ <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.js"></script>
+   <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.0.1.js"></script>
+   <script src="example.js"></script>
+ <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+      
+<title>Teacher Homepage</title>
 
 <style>
 
@@ -130,6 +137,7 @@ th, tr {
 
 
 		<div id="eventsDiv" style="display:none" class="w3-container city w3-animate-left">
+		
 		<form id = "eventForm" novalidatestyle = "font-family :chalky; color: white">
 		<h2>My Events:</h2>
 		
@@ -140,11 +148,15 @@ th, tr {
 		<h3>Description</h3>
 		
 		<input type = "text" ng-model ="event.description"/>
+		
+		<h3>Select Date </h3>
+  	
 		<br>
 		<br>
 		<button ng-click = "teacherHomeData.createEvents(event.name, event.description)">Post New Event</button>
 		
 		</form>
+		
 		<table class="">
 			<tr>
 				<th>Event</th>
@@ -159,6 +171,22 @@ th, tr {
 			</tr>
 		</table>
 		</div>
+	
+	<div ng-controller="DatepickerDemoCtrl">
+    <pre>Selected date is: <em>{{dt | date:'fullDate' }}</em></pre>
+
+    <h4>Inline</h4>
+    <div style="display:inline-block; min-height:290px;">
+      <div uib-datepicker ng-model="dt" class="well well-sm" datepicker-options="options"></div>
+    </div>
+
+    <hr />
+    <button type="button" class="btn btn-sm btn-info" ng-click="today()">Today</button>
+    <button type="button" class="btn btn-sm btn-default" ng-click="setDate(2009, 7, 24)">2009-08-24</button>
+    <button type="button" class="btn btn-sm btn-danger" ng-click="clear()">Clear</button>
+    <button type="button" class="btn btn-sm btn-default" ng-click="toggleMin()" uib-tooltip="After today restriction">Min date</button>
+</div>
+
 
 		<div id="emailDiv" style="display:none" class="w3-container city w3-animate-left">
 				<form id="studentform" novalidatestyle="font-family: chalky; color: white">
