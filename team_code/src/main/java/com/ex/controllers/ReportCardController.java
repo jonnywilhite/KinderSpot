@@ -27,5 +27,10 @@ public class ReportCardController {
 	public List<ReportCard> getAllReportCardsByTeacher(@PathVariable int teacherId) {
 		return service.getAllReportCardsByTeacher(teacherId);
 	}
+	
+	@RequestMapping(value="report-cards/{studentId}", method=RequestMethod.GET)
+	public ReportCard getReportCardByStudent(@PathVariable int studentId) {
+		return service.getReportCardByStudent(studentId);
+	}
 
 }

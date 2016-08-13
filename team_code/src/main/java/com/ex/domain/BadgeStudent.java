@@ -2,10 +2,14 @@ package com.ex.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
@@ -16,13 +20,16 @@ public class BadgeStudent implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-
 	@Id
+	@Column(name="bs_id")
+	@SequenceGenerator(allocationSize=1, name="badgeStudentSequence", sequenceName="bs_sequence")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="badgeStudentSequence")
+	private int id;
+	
 	@ManyToOne
 	@JoinColumn(name="b_id")
 	private Badge badge;
 	
-	@Id
 	@ManyToOne
 	@JoinColumn(name="s_id")
 	private Student student;

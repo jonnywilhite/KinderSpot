@@ -2,9 +2,94 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
 <title>Parent Homepage</title>
 </head>
+
+<style>
+
+body {
+	background-image: url("/KinderSpot/resources/themes/greenBoard.jpg");
+	/* background-size: 100% 175%; */
+	background-size: cover;
+	background-repeat: no-repeat;
+} 
+
+@font-face { font-family: chalky; src: url("/KinderSpot/resources/fonts/SimplyChalky.ttf") }
+@font-face { font-family: lemonMilk; src: url("/KinderSpot/resources/fonts/LemonMilk.otf") }
+@font-face { font-family: marker; src: url("/KinderSpot/resources/fonts/PWMarker.ttf") }
+@font-face { font-family: chalkboard; src: url("/KinderSpot/resources/fonts/chalkboard.ttf") }
+@font-face { font-family: brokenchalk; src: url("/KinderSpot/resources/fonts/BrokenChalk.ttf") }
+
+h3, h2, th, tr {
+	font-family: chalky;
+	color: white; 
+}
+
+li, th, tr, td {
+    border: 1.5px solid white;
+    font-family: chalky;
+	color: white; 
+}
+
+</style>
+
 <body>
-<h2>Parent Home</h2>
+
+<!--  Dependencies -->
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.1/angular-ui-router.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.0.1/ui-bootstrap-tpls.min.js"></script>
+
+
+
+<div ng-app="myApp" ng-controller="parentHomeCtrl" ng-init="user={}">
+
+<!-- These values are referenced in the controllers to get database values to be displayed below
+     in {{expressions}}. -->
+	<input type="hidden" ng-model="loggedInUser" />
+	<input type="hidden" ng-model="parentHomeData.myChild" />
+	<input type="hidden" ng-model="parentHomeData.currentReportCard">
+	
+<h2>Parent Page: {{parentHomeData.loggedInUser.firstName}}</h2>
+
+
+<div id="infoDiv" style="display:inline">
+	<table class="w3-table w3-border">
+  		<tr><td><h2>My Child Info:</h2></td></tr>
+  		<tr><td>Id: {{parentHomeData.loggedInUser.id}}</td></tr>
+  		<tr><td>Name: {{parentHomeData.loggedInUser.firstName}} {{parentHomeData.loggedInUser.lastName}}</td></tr>
+  		<tr><td>Teacher: {{parentHomeData.myChild.teacher.firstName}} {{parentHomeData.myChild.teacher.lastName}}</td></tr>
+		<tr><td>Grade: {{parentHomeData.currentReportCard.grade}}</td></tr>
+	</table>
+</div>
+
+
+
+<div id="emailDiv" style="display:none">
+	<form novalidate>
+    	<h3>Subject:</h3><br>
+    	<input type="text" ng-model="user.subject" required><br>
+    	<h3>Body:</h3><br>
+    	<textarea rows="5" ng-model="user.body" autocomplete="off" required></textarea>
+    	<br><br>
+    	<button class="w3-btn w3-transparent w3-border w3-round-large" ng-click="parentHomeData.emailTeacher(user.subject, user.body)">Send</button>
+	</form>
+</div>
+
+
+
+</div>
+
+<!-- Custom Script -->
+<script type="text/javascript" src="javascript/controllers.js"></script> 
+
+
+
+
+
 </body>
+
+
 </html>
