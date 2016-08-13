@@ -177,8 +177,6 @@ angular.module("myApp").controller("parentHomeCtrl", function($http, sharedPrope
         		console.log("Failed.");
         });
 	}; //ends email function 
-
-	parentHomeData.emailTeacher();
 	
 });//ends parentHomeApp.controller()
 
