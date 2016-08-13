@@ -388,42 +388,113 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 }); //ends teacherHomeCtrl
 
 
+angular.module("myApp").controller("DatepickerDemoCtrl", function ($scope) {
+	  $scope.today = function() {
+	    $scope.dt = new Date();
+	  };
+	  $scope.today();
+
+	  $scope.clear = function() {
+	    $scope.dt = null;
+	  };
+
+	  $scope.options = {
+	    customClass: getDayClass,
+	    minDate: new Date(),
+	    showWeeks: true
+	  };
+
+	  // Disable weekend selection
+	  function disabled(data) {
+	    var date = data.date,
+	      mode = data.mode;
+	    return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
+	  }
+
+	  $scope.toggleMin = function() {
+	    $scope.options.minDate = $scope.options.minDate ? null : new Date();
+	  };
+
+	  $scope.toggleMin();
+
+	  $scope.setDate = function(year, month, day) {
+	    $scope.dt = new Date(year, month, day);
+	  };
+
+	  var tomorrow = new Date();
+	  tomorrow.setDate(tomorrow.getDate() + 1);
+	  var afterTomorrow = new Date(tomorrow);
+	  afterTomorrow.setDate(tomorrow.getDate() + 1);
+	  $scope.events = [
+	    {
+	      date: tomorrow,
+	      status: 'full'
+	    },
+	    {
+	      date: afterTomorrow,
+	      status: 'partially'
+	    }
+	  ];
+
+	  function getDayClass(data) {
+	    var date = data.date,
+	      mode = data.mode;
+	    if (mode === 'day') {
+	      var dayToCheck = new Date(date).setHours(0,0,0,0);
+
+	      for (var i = 0; i < $scope.events.length; i++) {
+	        var currentDay = new Date($scope.events[i].date).setHours(0,0,0,0);
+
+	        if (dayToCheck === currentDay) {
+	          return $scope.events[i].status;
+	        }
+	      }
+	    }
+
+	    return '';
+	  }
+	});
 
 
-//angular.module('datepickerBasicUsage',
-//	    ['ngMaterial', 'ngMessages']).controller('AppCtrl', function($scope) {
-//	  $scope.myDate = new Date();
-//	  $scope.minDate = new Date(
-//	      $scope.myDate.getFullYear(),
-//	      $scope.myDate.getMonth() - 2,
-//	      $scope.myDate.getDate());
-//	  $scope.maxDate = new Date(
-//	      $scope.myDate.getFullYear(),
-//	      $scope.myDate.getMonth() + 2,
-//	      $scope.myDate.getDate());
-//	  $scope.onlyWeekendsPredicate = function(date) {
-//	    var day = date.getDay();
-//	    return day === 0 || day === 6;
-//	  }
-//	});
 
 
 
-//angular.module("myApp").service('meetingService', function($http){
 
-//var myservice = this;
 
-//myservice.previousMeeting = [];
 
-//myservice.spoons = function (){
-//var promise = $http({
-//method: "GET",
-//url: "Kinderspot/meeting"	
-//});
-//return promise;
-//};
 
-//});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -467,6 +538,21 @@ angular.module("myApp").controller("viewStudentCtrl", function($http, sharedProp
 	};
 	
 	viewStudentData.showAttendance();
+	
+	viewStudentData.showBadges = function() {
+		$http({
+			url: "/KinderSpot/badges/" + viewStudentData.currentStudent.id,
+			method: "GET",
+			headers: {'Content-Type': 'application/json'}
+		})
+		.then(function(response) {
+			viewStudentData.currentBadges = response.data;
+		},
+		function(response) {
+			console.log("asdfasdfsadf");
+		});
+	};
+	viewStudentData.showBadges();
 	
 }); //ends viewStudentCtrl
 
@@ -532,6 +618,7 @@ angular.module('myApp').controller('ModalInstanceCtrl', ['$scope', '$uibModalIns
 
 	$scope.ok = function () {
 		$uibModalInstance.close();
+		console.log($scope.myStudents);
 	};
 
 	$scope.cancel = function () {
