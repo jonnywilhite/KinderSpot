@@ -17,7 +17,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="EDU_ATTENDANCE")
-public class Attendance 
+public class Attendance implements Comparable<Attendance>
 {
 	@Id
 	@Column(name="A_ID")
@@ -98,6 +98,11 @@ public class Attendance
 		if (id != other.id)
 			return false;
 		return true;
+	}
+
+	@Override
+	public int compareTo(Attendance that) {
+		return this.getDate().compareTo(that.getDate());
 	}
 	
 }

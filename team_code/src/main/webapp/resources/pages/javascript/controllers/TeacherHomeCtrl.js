@@ -3,9 +3,10 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 	var teacherHomeData = this;
 	var loggedUser = sharedProperties.getProperty();
 	
-	teacherHomeData.attendanceMessage = {
-			hasSubmitted: "You have already submitted today's attendance",
-			hasNotSubmitted: "You haven't submitted today's attendance yet"
+	teacherHomeData.attendanceMessage = "";
+	
+	teacherHomeData.displayAttendanceMessage = function() {
+		
 	}
 
 

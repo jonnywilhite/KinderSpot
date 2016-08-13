@@ -11,6 +11,6 @@ import com.ex.domain.User;
 @Repository
 public interface AttendanceRepo extends JpaRepository<Attendance, Integer>{
 	
-	List<Attendance> findByTeacher(User teacher);
+	List<Attendance> findByTeacherOrderByDate(User teacher);
 
 }

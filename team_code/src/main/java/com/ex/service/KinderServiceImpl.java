@@ -262,13 +262,13 @@ public class KinderServiceImpl implements KinderService {
 	@Override
 	public List<Attendance> viewAttendanceSheets(int teacherId) {
 		User teacher = teacherRepo.findOne(teacherId);
-		return attendanceRepo.findByTeacher(teacher);
+		return attendanceRepo.findByTeacherOrderByDate(teacher);
 	}
 	
 	@Override
 	public List<AttendanceStudent> viewAttendanceEntriesByStudent(int studentId) {
 		Student student = studentRepo.findOne(studentId);
-		List<AttendanceStudent> list = attendanceStudentRepo.findByStudent(student);
+		List<AttendanceStudent> list = attendanceStudentRepo.findByStudentOrderByAttendance(student);
 		return list;
 	}
 	

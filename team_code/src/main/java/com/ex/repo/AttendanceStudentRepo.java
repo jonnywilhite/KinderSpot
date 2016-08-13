@@ -9,6 +9,6 @@ import com.ex.domain.Student;
 
 public interface AttendanceStudentRepo extends JpaRepository<AttendanceStudent, Integer> {
 	
-	List<AttendanceStudent> findByStudent(Student student);
+	List<AttendanceStudent> findByStudentOrderByAttendance(Student student);
 
 }
