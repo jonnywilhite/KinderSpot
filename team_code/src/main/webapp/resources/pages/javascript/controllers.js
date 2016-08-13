@@ -149,7 +149,7 @@ angular.module("myApp").controller("parentHomeCtrl", function($http, sharedPrope
 });
 
 
-angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProperties, studentProperties, $state, $uibModal, $log) {
+angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProperties, studentProperties, $state, $uibModal, studentsService)  {
 
 	var teacherHomeData = this;
 	var loggedUser = sharedProperties.getProperty();
@@ -173,6 +173,7 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 			//success
 			//studentsList = response.data;
 			teacherHomeData.myStudents = response.data;
+			studentsService.setStudents(response.data);
 			//console.log("students: " + studentsList[0].firstname);
 		}, 
 		function(response) { // optional
@@ -445,17 +446,53 @@ angular.module("myApp").service('studentProperties', function () {
 	};
 });
 
+angular.module("myApp").service('studentsService', function() {
+	
+	var myStudents = [];
+	
+	return {
+		getStudents: function() {
+			return myStudents;
+		},
+		setStudents: function(value) {
+			myStudents = value;
+		}
+	}
+	
+});
+
+/*angular.module("myApp").service('attendanceEntryService', function(studentsService) {
+	var attendanceEntries = [];
+	var students = studentsService.getStudents();
+	
+	return {
+		getAttendanceEntries: function() {
+			return attendanceEntries;
+		},
+		pushAttendanceEntries: function() {
+			for (var i = 0; i < students.length; i++) {
+				attendanceEntries.push(true);
+			}
+		}
+	}
+	
+});*/
 
 	// Please note that $uibModalInstance represents a modal window (instance) dependency.
 	// It is not the same as the $uibModal service used above.
 
-angular.module('myApp').controller('ModalInstanceCtrl', function ($scope, $uibModalInstance) {
+angular.module('myApp').controller('ModalInstanceCtrl', ['$scope', '$uibModalInstance', 'studentsService', function ($scope, $uibModalInstance, studentsService) {
+	
+	$scope.myStudents = studentsService.getStudents();
+	$scope.myStudents.forEach(function(student) {
+		student.present = true;
+	});
 
 	$scope.ok = function () {
-		$uibModalInstance.dismiss('cancel');
+		$uibModalInstance.close();
 	};
 
 	$scope.cancel = function () {
 		$uibModalInstance.dismiss('cancel');
 	};
-});
+}]);
