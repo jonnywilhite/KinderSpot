@@ -19,10 +19,12 @@ import org.springframework.beans.factory.annotation.Autowired;
  	@Autowired
  	private KinderService service;
  	
- 	@RequestMapping (value ="meeting", method = RequestMethod.POST)
- 	public Meetings createMeeting(@RequestBody Meetings meeting){
- 		return service.createMeeting(meeting);
+ 	@RequestMapping (value ="meeting/{parentId}", method = RequestMethod.POST)
+ 	public Meetings createMeeting(@RequestBody Meetings meeting, @PathVariable int parentId){
+ 		return service.createMeeting(meeting, parentId);
  	}
+
+
  	
  	@RequestMapping (value= "meeting", method = RequestMethod.GET)
  	public List<Meetings> getAllMeetings() {

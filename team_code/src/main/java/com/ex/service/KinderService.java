@@ -21,6 +21,7 @@ public interface KinderService {
 	//Student stuff
 	List<Student> getAllStudents();
 	Student getStudentById(int studentId);
+	List<Student> getStudentByParent(int parentId);
 	List<Student> getAllStudentsByTeacher(int teacherId);
 	List<Student> deleteStudentsInClassByTeacher(int teacherId);
 	List<Student> deleteStudentsInClassByTeacher(int teacherId, int[] studentIds);
@@ -34,14 +35,14 @@ public interface KinderService {
 	
 	//Event stuff
 	public  List <Event> getAllEvents ();
-	public Event createEvent (Event event);
+	public Event createEvent (Event event, @PathVariable String eventName);
 	public Event getEventByEventName (String name);
 	public Event deleteEvent (String name);
 	public Event updateEvent (Event event, @PathVariable String eventName);
 	
 	
 	//Meeting Stuff 
-	public Meetings createMeeting (Meetings meeting);
+	public Meetings createMeeting (Meetings meeting, @PathVariable int parentId);
 	public List <Meetings> getAllMeetings ();
 	public Meetings updateMeetingStatus(Meetings meeting, @PathVariable Boolean meetingStatus);
 	
@@ -65,5 +66,6 @@ public interface KinderService {
 	//Email stuff
 	public void sendEmail(int senderId, int recipientId, String subject, String body);
 	public void emailAllParents(int teacherId, String subject, String body);
+	
 	
 }
