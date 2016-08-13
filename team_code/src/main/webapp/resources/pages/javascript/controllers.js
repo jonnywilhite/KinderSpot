@@ -404,7 +404,7 @@ angular.module("myApp").controller("viewStudentCtrl", function($http, sharedProp
 	
 	viewStudentData.showGrade = function() {
 		$http({
-			url: "http://localhost:8085/KinderSpot/report-cards/" + viewStudentData.currentStudent.id,
+			url: "/KinderSpot/report-cards/" + viewStudentData.currentStudent.id,
 			method: "GET",
 			headers: {'Content-Type': 'application/json'}
 		})
@@ -420,7 +420,7 @@ angular.module("myApp").controller("viewStudentCtrl", function($http, sharedProp
 	
 	viewStudentData.showAttendance = function() {
 		$http({
-			url: "http://localhost:8085/KinderSpot/attendance/" + viewStudentData.currentStudent.id,
+			url: "/KinderSpot/attendance/" + viewStudentData.currentStudent.id,
 			method: "GET",
 			headers: {'Content-Type': 'application/json'}
 		})
