@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.InputStream;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
@@ -246,8 +247,17 @@ public class KinderServiceImpl implements KinderService {
 	@Override
 	public Attendance submitAttendanceSheet(List<AttendanceStudent> attendance, int teacherId) {
 		
+		Timestamp timestamp = new Timestamp(new Date().getTime());
+		
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(timestamp);
+		cal.set(Calendar.HOUR_OF_DAY, cal.getMinimum(Calendar.HOUR_OF_DAY));
+	    cal.set(Calendar.MINUTE, cal.getMinimum(Calendar.MINUTE));
+	    cal.set(Calendar.SECOND, cal.getMinimum(Calendar.SECOND));
+	    cal.set(Calendar.MILLISECOND, cal.getMinimum(Calendar.MILLISECOND));
+		
 		Attendance attendanceSheet = new Attendance();
-		attendanceSheet.setDate(new Timestamp(new Date().getTime()));
+		attendanceSheet.setDate(new Timestamp(cal.getTime().getTime()));
 		attendanceSheet.setTeacher(teacherRepo.findById(teacherId));
 		attendanceRepo.save(attendanceSheet);
 		
@@ -270,6 +280,22 @@ public class KinderServiceImpl implements KinderService {
 		Student student = studentRepo.findOne(studentId);
 		List<AttendanceStudent> list = attendanceStudentRepo.findByStudentOrderByAttendance(student);
 		return list;
+	}
+	
+	@Override
+	public List<AttendanceStudent> viewAttendanceSheetForDate(int teacherId, Date date) {
+		User teacher = teacherRepo.findOne(teacherId);
+		
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		cal.set(Calendar.HOUR_OF_DAY, cal.getMinimum(Calendar.HOUR_OF_DAY));
+	    cal.set(Calendar.MINUTE, cal.getMinimum(Calendar.MINUTE));
+	    cal.set(Calendar.SECOND, cal.getMinimum(Calendar.SECOND));
+	    cal.set(Calendar.MILLISECOND, cal.getMinimum(Calendar.MILLISECOND));
+	    
+	    Attendance a = attendanceRepo.findByTeacherAndDate(teacher, cal.getTime());
+		System.out.println(a);
+		return attendanceStudentRepo.findByAttendance(a);
 	}
 	
 	

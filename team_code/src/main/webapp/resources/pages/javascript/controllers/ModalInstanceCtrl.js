@@ -10,8 +10,7 @@ angular.module('myApp').controller('ModalInstanceCtrl', ['$scope', '$uibModalIns
 	$scope.date = new Date();
 
 	$scope.ok = function () {
-		$uibModalInstance.close();
-		//console.log($scope.myStudents);
+		
 		var list = [];
 		$scope.myStudents.forEach(function(student) {
 			var item = {};
@@ -33,6 +32,8 @@ angular.module('myApp').controller('ModalInstanceCtrl', ['$scope', '$uibModalIns
 		function(response) {
 
 		});
+		
+		$uibModalInstance.close();
 
 	};
 

@@ -1,6 +1,7 @@
 package com.ex.controllers;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,11 @@ public class AttendanceController {
 		List<Attendance> l = service.viewAttendanceSheets(teacherId);
 		Collections.reverse(l);
 		return l;
+	}
+	
+	@RequestMapping(value="{teacherId}/attendance/{date}", method=RequestMethod.GET)
+	public List<AttendanceStudent> viewAttendanceSheetForDate(@PathVariable int teacherId, @PathVariable long date) {
+		return service.viewAttendanceSheetForDate(teacherId, new Date(date));
 	}
 	
 	@RequestMapping(value="attendance/{studentId}", method=RequestMethod.GET)

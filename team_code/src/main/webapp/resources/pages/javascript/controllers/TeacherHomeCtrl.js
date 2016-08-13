@@ -211,23 +211,45 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 	teacherHomeData.animationsEnabled = true;
 
 	teacherHomeData.open = function (size) {
+		
+		if (!teacherHomeData.hasSubmittedAttendance) {
 
-		var modalInstance = $uibModal.open({
-			animation: teacherHomeData.animationsEnabled,
-			templateUrl: 'myModalContent.html',
-			controller: 'ModalInstanceCtrl',
-			size: size,
-			resolve: {
-
-			}
-		});
-
-		modalInstance.result.then(function () {
-			teacherHomeData.attendanceMessage = "You've submitted today's attendance!";
-			teacherHomeData.hasSubmittedAttendance = true;
-		}, function () {
+			var modalInstance = $uibModal.open({
+				animation: teacherHomeData.animationsEnabled,
+				templateUrl: 'myModalContent.html',
+				controller: 'ModalInstanceCtrl',
+				size: size,
+				resolve: {
+	
+				}
+			});
+	
+			modalInstance.result.then(function () {
+				teacherHomeData.attendanceMessage = "You've submitted today's attendance!";
+				teacherHomeData.hasSubmittedAttendance = true;
+			}, function () {
+				
+			});
+		
+		} else {
 			
-		});
+			var editModalInstance = $uibModal.open({
+				animation: teacherHomeData.animationsEnabled,
+				templateUrl: 'EditAttendanceModalContent.html',
+				controller: 'EditModalInstanceCtrl',
+				size: size,
+				resolve: {
+	
+				}
+			});
+	
+			editModalInstance.result.then(function () {
+				teacherHomeData.attendanceMessage = "You've submitted today's attendance!";
+				teacherHomeData.hasSubmittedAttendance = true;
+			}, function () {
+				
+			});
+		}
 	};
 
 }); //ends teacherHomeCtrl
