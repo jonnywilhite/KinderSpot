@@ -10,7 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
  import org.springframework.web.bind.annotation.RestController;
  
  import com.ex.domain.Meetings;
- import com.ex.service.KinderService;
+import com.ex.domain.User;
+import com.ex.service.KinderService;
  
  @RestController
  public class MeetingController {
@@ -22,8 +23,11 @@ import org.springframework.beans.factory.annotation.Autowired;
  	public Meetings createMeeting(@RequestBody Meetings meeting, @PathVariable int parentId){
  		return service.createMeeting(meeting, parentId);
  	}
-
-
+ 	
+ 	@RequestMapping (value= "meeting/{parentId}", method = RequestMethod.GET)
+ 	public List<Meetings> getMeetingsByParent(@PathVariable int parentId) {
+ 		return service.getMeetingsByParent(parentId);
+ 	}
  	
  	@RequestMapping (value= "meeting", method = RequestMethod.GET)
  	public List<Meetings> getAllMeetings() {
