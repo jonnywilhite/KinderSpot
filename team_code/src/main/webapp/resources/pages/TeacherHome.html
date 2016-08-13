@@ -59,6 +59,7 @@ th, tr {
 	<input type="hidden" ng-model="teacherHomeData.myStudents" />
 	<input type="hidden" ng-model="teacherHomeData.myMeetings" />
 	<input type="hidden" ng-model="teacherHomeData.myEvents" />
+	<input type="hidden" ng-model="teacherHomeData.myAttendanceEntry" />
 	
 
 	<div ng-app="myApp" ng-controller="teacherHomeCtrl">
@@ -95,32 +96,8 @@ th, tr {
 			</tr>
 		</table>
 		
-		<div ng-controller="ModalDemoCtrl">
-    		<script type="text/ng-template" id="myModalContent.html">
-        		<div class="modal-header">
-            		<h3 class="modal-title" style="color: black">Attendance</h3>
-        		</div>
-        		<div class="modal-body">
-            		<table class="table">
-						<tr>
-							<th>Name</th>
-							<th>Present</th>
-						</tr>
-						<tr ng-repeat="student in teacherHomeData.myStudents">
-							<td ng-bind="student.firstName + ' ' + student.lastName" ng-model="teacherHomeData.myAttendanceEntry.name"></td>
-							<td>
-								<input type="checkbox" ng-model="teacherHomeData.myAttendanceEntry.present">
-							</td>
-						</tr>
-					</table>
-        		</div>
-        		<div class="modal-footer">
-            		<button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
-            		<button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
-        		</div>
-    		</script>
-
-    		<button type="button" class="btn btn-default" ng-click="open()">Submit Attendance</button>
+		<div>
+    		<button type="button" class="btn btn-default" ng-click="teacherHomeData.open()">Submit Attendance</button>
 		</div>
 		
 		</div>

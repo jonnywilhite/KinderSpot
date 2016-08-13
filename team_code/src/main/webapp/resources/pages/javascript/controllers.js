@@ -113,10 +113,29 @@ angular.module("myApp").controller("parentHomeCtrl", function($http, sharedPrope
 
 	parentHomeData.displayUser = function() {
 		//console.log("loggedUser is: " + loggedUser.firstName);
-		parentHomeData.loggedInUser = loggedUser.firstName; //loggedInUser is the ng-model in ParentHome.html
+		parentHomeData.loggedInUser = loggedUser; //loggedInUser is the ng-model in ParentHome.html
+		//console.log("parentHomeData.loggedInUser = " + parentHomeData.loggedInUser);
 	}
-
 	parentHomeData.displayUser();
+	
+	
+	parentHomeData.getMyChild = function(){
+		
+		$http({
+            url: '/KinderSpot/' + loggedUser.id + '/getchildren',
+            method: "GET",
+            headers: {'Content-Type': 'application/json'}
+        })
+        .then(function(response) {
+        	//success
+        	parentHomeData.myChild = response.data[0];
+        	//console.log("my child: " + response.data[0].firstName);
+        }, 
+        function(response) { // optional
+        		console.log("Failed.");
+        });
+	}
+	parentHomeData.getMyChild();
 
 	
 	parentHomeData.emailTeacher = function(subject, body) {
@@ -140,16 +159,14 @@ angular.module("myApp").controller("parentHomeCtrl", function($http, sharedPrope
         function(response) { // optional
         		console.log("Failed.");
         });
-
-	
-
-	}; //ends parentHomeApp.controller()
+	}; //ends email function 
 
 	parentHomeData.emailTeacher();
-});
+	
+});//ends parentHomeApp.controller()
 
 
-angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProperties, studentProperties, $state, ModalService) {
+angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProperties, studentProperties, $state, $uibModal, studentsService)  {
 
 	var teacherHomeData = this;
 	var loggedUser = sharedProperties.getProperty();
@@ -173,6 +190,7 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 			//success
 			//studentsList = response.data;
 			teacherHomeData.myStudents = response.data;
+			studentsService.setStudents(response.data);
 			//console.log("students: " + studentsList[0].firstname);
 		}, 
 		function(response) { // optional
@@ -329,6 +347,27 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 		document.getElementById(divId).style.display = "inline";
 	};
 	
+	teacherHomeData.animationsEnabled = true;
+
+	teacherHomeData.open = function (size) {
+
+	    var modalInstance = $uibModal.open({
+	      animation: teacherHomeData.animationsEnabled,
+	      templateUrl: 'myModalContent.html',
+	      controller: 'ModalInstanceCtrl',
+	      size: size,
+	      resolve: {
+	    	  
+	      }
+	    });
+
+	    modalInstance.result.then(function (selectedItem) {
+	      
+	    }, function () {
+	      
+	    });
+	  };
+	
 }); //ends teacherHomeCtrl
 
 
@@ -453,7 +492,7 @@ angular.module("myApp").controller("viewStudentCtrl", function($http, sharedProp
 	
 	viewStudentData.showGrade = function() {
 		$http({
-			url: "http://localhost:8085/KinderSpot/report-cards/" + viewStudentData.currentStudent.id,
+			url: "/KinderSpot/report-cards/" + viewStudentData.currentStudent.id,
 			method: "GET",
 			headers: {'Content-Type': 'application/json'}
 		})
@@ -469,7 +508,7 @@ angular.module("myApp").controller("viewStudentCtrl", function($http, sharedProp
 	
 	viewStudentData.showAttendance = function() {
 		$http({
-			url: "http://localhost:8085/KinderSpot/attendance/" + viewStudentData.currentStudent.id,
+			url: "/KinderSpot/attendance/" + viewStudentData.currentStudent.id,
 			method: "GET",
 			headers: {'Content-Type': 'application/json'}
 		})
@@ -490,8 +529,7 @@ angular.module("myApp").controller("viewStudentCtrl", function($http, sharedProp
 	myService.student = {};
 });*/
 
-angular.module("myApp")
-.service('studentProperties', function () {
+angular.module("myApp").service('studentProperties', function () {
 	var student = {};
 
 	return {
@@ -504,63 +542,53 @@ angular.module("myApp")
 	};
 });
 
+angular.module("myApp").service('studentsService', function() {
+	
+	var myStudents = [];
+	
+	return {
+		getStudents: function() {
+			return myStudents;
+		},
+		setStudents: function(value) {
+			myStudents = value;
+		}
+	}
+	
+});
 
-/*angular.module("myApp").controller('ModalController', function($scope, close) {
-	  
-	$scope.close = function(result) {
-		close(result, 500); // close, but give 500ms for bootstrap to animate
-	};
-
+/*angular.module("myApp").service('attendanceEntryService', function(studentsService) {
+	var attendanceEntries = [];
+	var students = studentsService.getStudents();
+	
+	return {
+		getAttendanceEntries: function() {
+			return attendanceEntries;
+		},
+		pushAttendanceEntries: function() {
+			for (var i = 0; i < students.length; i++) {
+				attendanceEntries.push(true);
+			}
+		}
+	}
+	
 });*/
-
-angular.module('myApp').controller('ModalDemoCtrl', function ($scope, $uibModal, $log) {
-
-	  $scope.items = ['item1', 'item2', 'item3'];
-
-	  $scope.animationsEnabled = true;
-
-	  $scope.open = function (size) {
-
-	    var modalInstance = $uibModal.open({
-	      animation: $scope.animationsEnabled,
-	      templateUrl: 'myModalContent.html',
-	      controller: 'ModalInstanceCtrl',
-	      size: size,
-	      resolve: {
-	        items: function () {
-	          return $scope.items;
-	        }
-	      }
-	    });
-
-	    modalInstance.result.then(function (selectedItem) {
-	      $scope.selected = selectedItem;
-	    }, function () {
-	      $log.info('Modal dismissed at: ' + new Date());
-	    });
-	  };
-
-	  $scope.toggleAnimation = function () {
-	    $scope.animationsEnabled = !$scope.animationsEnabled;
-	  };
-
-	});
 
 	// Please note that $uibModalInstance represents a modal window (instance) dependency.
 	// It is not the same as the $uibModal service used above.
 
-	angular.module('myApp').controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, items) {
-
-	  $scope.items = items;
-	  $scope.selected = {
-	    item: $scope.items[0]
-	  };
-
-	  $scope.ok = function () {
-	    $uibModalInstance.close($scope.selected.item);
-	  };
-
-	  $scope.cancel = function () {
-	    $uibModalInstance.dismiss('cancel');
-	  };
+angular.module('myApp').controller('ModalInstanceCtrl', ['$scope', '$uibModalInstance', 'studentsService', function ($scope, $uibModalInstance, studentsService) {
+	
+	$scope.myStudents = studentsService.getStudents();
+	$scope.myStudents.forEach(function(student) {
+		student.present = true;
 	});
+
+	$scope.ok = function () {
+		$uibModalInstance.close();
+	};
+
+	$scope.cancel = function () {
+		$uibModalInstance.dismiss('cancel');
+	};
+}]);
