@@ -2,6 +2,7 @@ package com.ex.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -16,13 +17,14 @@ public class BadgeStudent implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-
 	@Id
+	@Column(name="bs_id")
+	private int id;
+	
 	@ManyToOne
 	@JoinColumn(name="b_id")
 	private Badge badge;
 	
-	@Id
 	@ManyToOne
 	@JoinColumn(name="s_id")
 	private Student student;
