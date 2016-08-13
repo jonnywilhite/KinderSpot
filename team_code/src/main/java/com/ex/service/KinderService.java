@@ -67,5 +67,7 @@ public interface KinderService {
 	public void sendEmail(int senderId, int recipientId, String subject, String body);
 	public void emailAllParents(int teacherId, String subject, String body);
 	
-	
+	//Badge stuff
+	public void getBadgesByStudent(int studentId);
+	public void assignBadgeToStudent(int studentId, int badgeId);
 }

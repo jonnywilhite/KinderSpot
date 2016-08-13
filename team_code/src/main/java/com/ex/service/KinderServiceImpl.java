@@ -400,5 +400,23 @@ public class KinderServiceImpl implements KinderService {
 		}
 		
 	}
+
+
+	
+	//Badge Stuff
+	@Override
+	public void getBadgesByStudent(int studentId) {
+		
+	}
+
+
+	@Override
+	public void assignBadgeToStudent(int studentId, int badgeId) {
+		
+	}
+	
+	
+	
+	
 	
 }
