@@ -11,6 +11,7 @@ import com.ex.domain.Attendance;
 import com.ex.domain.AttendanceStudent;
 import com.ex.domain.Badge;
 import com.ex.domain.Event;
+import com.ex.domain.EventType;
 import com.ex.domain.Meetings;
 import com.ex.domain.Photos;
 import com.ex.domain.ReportCard;
@@ -38,7 +39,7 @@ public interface KinderService {
 	//Event stuff
 	public  List <Event> getAllEvents ();
 	public Event createEvent (Event event, @PathVariable String eventName);
-	public Event getEventByEventName (String name);
+	public List <EventType> getAllTypes();
 	public Event deleteEvent (String name);
 	public Event updateEvent (Event event, @PathVariable String eventName);
 	
