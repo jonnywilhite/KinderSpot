@@ -236,6 +236,7 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 		document.getElementById('meetingsDiv').style.display = "none";
 
 		document.getElementById(divId).style.display = "inline";
+		document.getElementById('body').style.backgroundSize = "100% 100%";
 	};
 
 	teacherHomeData.animationsEnabled = true;

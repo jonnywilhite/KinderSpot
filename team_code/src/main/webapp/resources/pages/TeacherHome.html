@@ -19,9 +19,9 @@
 
  body {
 	background-image: url("/KinderSpot/resources/themes/greenBoard.jpg");
-	/* background-size: 100% 175%; */
 	background-size: cover;
-	background-repeat: no-repeat;
+	/*background-size: contain;*/
+	background-repeat: repeat-y;
 } 
 
 @font-face { font-family: chalky; src: url("/KinderSpot/resources/fonts/SimplyChalky.ttf") }
@@ -160,6 +160,22 @@ th, tr {
 		<form id = "eventForm" novalidatestyle = "font-family :chalky; color: white">
 		<h2>My Events:</h2>
 		
+		<table class="w3-table w3-border w3-bordered">
+			<tr>
+				<th>Event</th>
+				<th>Type</th>
+				<th>Description</th>
+				<th>Date</th>
+
+			</tr>
+			<tr ng-repeat="e in teacherHomeData.myEvents">
+				<td>{{ e.name }}</td>
+				<td>{{e.eventType.name}}</td>
+				<td>{{ e.description }}</td>
+				<td>{{ e.date |date:'MMM d, yyyy'}}</td>
+			</tr>
+		</table>
+		
 		<h3>Event Name</h3>
 
 		<input type = "text" ng-model = "event.name"/>
@@ -194,23 +210,6 @@ th, tr {
 		
 		</form>
 		</div>
-		
-		
-		<table class="">
-			<tr>
-				<th>Event</th>
-				<th>Type</th>
-				<th>Description</th>
-				<th>Date</th>
-
-			</tr>
-			<tr ng-repeat="e in teacherHomeData.myEvents">
-				<td>{{ e.name }}</td>
-				<td>{{e.eventType.name}}</td>
-				<td>{{ e.description }}</td>
-				<td>{{ e.date |date:'medium'}}</td>
-			</tr>
-		</table>
 		
 		</div>
 	
