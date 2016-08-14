@@ -93,18 +93,24 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 	teacherHomeData.showMeetings();
 
 
-	teacherHomeData.createMeeting = function (parent,reason)
+	teacherHomeData.createMeeting = function (parent,reason,date)
 	{
 		teacherHomeData.selectParent = parent;
 		teacherHomeData.meetingReason = reason; 
+		teacherHomeData.meetingDate = date;
+		
 		console.log(parent);
+		console.log(reason);
+		console.log(date);
+		
 		$http({ 
 			url:'/KinderSpot/meeting/' + parent ,
 			method: "POST",
 			data: { "reason": teacherHomeData.meetingReason,
 				"parent":{
 					"id": teacherHomeData.selectParent
-				}
+				},
+				"date": teacherHomeData.meetingDate
 
 			},
 			headers: {'Content-Type':'application/json'}

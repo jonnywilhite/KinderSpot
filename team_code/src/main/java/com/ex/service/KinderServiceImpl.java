@@ -217,7 +217,7 @@ public class KinderServiceImpl implements KinderService {
 		parent.setId(id);
 
 
-		meeting.setDate(new Timestamp (new Date().getTime()));
+		meeting.setDate(meeting.getDate());
 		meeting.setParent(parent);
 		meeting.setReason(meeting.getReason());
 		return meetingRepo.save(meeting);
