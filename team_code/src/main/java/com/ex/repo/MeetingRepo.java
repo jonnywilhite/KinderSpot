@@ -11,4 +11,6 @@ public interface MeetingRepo extends JpaRepository <Meetings, Integer> {
 	//Meetings createMeeting (Meetings meeting);
 	//Page<Meetings> findByTApproveTrueOrderByDateDesc (Pageable page); 
 
+	
+
 }

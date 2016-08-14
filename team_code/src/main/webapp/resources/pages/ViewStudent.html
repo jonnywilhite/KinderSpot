@@ -4,6 +4,36 @@
 <meta charset="ISO-8859-1">
 <title>Student View</title>
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">
+
+
+<style>
+
+ body {
+	background-image: url("/KinderSpot/resources/themes/greenBoard.jpg");
+	/* background-size: 100% 175%; */
+	background-size: cover;
+	background-repeat: no-repeat;
+} 
+
+@font-face { font-family: chalky; src: url("/KinderSpot/resources/fonts/SimplyChalky.ttf") }
+@font-face { font-family: lemonMilk; src: url("/KinderSpot/resources/fonts/LemonMilk.otf") }
+@font-face { font-family: marker; src: url("/KinderSpot/resources/fonts/PWMarker.ttf") }
+@font-face { font-family: chalkboard; src: url("/KinderSpot/resources/fonts/chalkboard.ttf") }
+@font-face { font-family: brokenchalk; src: url("/KinderSpot/resources/fonts/BrokenChalk.ttf") }
+
+h3, h2, h5 {
+	font-family: chalky;
+	color: white; 
+}
+
+th, tr {
+	font-family: chalky; 
+	color: white;
+}
+
+</style>
 
 </head>
 <body ng-app="myApp">
@@ -19,12 +49,14 @@
 		<input type="hidden" ng-model="viewStudentData.currentReportCard">
 		<input type="hidden" ng-model="viewStudentData.currentAttendance">
 		<input type="hidden" ng-model="viewStudentData.currentBadges">
+		<input type="hidden" ng-model="viewStudentData.allBadges">
+		
 		<h2>View Student: <span ng-bind="viewStudentData.currentStudent.firstName"></span></h2>
 		
 		<h2>Grade: <span ng-bind="viewStudentData.currentReportCard.grade"></span></h2>
 		
 		<h2>Recent attendance:</h2>
-		<table>
+		<table class="w3-table w3-border w3-bordered" style="width: 85%">
 			<tr>
 				<th>Date</th>
 				<th>Present</th>
@@ -35,21 +67,42 @@
 			</tr>
 		</table>
 		
-		<h2>Badges</h2>
+		<br><br>
+		
+		<!-- <div class="w3-panel w3-pale-yellow w3-topbar w3-bottombar w3-border-yellow"> -->
+		<div class="w3-panel w3-pale-green w3-topbar w3-bottombar w3-border-green w3-border">
+		<h1 style="font-family:marker;color:black">Badges</h1>
+		<br><br>
 			<table>
 				<tr>
-					<th>Name</th>
-					<th>Description</th>
-					<th>Image</th>
+					<th></th>
+					<th></th>
 				</tr>
-				<tr ng-repeat="bad in viewStudentData.currentBadges">
+				<tr ng-repeat="bad in viewStudentData.currentBadges" style="font-family:marker;color:black">
 					<td ng-bind="bad.name"></td>
-					<td ng-bind="bad.description"></td>
 					<td >
-						<img ng-src="{{bad.photo}}"/>
+						<img ng-src="{{bad.photo}}" class="img-responsive"
+						style="width: 40%; height: 20%; border: medium; border-style: double;"
+						align="top"/>
 					</td>
 				</tr>
 			</table>
+			
+				<form id="badgeform" novalidatestyle="font-family:marker; color:black" style="font-family:marker;color:black">
+					<h4 style="font-family:marker;color:black">Give a Badge:</h4> 
+					<select style="font-family:marker; color:black" name="studentlist"
+						form="badgeform" ng-model="user.badge" required>
+						<option ng-repeat="x in viewStudentData.allBadges"
+							value="{{x.id}}">{{x.name}}</option>
+					</select> 
+					<br><br>
+					<button ng-click="viewStudentData.addBadges(user.badge)" style="font-family:marker;color:black">
+						Add</button>
+				</form>
+			
+		</div>
+		
+		
 			
 	</div>
 

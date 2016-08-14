@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.InputStream;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
@@ -32,6 +33,8 @@ import com.ex.domain.AttendanceStudent;
 import com.ex.domain.Badge;
 import com.ex.domain.BadgeStudent;
 import com.ex.domain.Event;
+import com.ex.domain.EventStudent;
+import com.ex.domain.EventType;
 import com.ex.domain.Meetings;
 import com.ex.domain.Photos;
 import com.ex.domain.ReportCard;
@@ -39,7 +42,10 @@ import com.ex.domain.Student;
 import com.ex.domain.User;
 import com.ex.repo.AttendanceRepo;
 import com.ex.repo.AttendanceStudentRepo;
+import com.ex.repo.BadgeRepo;
 import com.ex.repo.BadgeStudentRepo;
+import com.ex.repo.EventStudentRepo;
+import com.ex.repo.EventTypeRepo;
 import com.ex.repo.EventsRepo;
 import com.ex.repo.MeetingRepo;
 import com.ex.repo.PhotosRepo;
@@ -51,38 +57,47 @@ import com.ex.repo.UserRepo;
 @Service
 @Transactional
 public class KinderServiceImpl implements KinderService {
-	
+
 	@Autowired
 	private StudentRepo studentRepo;
 	
 	@Autowired
+	private EventStudentRepo eventStudentRepo;
+
+	@Autowired
 	private TeacherRepo teacherRepo;
-	
+
 	@Autowired
 	private UserRepo userRepo;
-	
+
 	@Autowired
 	private ReportCardRepo reportCardRepo;
-	
+
 	@Autowired
 	private AttendanceRepo attendanceRepo;
-	
+
 	@Autowired
 	private EventsRepo eventRepo;
-	
+
 	@Autowired
 	private PhotosRepo photoRepo;
-	
+
 	@Autowired 
 	private MeetingRepo meetingRepo;
-	
+
 	@Autowired
 	private BadgeStudentRepo badgeStudentRepo;
 	
 	@Autowired
-	private AttendanceStudentRepo attendanceStudentRepo;
+	private BadgeRepo badgeRepo;
 
+	@Autowired
+	private AttendanceStudentRepo attendanceStudentRepo;
 	
+	@Autowired
+	private EventTypeRepo eventTypeRepo;
+
+
 	/*
 	 * Student stuff(non-Javadoc)
 	 */
@@ -90,25 +105,25 @@ public class KinderServiceImpl implements KinderService {
 	public List<Student> getAllStudents(){
 		return studentRepo.findAll();
 	}
-	
-	
+
+
 	@Override
 	public Student getStudentById(int studentId) {
 		return studentRepo.findOne(studentId);
 	}
-	
+
 	@Override
 	public List<Student> getStudentByParent(int parentId) {
 		User parent = userRepo.findById(parentId);
 		return studentRepo.findByParentAndActiveTrue(parent);
 	}
-	
+
 	@Override
 	public List<Student> getAllStudentsByTeacher(int teacherId) {
 		User teacher = teacherRepo.findById(teacherId);
 		return studentRepo.findByTeacherAndActiveTrue(teacher);
 	}
-	
+
 	@Override
 	public List<Student> deleteStudentsInClassByTeacher(int teacherId) {
 		User teacher = teacherRepo.findById(teacherId);
@@ -133,8 +148,8 @@ public class KinderServiceImpl implements KinderService {
 		}
 		return students;
 	}
-	
-	
+
+
 	/*
 	 * Login stuff(non-Javadoc)
 	 */
@@ -142,9 +157,9 @@ public class KinderServiceImpl implements KinderService {
 	public User authenticate(User user) {
 		return userRepo.findByEmailAndPassword(user.getEmail(), user.getPassword());
 	}
-	
-	
-	
+
+
+
 	@Override
 	public User findById(int id) {
 		return userRepo.findById(id);
@@ -158,22 +173,31 @@ public class KinderServiceImpl implements KinderService {
 		rc.setDate(new Timestamp(new Date().getTime()));
 		return reportCardRepo.save(rc);
 	}
-	
+
 	@Override
 	public List<ReportCard> getAllReportCardsByTeacher(int teacherId) {
 		User teacher = teacherRepo.findOne(teacherId);
 		return reportCardRepo.findByTeacher(teacher);
 	}
-	
+
 	@Override
 	public ReportCard getReportCardByStudent(int studentId) {
 		Student student = studentRepo.findOne(studentId);
 		return reportCardRepo.findByStudent(student);
 	}
 	
-	
+	@Override
+	public ReportCard updateReportCardByStudent(int studentId, String grade) {
+		Student student = studentRepo.findOne(studentId);
+		ReportCard reportCard = reportCardRepo.findByStudent(student);
+		reportCard.setGrade(grade);
+		return reportCard;
+	}
+
+
 
 	//Event stuff
+
 	 	@Override
 	 	public List<Event> getAllEvents() {
     		
@@ -181,17 +205,35 @@ public class KinderServiceImpl implements KinderService {
 		}
 	
 		@Override
-		public Event getEventByEventName(String name) {
-			return eventRepo.findByName(name);
+		public List<EventType> getAllTypes() {
+			return eventTypeRepo.findAll();
 		}
 	
 		@Override
 		public Event createEvent(Event event, String name) {
 			
-			event.setDate(new Timestamp(new Date().getTime()));
+			event.setDate(event.getDate());
+			event.setEventType(event.getEventType());
 			event.setDescription(event.getDescription());
 			event.setName(name);
 			return eventRepo.save(event) ;
+		}
+		
+		
+		@Override
+		public List<Event> getStudentEvents(int studentId) {
+			
+			Student student = studentRepo.findOne(studentId);
+			
+			List<EventStudent> esList = eventStudentRepo.findByStudent(student);
+			List<Event> eList = new ArrayList<Event>();
+			
+			for(EventStudent es: esList)
+			{
+				eList.add(es.getEvent());
+			}
+			
+			return eList;
 		}
 		
 		@Override
@@ -203,21 +245,23 @@ public class KinderServiceImpl implements KinderService {
 	 	public Event deleteEvent(String name) {
 	 		return null;
 	 	}
+	 	
 
-	
+
+
 	//Meeting Stuff 
 	@Override
 	public Meetings createMeeting(Meetings meeting, int id) 
 	{			
-				User parent = new User ();
-				parent.setId(id);
-				
-	
-				meeting.setDate(new Timestamp (new Date().getTime()));
-				meeting.setParent(parent);
-				meeting.setReason(meeting.getReason());
-				return meetingRepo.save(meeting);
-			}
+		User parent = new User ();
+		parent.setId(id);
+
+
+		meeting.setDate(meeting.getDate());
+		meeting.setParent(parent);
+		meeting.setReason(meeting.getReason());
+		return meetingRepo.save(meeting);
+	}
 
 	
 	//Meeting Stuff 
@@ -226,33 +270,55 @@ public class KinderServiceImpl implements KinderService {
 		return meetingRepo.findAll();
 	}
 	
-	
-		@Override
-			public Meetings updateMeetingStatus(Meetings meeting, Boolean meetingStatus) {
-				
-				Meetings meetingStat = new Meetings ();
-				
-				meetingStat.settApprove(true);
-				
-		 		return meetingRepo.save(meetingStat);
-		 	}
-	
-	
+	/*Gets meetings specific to a parent. I couldn't figure out how to use the Repo to get this, so I'm 
+	  just doing this instead.*/
+	@Override
+	public List<Meetings> getMeetingsByParent(int parentId) 
+	{
+		List<Meetings> mList = meetingRepo.findAll();
+		List<Meetings> returnList = new ArrayList<Meetings>();
+		
+		for(Meetings m: mList)
+		{
+			if(m.getParent().getId() == parentId)
+				returnList.add(m);
+		}
 
-	
-	
-	
+		return returnList;
+	}
+
+
+	@Override
+	public Meetings updateMeetingStatus(Meetings meeting, Boolean meetingStatus) {
+
+		Meetings meetingStat = new Meetings ();
+
+		meetingStat.settApprove(true);
+
+		return meetingRepo.save(meetingStat);
+	}
+
+
 	/*
 	 * Attendance stuff
 	 */
 	@Override
 	public Attendance submitAttendanceSheet(List<AttendanceStudent> attendance, int teacherId) {
 		
+		Timestamp timestamp = new Timestamp(new Date().getTime());
+		
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(timestamp);
+		cal.set(Calendar.HOUR_OF_DAY, cal.getMinimum(Calendar.HOUR_OF_DAY));
+	    cal.set(Calendar.MINUTE, cal.getMinimum(Calendar.MINUTE));
+	    cal.set(Calendar.SECOND, cal.getMinimum(Calendar.SECOND));
+	    cal.set(Calendar.MILLISECOND, cal.getMinimum(Calendar.MILLISECOND));
+		
 		Attendance attendanceSheet = new Attendance();
-		attendanceSheet.setDate(new Timestamp(new Date().getTime()));
+		attendanceSheet.setDate(new Timestamp(cal.getTime().getTime()));
 		attendanceSheet.setTeacher(teacherRepo.findById(teacherId));
 		attendanceRepo.save(attendanceSheet);
-		
+
 		for (AttendanceStudent as : attendance) {
 			as.setStudent(studentRepo.findOne(as.getStudent().getId()));
 			as.setAttendance(attendanceSheet);
@@ -260,20 +326,46 @@ public class KinderServiceImpl implements KinderService {
 		}
 		return null;
 	}
-	
+
 	@Override
 	public List<Attendance> viewAttendanceSheets(int teacherId) {
 		User teacher = teacherRepo.findOne(teacherId);
-		return attendanceRepo.findByTeacher(teacher);
+		return attendanceRepo.findByTeacherOrderByDate(teacher);
 	}
-	
+
 	@Override
 	public List<AttendanceStudent> viewAttendanceEntriesByStudent(int studentId) {
 		Student student = studentRepo.findOne(studentId);
-		List<AttendanceStudent> list = attendanceStudentRepo.findByStudent(student);
+		List<AttendanceStudent> list = attendanceStudentRepo.findByStudentOrderByAttendance(student);
 		return list;
 	}
+
+	@Override
+	public List<AttendanceStudent> viewAttendanceSheetForDate(int teacherId, Date date) {
+		User teacher = teacherRepo.findOne(teacherId);
+		
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		cal.set(Calendar.HOUR_OF_DAY, cal.getMinimum(Calendar.HOUR_OF_DAY));
+	    cal.set(Calendar.MINUTE, cal.getMinimum(Calendar.MINUTE));
+	    cal.set(Calendar.SECOND, cal.getMinimum(Calendar.SECOND));
+	    cal.set(Calendar.MILLISECOND, cal.getMinimum(Calendar.MILLISECOND));
+	    
+	    Attendance a = attendanceRepo.findByTeacherAndDate(teacher, cal.getTime());
+		System.out.println(a);
+		return attendanceStudentRepo.findByAttendance(a);
+	}
 	
+	@Override
+	public Attendance updateAttendanceSheetForDate(int teacherId, Date date, List<AttendanceStudent> attendanceSheet) {
+		List<AttendanceStudent> oldList = viewAttendanceSheetForDate(teacherId, date);
+		Attendance oldAtt = oldList.get(0).getAttendance();
+		for (AttendanceStudent as : oldList) {
+			attendanceStudentRepo.delete(as);
+		}
+		attendanceRepo.delete(oldAtt);
+		return submitAttendanceSheet(attendanceSheet, teacherId);
+	}
 	
 	/*
 	 * Photos stuff
@@ -283,49 +375,49 @@ public class KinderServiceImpl implements KinderService {
 		AWSCredentials credentials = new ProfileCredentialsProvider().getCredentials();
 		System.out.println(credentials.getAWSAccessKeyId());
 		AmazonS3 client = new AmazonS3Client(credentials);
-		String bucketName = "jonathan-gary-lee-wilhite-bucket-this-name-better-not-be-taken";
-		String folderName = "testfolder";
+		String bucketName = "kinderspot-photos";
+		String folderName = "badges";
 		String SUFFIX = "/";
-		
+
 		//client.createBucket(bucketName);
 		//createFolder(bucketName, folderName, client);
 		photo.setPhoto(folderName + SUFFIX + file.getName());
-		
+
 		String fileName = photo.getPhoto();
 		client.putObject(new PutObjectRequest(bucketName, fileName, file));
-		
+
 		return photoRepo.save(photo);
 	}
-	
+
 	@Override
 	public List<Photos> getAllPhotos() {
 		return photoRepo.findAll();
 	}
-	
+
 	@Override
 	public List<Photos> getPhotosByEvent(int eventId) {
 		Event event = eventRepo.findOne(eventId);
 		return photoRepo.findByEvent(event);
 	}
-	
+
 	public static void createFolder(String bucketName, String folderName, AmazonS3 client) {
 		// create meta-data for your folder and set content-length to 0
 		ObjectMetadata metadata = new ObjectMetadata();
 		metadata.setContentLength(0);
-		
+
 		// create empty content
 		InputStream emptyContent = new ByteArrayInputStream(new byte[0]);
-		
+
 		// create a PutObjectRequest passing the folder name suffixed by /
 		PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, folderName + "/", emptyContent, metadata);
-		
+
 		// send request to S3 to create folder
 		client.putObject(putObjectRequest);
 	}
 
-	
 
-	
+
+
 	//Email stuff
 	@Override
 	public void sendEmail(int senderId, int recipientId, String subject, String body) {
@@ -333,41 +425,41 @@ public class KinderServiceImpl implements KinderService {
 		//String senderEmail = teacherRepo.findById(senderId).getEmail();
 		String recipientEmail = userRepo.findById(recipientId).getEmail();
 		final String uname = "kinderspotemail@gmail.com";
-	       final String pword = "Kinderspot1234";
-	       
-	       String emailHeader = "Hello " + userRepo.findById(recipientId).getFirstName() + ",\n\n";
-	       String emailSignature = "\n\n" + userRepo.findById(senderId).getFirstName();
-	       body = emailHeader + body + emailSignature;
+		final String pword = "Kinderspot1234";
 
-	       Properties props = new Properties();
-	       props.put("mail.smtp.starttls.enable", "true");
-	       props.put("mail.smtp.auth", "true");
-	       props.put("mail.smtp.host", "smtp.gmail.com");
-	       props.put("mail.smtp.port", "587");
+		String emailHeader = "Hello " + userRepo.findById(recipientId).getFirstName() + ",\n\n";
+		String emailSignature = "\n\n" + userRepo.findById(senderId).getFirstName();
+		body = emailHeader + body + emailSignature;
 
-	       Session session = Session.getInstance(props,
-	         new javax.mail.Authenticator() {
-	           protected PasswordAuthentication getPasswordAuthentication() {
-	               return new PasswordAuthentication(uname, pword);
-	           }
-	         });
+		Properties props = new Properties();
+		props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.host", "smtp.gmail.com");
+		props.put("mail.smtp.port", "587");
 
-	       try {
+		Session session = Session.getInstance(props,
+				new javax.mail.Authenticator() {
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(uname, pword);
+			}
+		});
 
-	           Message message = new MimeMessage(session);
-	           message.setFrom(new InternetAddress("randyma12@gmail.com"));
-	           message.setRecipients(Message.RecipientType.TO,
-	               InternetAddress.parse(recipientEmail));
-	           message.setSubject(subject);
-	           message.setText(body);
+		try {
 
-	           Transport.send(message);
-	           System.out.println("Successfully sent email to " + recipientEmail);
+			Message message = new MimeMessage(session);
+			message.setFrom(new InternetAddress("randyma12@gmail.com"));
+			message.setRecipients(Message.RecipientType.TO,
+					InternetAddress.parse(recipientEmail));
+			message.setSubject(subject);
+			message.setText(body);
+
+			Transport.send(message);
+			System.out.println("Successfully sent email to " + recipientEmail);
 
 
-	       } catch (MessagingException e) {
-	           throw new RuntimeException(e);
-	       }
+		} catch (MessagingException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 
@@ -375,51 +467,51 @@ public class KinderServiceImpl implements KinderService {
 	public void emailAllParents(int teacherId, String subject, String body) {
 		List<Student> studentList = studentRepo.findByTeacherAndActiveTrue(teacherRepo.findById(teacherId));
 		for (int i = 0; i < studentList.size(); i++){
-		
-		final String uname = "kinderspotemail@gmail.com";
-	       final String pword = "Kinderspot1234";
-	       
-	       String emailHeader = "To all parents,\n\n";
-	       String emailSignature = "\n\n" + userRepo.findById(teacherId).getFirstName();
-	       body = emailHeader + body + emailSignature;
 
-	       Properties props = new Properties();
-	       props.put("mail.smtp.starttls.enable", "true");
-	       props.put("mail.smtp.auth", "true");
-	       props.put("mail.smtp.host", "smtp.gmail.com");
-	       props.put("mail.smtp.port", "587");
+			final String uname = "kinderspotemail@gmail.com";
+			final String pword = "Kinderspot1234";
 
-	       Session session = Session.getInstance(props,
-	         new javax.mail.Authenticator() {
-	           protected PasswordAuthentication getPasswordAuthentication() {
-	               return new PasswordAuthentication(uname, pword);
-	           }
-	         });
+			String emailHeader = "To all parents,\n\n";
+			String emailSignature = "\n\n" + userRepo.findById(teacherId).getFirstName();
+			body = emailHeader + body + emailSignature;
 
-	       try {
+			Properties props = new Properties();
+			props.put("mail.smtp.starttls.enable", "true");
+			props.put("mail.smtp.auth", "true");
+			props.put("mail.smtp.host", "smtp.gmail.com");
+			props.put("mail.smtp.port", "587");
 
-	           Message message = new MimeMessage(session);
-	           message.setFrom(new InternetAddress("randyma12@gmail.com"));
-	           message.setRecipients(Message.RecipientType.TO,
-	               InternetAddress.parse(studentList.get(i).getParent().getEmail()));
-	           message.setSubject(subject);
-	           message.setText(body);
-	           
-	           System.out.println("Sending email to " + studentList.get(i).getParent().getEmail());
+			Session session = Session.getInstance(props,
+					new javax.mail.Authenticator() {
+				protected PasswordAuthentication getPasswordAuthentication() {
+					return new PasswordAuthentication(uname, pword);
+				}
+			});
 
-	           Transport.send(message);
-	           System.out.println("Successfully sent email to "+ studentList.get(i).getParent().getEmail());
+			try {
+
+				Message message = new MimeMessage(session);
+				message.setFrom(new InternetAddress("randyma12@gmail.com"));
+				message.setRecipients(Message.RecipientType.TO,
+						InternetAddress.parse(studentList.get(i).getParent().getEmail()));
+				message.setSubject(subject);
+				message.setText(body);
+
+				System.out.println("Sending email to " + studentList.get(i).getParent().getEmail());
+
+				Transport.send(message);
+				System.out.println("Successfully sent email to "+ studentList.get(i).getParent().getEmail());
 
 
-	       } catch (MessagingException e) {
-	           throw new RuntimeException(e);
-	       }
+			} catch (MessagingException e) {
+				throw new RuntimeException(e);
+			}
 		}
-		
+
 	}
 
 
-	
+
 	//Badge Stuff
 	@Override
 	public List<Badge> getBadgesByStudent(int studentId) {
@@ -428,18 +520,22 @@ public class KinderServiceImpl implements KinderService {
 		for (int i = 0; i < list.size(); i++){
 			badgeList.add(list.get(i).getBadge());
 		}
-		
+
 		return badgeList;
 	}
 
 
 	@Override
-	public void assignBadgeToStudent(int studentId, int badgeId) {
-		
+	public void assignBadgeToStudent(int studentId, Badge b) {
+		Student s = studentRepo.findOne(studentId);
+		badgeStudentRepo.save(new BadgeStudent(b, s));
 	}
-	
-	
-	
-	
-	
+
+
+	@Override
+	public List<Badge> getAllBadges(){
+		return badgeRepo.findAll();
+	}
+
+
 }

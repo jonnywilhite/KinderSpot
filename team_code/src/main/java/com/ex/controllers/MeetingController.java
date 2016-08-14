@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
- 
+
 import com.ex.domain.Meetings;
 import com.ex.service.KinderService;
  
@@ -22,8 +22,11 @@ import com.ex.service.KinderService;
  	public Meetings createMeeting(@RequestBody Meetings meeting, @PathVariable int parentId){
  		return service.createMeeting(meeting, parentId);
  	}
-
-
+ 	
+ 	@RequestMapping (value= "meeting/{parentId}", method = RequestMethod.GET)
+ 	public List<Meetings> getMeetingsByParent(@PathVariable int parentId) {
+ 		return service.getMeetingsByParent(parentId);
+ 	}
  	
  	@RequestMapping (value= "meeting", method = RequestMethod.GET)
  	public List<Meetings> getAllMeetings() {

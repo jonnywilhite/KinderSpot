@@ -1,5 +1,6 @@
 package com.ex.controllers;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,12 +26,19 @@ public class ReportCardController {
 	
 	@RequestMapping(value="{teacherId}/report-cards", method=RequestMethod.GET)
 	public List<ReportCard> getAllReportCardsByTeacher(@PathVariable int teacherId) {
-		return service.getAllReportCardsByTeacher(teacherId);
+		List<ReportCard> list = service.getAllReportCardsByTeacher(teacherId);
+		Collections.sort(list);
+		return list;
 	}
 	
 	@RequestMapping(value="report-cards/{studentId}", method=RequestMethod.GET)
 	public ReportCard getReportCardByStudent(@PathVariable int studentId) {
 		return service.getReportCardByStudent(studentId);
+	}
+	
+	@RequestMapping(value="report-cards/{studentId}", method=RequestMethod.PUT)
+	public ReportCard updateReportCardByStudent(@PathVariable int studentId, @RequestBody String grade) {
+		return service.updateReportCardByStudent(studentId, grade);
 	}
 
 }
