@@ -3,6 +3,7 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 	var teacherHomeData = this;
 	var loggedUser = sharedProperties.getProperty();
 
+	teacherHomeData.myStudentGrades = {};
 	teacherHomeData.attendanceMessage = "";
 	teacherHomeData.hasSubmittedAttendance = false;
 
@@ -48,17 +49,33 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 			headers: {'Content-Type': 'application/json'}
 		})
 		.then(function(response) {
-			//success
-			//studentsList = response.data;
+			
 			teacherHomeData.myStudents = response.data;
 			studentsService.setStudents(response.data);
-			//console.log("students: " + studentsList[0].firstname);
 		}, 
 		function(response) { // optional
 			console.log("Failed.");
 		});
-	}//ends showStudents()
+	};//ends showStudents()
 	teacherHomeData.showStudents();
+	
+	teacherHomeData.showGrades = function() {
+		$http({
+			url: '/KinderSpot/' + loggedUser.id + '/report-cards/',
+			method: "GET",
+			headers: {'Content-Type': 'application/json'}
+		})
+		.then(function(response) {
+			teacherHomeData.myStudentGrades = response.data;
+			for (var i = 0; i < teacherHomeData.myStudents.length(); i++) {
+				teacherHomeData.myStudents[i].grade = teacherHomeData.myStudentGrades[i].grade;
+			}
+		},
+		function(response) {
+			console.log("Failed to get grades");
+		});
+	};
+	teacherHomeData.showGrades();
 
 	teacherHomeData.viewStudent = function(id) {
 
@@ -236,6 +253,7 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 		document.getElementById('meetingsDiv').style.display = "none";
 
 		document.getElementById(divId).style.display = "inline";
+		document.getElementById('body').style.backgroundSize = "100% 100%";
 	};
 
 	teacherHomeData.animationsEnabled = true;

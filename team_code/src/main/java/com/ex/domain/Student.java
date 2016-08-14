@@ -12,7 +12,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="EDU_STUDENTS")
-public class Student {
+public class Student implements Comparable<Student> {
 	
 	@Id
 	@Column(name="s_id")
@@ -118,5 +118,12 @@ public class Student {
 			return false;
 		return true;
 	}
+
+	@Override
+	public int compareTo(Student that) {
+		return Integer.compare(this.id, that.id);
+	}
+	
+	
 	
 }

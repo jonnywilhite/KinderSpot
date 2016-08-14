@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ex.domain.Meetings;
-import com.ex.domain.User;
 import com.ex.service.KinderService;
  
  @RestController

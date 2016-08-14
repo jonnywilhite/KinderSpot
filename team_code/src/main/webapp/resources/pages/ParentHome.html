@@ -52,6 +52,7 @@ li, th, tr, td {
 	<input type="hidden" ng-model="parentHomeData.myChild" />
 	<input type="hidden" ng-model="parentHomeData.currentReportCard">
 	<input type="hidden" ng-model="parentHomeData.meeting">
+	<input type="hidden" ng-model="parentHomeData.events">
 	
 	
 <h2>Parent Page: {{parentHomeData.loggedInUser.firstName}}</h2>
@@ -67,6 +68,38 @@ li, th, tr, td {
 	</table>
 </div>
 
+<div id="meetingsDiv" style="display:inline">
+	<br><br>
+	<table class="w3-table w3-border w3-bordered" style="width:75%">
+				<tr>
+					<th>Meeting Description</th>
+					<th>Date Scheduled</th>
+				</tr>
+				<tr ng-repeat="x in parentHomeData.meeting">
+					<td>{{ x.reason }}</td>
+					<td>{{ x.date | date:'MMM d, yyyy h:mm a' }}</td>
+				</tr>
+	</table>
+</div>
+
+
+<div id="eventsDiv" style="display:inline">
+	<br><br>
+	<table class="w3-table w3-border w3-bordered" style="width:75%">
+				<tr>
+					<th>Event</th>
+					<th>Description</th>
+					<th>Date</th>
+				</tr>
+				<tr ng-repeat="x in parentHomeData.events">
+					<td>{{ x.name }}</td>
+					<td> {{x.description}} </td>
+					<td> {{x.date | date:'MMM d, yyyy h:mm a'}} </td>
+				</tr>
+	</table>
+
+
+</div>
 
 
 <div id="emailDiv" style="display:inline">
@@ -98,30 +131,6 @@ li, th, tr, td {
 				</tr>
 		</table>
 </div>
-
-<div id="meetingsDiv" style="display:inline">
-	<br><br>
-	<table class="w3-table w3-border w3-bordered" style="width:75%">
-				<tr>
-					<th>Meeting Description</th>
-					<th>Date Scheduled</th>
-				</tr>
-				<tr ng-repeat="x in parentHomeData.meeting">
-					<td>{{ x.reason }}</td>
-					<td>{{ x.date }}</td>
-				</tr>
-	</table>
-
-
-</div>
-
-
-<div id="eventsDiv" style="display:inline">
-
-
-
-</div>
-
 
 
 </div>

@@ -14,7 +14,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name ="EDU_REPORT_CARD")
-public class ReportCard {
+public class ReportCard implements Comparable<ReportCard> {
 	
 	@Id
 	@Column(name = "RC_ID")
@@ -94,5 +94,12 @@ public class ReportCard {
 	public void setComments(String comments) {
 		this.comments = comments;
 	}
+
+	@Override
+	public int compareTo(ReportCard that) {
+		return this.student.compareTo(that.student);
+	}
+	
+	
 
 }

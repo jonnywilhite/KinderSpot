@@ -1,5 +1,6 @@
 package com.ex.controllers;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,9 @@ public class StudentController {
 	
 	@RequestMapping(value="{teacherId}/students", method=RequestMethod.GET)
 	public List<Student> getStudentsInClass(@PathVariable int teacherId) {
-		return service.getAllStudentsByTeacher(teacherId);
+		List<Student> list = service.getAllStudentsByTeacher(teacherId);
+		Collections.sort(list);
+		return list;
 	}
 	
 	@RequestMapping(value="{teacherId}/students", method=RequestMethod.DELETE)
