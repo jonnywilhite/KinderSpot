@@ -128,7 +128,7 @@ th, tr {
 			<h3>Select Parent</h3>
 			
 			<select form = "parentForm" ng-model = "teach.parent" required> 
-				<option ng-repeat ="x in teacherHomeData.myStudents" value ="{{x.id + 1}}">{{x.parent.firstName}}</option>
+				<option ng-repeat ="x in teacherHomeData.myStudents" value ="{{x.parent.id}}">{{x.parent.firstName}}</option>
 			</select>
 			
 			<h3>Reason</h3>
@@ -142,10 +142,7 @@ th, tr {
 	    	</div>
 	
 	    	<hr />
-	   		 <button type="button" class="btn btn-sm btn-info" ng-click="today()">Today</button>
-	   		 <button type="button" class="btn btn-sm btn-default" ng-click="setDate(2016, 8, 13)">2016-08-13</button>
-	    	 <button type="button" class="btn btn-sm btn-danger" ng-click="clear()">Clear</button>
-	    	 <button type="button" class="btn btn-sm btn-default" ng-click="toggleMin()" uib-tooltip="After today restriction">Min date</button>
+	   		 
 		<!-- Calendar  -->
 			<br>
 			<br>
@@ -166,9 +163,9 @@ th, tr {
 
 		<input type = "text" ng-model = "event.name"/>
 		
-		<h3>Event type</h3>
+		<h3>Event Type</h3>
 		<select form ="" ng-model = "event.type" required>
-		<option ng-repeat = "x in teacherHomeData.myEventType" value = "{{x.name}}">{{x.name}}
+		<option ng-repeat = "x in teacherHomeData.myEventType" value = "{{x.id}}">{{x.name}}
 		</option>
 		</select>
 	
@@ -187,15 +184,12 @@ th, tr {
 	    </div>
 	
 	    <hr />
-	    <button type="button" class="btn btn-sm btn-info" ng-click="today()">Today</button>
-	    <button type="button" class="btn btn-sm btn-default" ng-click="setDate(2016, 8, 13)">2016-08-13</button>
-	    <button type="button" class="btn btn-sm btn-danger" ng-click="clear()">Clear</button>
-	    <button type="button" class="btn btn-sm btn-default" ng-click="toggleMin()" uib-tooltip="After today restriction">Min date</button>
+	
 		<!-- Calendar  -->
 		
 		<br>
 		<br>
-		<button ng-click = "teacherHomeData.createEvents(event.name, event.description, dt)">Post New Event</button>
+		<button ng-click = "teacherHomeData.createEvents(event.name,event.type, event.description, dt)">Post New Event</button>
 		
 		</form>
 		</div>
@@ -204,12 +198,14 @@ th, tr {
 		<table class="">
 			<tr>
 				<th>Event</th>
+				<th>Type</th>
 				<th>Description</th>
 				<th>Date</th>
 
 			</tr>
 			<tr ng-repeat="e in teacherHomeData.myEvents">
 				<td>{{ e.name }}</td>
+				<td>{{e.eventType.name}}</td>
 				<td>{{ e.description }}</td>
 				<td>{{ e.date |date:'medium'}}</td>
 			</tr>

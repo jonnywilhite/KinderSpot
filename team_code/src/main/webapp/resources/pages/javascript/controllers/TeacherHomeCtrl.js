@@ -163,13 +163,15 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 	teacherHomeData.showEventTypes();
 
 
-	teacherHomeData.createEvents = function (eventName, description, date)
+	teacherHomeData.createEvents = function (eventName,eventType, description, date)
 	{
 		teacherHomeData.newEvent = eventName; 
+		teacherHomeData.type = eventType;
 		teacherHomeData.description = description;
 		teacherHomeData.eventDate = date; 
 	
 		console.log(eventName);
+		console.log(eventType);
 		console.log(description);
 		console.log(date);
 
@@ -178,7 +180,10 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 			method: "POST",
 			data: {"name": teacherHomeData.newEvent,
 				   "description": teacherHomeData.description,
-				   "date": teacherHomeData.eventDate
+				   "date": teacherHomeData.eventDate,
+				   "eventType":{
+					   "id": teacherHomeData.type
+				   }
 			},
 
 			headers: {'Content-Type':'application/json'}
