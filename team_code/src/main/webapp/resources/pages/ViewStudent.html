@@ -35,21 +35,23 @@
 			</tr>
 		</table>
 		
-		<h2>Badges</h2>
+		
+		<div class="well">Badges<br><br>
 			<table>
 				<tr>
-					<th>Name</th>
-					<th>Description</th>
-					<th>Image</th>
+					<th></th>
+					<th></th>
 				</tr>
 				<tr ng-repeat="bad in viewStudentData.currentBadges">
 					<td ng-bind="bad.name"></td>
-					<td ng-bind="bad.description"></td>
 					<td >
-						<img ng-src="{{bad.photo}}"/>
+						<img ng-src="{{bad.photo}}" class="img-responsive"
+						style="width: 40%; height: 20%; border: medium; border-style: double;"
+						align="top"/>
 					</td>
 				</tr>
 			</table>
+		</div>
 			
 	</div>
 
