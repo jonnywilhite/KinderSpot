@@ -1,5 +1,6 @@
 package com.ex.controllers;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,9 @@ public class ReportCardController {
 	
 	@RequestMapping(value="{teacherId}/report-cards", method=RequestMethod.GET)
 	public List<ReportCard> getAllReportCardsByTeacher(@PathVariable int teacherId) {
-		return service.getAllReportCardsByTeacher(teacherId);
+		List<ReportCard> list = service.getAllReportCardsByTeacher(teacherId);
+		Collections.sort(list);
+		return list;
 	}
 	
 	@RequestMapping(value="report-cards/{studentId}", method=RequestMethod.GET)

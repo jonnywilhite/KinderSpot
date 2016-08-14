@@ -101,16 +101,16 @@ th, tr {
 				<!-- Loops through our students list obtained from the database, then displayed below. -->
 
 				<h2>My students:</h2>
-				<table class="w3-table w3-border w3-bordered" style="width: 75%">
+				<table class="w3-table w3-border w3-bordered" style="width: 85%">
 					<tr>
 						<th>Name</th>
 						<th>Student Link</th>
-						<th>Parent</th>
+						<th>Current Grade</th>
 					</tr>
 					<tr ng-repeat="x in teacherHomeData.myStudents">
 						<td>{{x.firstName}}</td>
 						<td><button class="w3-btn w3-transparent w3-border w3-round-large" ng-click="teacherHomeData.viewStudent(x.id)">View</button></td>
-						<td>{{ x.parent.firstName }}</td>
+						<td>{{ x.grade }}</td>
 					</tr>
 				</table>
 
@@ -128,7 +128,7 @@ th, tr {
 				<form id="meetingForm" novalidate style="font-family: chalky; color: white">
 					<h2>My Meetings:</h2>
 
-					<table class="w3-table w3-border w3-bordered" style="width: 75%">
+					<table class="w3-table w3-border w3-bordered" style="width: 85%">
 						<tr>
 							<th>Parent</th>
 							<th>Reason</th>
