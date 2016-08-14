@@ -34,6 +34,7 @@ import com.ex.domain.Badge;
 import com.ex.domain.BadgeStudent;
 import com.ex.domain.Event;
 import com.ex.domain.EventStudent;
+import com.ex.domain.EventType;
 import com.ex.domain.Meetings;
 import com.ex.domain.Photos;
 import com.ex.domain.ReportCard;
@@ -41,8 +42,10 @@ import com.ex.domain.Student;
 import com.ex.domain.User;
 import com.ex.repo.AttendanceRepo;
 import com.ex.repo.AttendanceStudentRepo;
+import com.ex.repo.BadgeRepo;
 import com.ex.repo.BadgeStudentRepo;
 import com.ex.repo.EventStudentRepo;
+import com.ex.repo.EventTypeRepo;
 import com.ex.repo.EventsRepo;
 import com.ex.repo.MeetingRepo;
 import com.ex.repo.PhotosRepo;
@@ -84,9 +87,15 @@ public class KinderServiceImpl implements KinderService {
 
 	@Autowired
 	private BadgeStudentRepo badgeStudentRepo;
+	
+	@Autowired
+	private BadgeRepo badgeRepo;
 
 	@Autowired
 	private AttendanceStudentRepo attendanceStudentRepo;
+	
+	@Autowired
+	private EventTypeRepo eventTypeRepo;
 
 
 	/*
@@ -188,18 +197,20 @@ public class KinderServiceImpl implements KinderService {
 		}
 	
 		@Override
-		public Event getEventByEventName(String name) {
-			return eventRepo.findByName(name);
+		public List<EventType> getAllTypes() {
+			return eventTypeRepo.findAll();
 		}
 	
 		@Override
 		public Event createEvent(Event event, String name) {
 			
 			event.setDate(event.getDate());
+			event.setEventType(event.getEventType());
 			event.setDescription(event.getDescription());
 			event.setName(name);
 			return eventRepo.save(event) ;
 		}
+		
 		
 		@Override
 		public List<Event> getStudentEvents(int studentId) {
@@ -354,8 +365,8 @@ public class KinderServiceImpl implements KinderService {
 		AWSCredentials credentials = new ProfileCredentialsProvider().getCredentials();
 		System.out.println(credentials.getAWSAccessKeyId());
 		AmazonS3 client = new AmazonS3Client(credentials);
-		String bucketName = "jonathan-gary-lee-wilhite-bucket-this-name-better-not-be-taken";
-		String folderName = "testfolder";
+		String bucketName = "kinderspot-photos";
+		String folderName = "badges";
 		String SUFFIX = "/";
 
 		//client.createBucket(bucketName);
@@ -505,12 +516,16 @@ public class KinderServiceImpl implements KinderService {
 
 
 	@Override
-	public void assignBadgeToStudent(int studentId, int badgeId) {
-
+	public void assignBadgeToStudent(int studentId, Badge b) {
+		Student s = studentRepo.findOne(studentId);
+		badgeStudentRepo.save(new BadgeStudent(b, s));
 	}
 
 
-
+	@Override
+	public List<Badge> getAllBadges(){
+		return badgeRepo.findAll();
+	}
 
 
 }

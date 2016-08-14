@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ex.domain.Event;
 import com.ex.domain.Student;
+import com.ex.domain.EventType;
 import com.ex.service.KinderService;
 
 @RestController
@@ -25,17 +26,22 @@ public class EventController {
 		return service.getAllEvents();
 	}
 	
+
 	@RequestMapping(value = "{studentId}/studentevent", method=RequestMethod.GET)
 	public List<Event> getStudentEvents(@PathVariable int studentId){
-		
-		
 		
 		return service.getStudentEvents(studentId);
 	}
 	
-	@RequestMapping (value = "event/{eventName}", method = RequestMethod.GET)
+	/*@RequestMapping (value = "event/{eventName}", method = RequestMethod.GET)
 	public  Event getEventByEventName(@PathVariable String eventName){
 		return service.getEventByEventName(eventName);
+	}*/
+
+
+	@RequestMapping (value = "event/Type", method = RequestMethod.GET)
+	public List <EventType> getEventByType(){
+		return service.getAllTypes();
 	}
 	
 	@RequestMapping(value ="event/{eventName}", method = RequestMethod.POST)

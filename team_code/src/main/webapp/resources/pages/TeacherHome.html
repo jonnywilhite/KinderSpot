@@ -59,6 +59,7 @@ th, tr {
 	<input type="hidden" ng-model="teacherHomeData.myStudents" />
 	<input type="hidden" ng-model="teacherHomeData.myMeetings" />
 	<input type="hidden" ng-model="teacherHomeData.myEvents" />
+	<input type="hidden" ng-model ="teacherHomeData.myEventType"/>
 	<input type="hidden" ng-model="teacherHomeData.myAttendanceEntry" />
 	
 
@@ -107,17 +108,31 @@ th, tr {
 
 
 		<div id="meetingsDiv" style="display:none" class="w3-container city w3-animate-left">
-		<div ng-controller="DatepickerDemoCtrl">
 		<form id="meetingForm" novalidatestyle="font-family: chalky; color: white">
 			<h2>My Meetings:</h2>
+			
+			<table class="w3-table w3-border w3-bordered" style="width:75%">
+				<tr>
+					<th>Parent</th>
+					<th>Reason</th>
+					<th>Date Scheduled</th>
+				</tr>
+				<tr ng-repeat="m in teacherHomeData.myMeetings">
+					<td>{{m.parent.firstName}}</td>
+					<td>{{ m.reason }}</td>
+					<td>{{ m.date | date:'MMM d, yyyy h:mm a' }}</td>
+				</tr>
+			</table>
+			
 			<h3>Select Parent</h3>
 			
 			<select form = "parentForm" ng-model = "teach.parent" required> 
-				<option ng-repeat ="x in teacherHomeData.myStudents" value ="{{x.id + 1}}">{{x.parent.firstName}}</option>
+				<option ng-repeat ="x in teacherHomeData.myStudents" value ="{{x.parent.id}}">{{x.parent.firstName}}</option>
 			</select>
 			
-			<h3>Create New Meeting</h3>
+			<h3>Reason</h3>
 			<input type="text" ng-model="teach.reason" />
+
 			
 			<h3> Select Date</h3>
 			<input type = "date" ng-model = "dt" value = "{{dt| date: 'fullDate'}}" name = "bdatetime" id = "datetimepicker" />
@@ -127,30 +142,16 @@ th, tr {
 	    	</div>
 	
 	    	<hr />
-	   		 <button type="button" class="btn btn-sm btn-info" ng-click="today()">Today</button>
-	   		 <button type="button" class="btn btn-sm btn-default" ng-click="setDate(2016, 8, 13)">2016-08-13</button>
-	    	 <button type="button" class="btn btn-sm btn-danger" ng-click="clear()">Clear</button>
-	    	 <button type="button" class="btn btn-sm btn-default" ng-click="toggleMin()" uib-tooltip="After today restriction">Min date</button>
+	   		 
 		<!-- Calendar  -->
+
 			<br>
 			<br>
-			<button ng-click="teacherHomeData.createMeeting(teach.parent, teach.reason,dt)">Create Meeting</button>
+			<button ng-click="teacherHomeData.createMeeting(teach.parent, teach.reason)">Create Meeting</button>
 			
 			</form>
-		</div>
+		
 
-		<table class="">
-			<tr>
-				<th>Parent</th>
-				<th>Type</th>
-				<th>Date Scheduled</th>
-			</tr>
-			<tr ng-repeat="m in teacherHomeData.myMeetings">
-				<td>{{m.parent.firstName}}</td>
-				<td>{{ m.reason }}</td>
-				<td>{{ m.date | date:'medium' }}</td>
-			</tr>
-		</table>
 		</div>
 
 
@@ -162,6 +163,12 @@ th, tr {
 		<h3>Event Name</h3>
 
 		<input type = "text" ng-model = "event.name"/>
+		
+		<h3>Event Type</h3>
+		<select form ="" ng-model = "event.type" required>
+		<option ng-repeat = "x in teacherHomeData.myEventType" value = "{{x.id}}">{{x.name}}
+		</option>
+		</select>
 	
 		<h3>Description</h3>
 		
@@ -178,15 +185,12 @@ th, tr {
 	    </div>
 	
 	    <hr />
-	    <button type="button" class="btn btn-sm btn-info" ng-click="today()">Today</button>
-	    <button type="button" class="btn btn-sm btn-default" ng-click="setDate(2016, 8, 13)">2016-08-13</button>
-	    <button type="button" class="btn btn-sm btn-danger" ng-click="clear()">Clear</button>
-	    <button type="button" class="btn btn-sm btn-default" ng-click="toggleMin()" uib-tooltip="After today restriction">Min date</button>
+	
 		<!-- Calendar  -->
 		
 		<br>
 		<br>
-		<button ng-click = "teacherHomeData.createEvents(event.name, event.description, dt)">Post New Event</button>
+		<button ng-click = "teacherHomeData.createEvents(event.name,event.type, event.description, dt)">Post New Event</button>
 		
 		</form>
 		</div>
@@ -195,12 +199,14 @@ th, tr {
 		<table class="">
 			<tr>
 				<th>Event</th>
+				<th>Type</th>
 				<th>Description</th>
 				<th>Date</th>
 
 			</tr>
 			<tr ng-repeat="e in teacherHomeData.myEvents">
 				<td>{{ e.name }}</td>
+				<td>{{e.eventType.name}}</td>
 				<td>{{ e.description }}</td>
 				<td>{{ e.date |date:'medium'}}</td>
 			</tr>

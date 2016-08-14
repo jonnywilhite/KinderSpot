@@ -49,9 +49,41 @@ angular.module("myApp").controller("viewStudentCtrl", function($http, sharedProp
 			viewStudentData.currentBadges = response.data;
 		},
 		function(response) {
-			console.log("asdfasdfsadf");
+			console.log(response);
 		});
 	};
 	viewStudentData.showBadges();
+	
+	viewStudentData.getAllBadges= function() {
+		$http({
+			url: "/KinderSpot/getAllBadges/",
+			method: "GET",
+			headers: {'Content-Type': 'application/json'}
+		})
+		.then(function(response) {
+			viewStudentData.allBadges = response.data;
+		},
+		function(response) {
+			console.log(response);
+		});
+	};
+	viewStudentData.getAllBadges();
+	
+	viewStudentData.addBadges = function(badge) {
+		viewStudentData.myBadge = badge;
+		$http({
+			url: "/KinderSpot/addBadge/" + viewStudentData.currentStudent.id,
+			method: "POST",
+			data: { "id": viewStudentData.myBadge},
+			headers: {'Content-Type': 'application/json'}
+		})
+		.then(function(response) {
+			console.log("Successfully added badge")
+			viewStudentData.showBadges();
+		},
+		function(response) {
+			console.log("Failed");
+		});
+	};
 
 }); //ends viewStudentCtrl
