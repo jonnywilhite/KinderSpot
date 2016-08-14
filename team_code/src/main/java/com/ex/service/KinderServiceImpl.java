@@ -40,6 +40,7 @@ import com.ex.domain.Student;
 import com.ex.domain.User;
 import com.ex.repo.AttendanceRepo;
 import com.ex.repo.AttendanceStudentRepo;
+import com.ex.repo.BadgeRepo;
 import com.ex.repo.BadgeStudentRepo;
 import com.ex.repo.EventsRepo;
 import com.ex.repo.MeetingRepo;
@@ -79,6 +80,9 @@ public class KinderServiceImpl implements KinderService {
 
 	@Autowired
 	private BadgeStudentRepo badgeStudentRepo;
+	
+	@Autowired
+	private BadgeRepo badgeRepo;
 
 	@Autowired
 	private AttendanceStudentRepo attendanceStudentRepo;
@@ -484,12 +488,16 @@ public class KinderServiceImpl implements KinderService {
 
 
 	@Override
-	public void assignBadgeToStudent(int studentId, int badgeId) {
-
+	public void assignBadgeToStudent(int studentId, Badge b) {
+		Student s = studentRepo.findOne(studentId);
+		badgeStudentRepo.save(new BadgeStudent(b, s));
 	}
 
 
-
+	@Override
+	public List<Badge> getAllBadges(){
+		return badgeRepo.findAll();
+	}
 
 
 }

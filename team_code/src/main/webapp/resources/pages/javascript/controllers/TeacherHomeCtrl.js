@@ -188,14 +188,10 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 			data: { "subject": teacherHomeData.mySubject,
 				"body": teacherHomeData.myBody, 	
 				"recipient": teacherHomeData.myRecipient},
-				headers: {'Content-Type': 'application/json'}
+			headers: {'Content-Type': 'application/json'}
 		})
 		.then(function(response) {
-			//success
-			//studentsList = response.data;
-			teacherHomeData.myStudents = response.data;
-			console.log("Hello")
-			//console.log("students: " + studentsList[0].firstname);
+			
 		}, 
 		function(response) { // optional
 			console.log("Failed.");

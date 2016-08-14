@@ -74,5 +74,6 @@ public interface KinderService {
 	
 	//Badge stuff
 	public List<Badge> getBadgesByStudent(int studentId);
-	public void assignBadgeToStudent(int studentId, int badgeId);
+	public void assignBadgeToStudent(int studentId, Badge b);
+	public List<Badge> getAllBadges();
 }

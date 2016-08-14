@@ -19,6 +19,8 @@
 		<input type="hidden" ng-model="viewStudentData.currentReportCard">
 		<input type="hidden" ng-model="viewStudentData.currentAttendance">
 		<input type="hidden" ng-model="viewStudentData.currentBadges">
+		<input type="hidden" ng-model="viewStudentData.allBadges">
+		
 		<h2>View Student: <span ng-bind="viewStudentData.currentStudent.firstName"></span></h2>
 		
 		<h2>Grade: <span ng-bind="viewStudentData.currentReportCard.grade"></span></h2>
@@ -37,7 +39,9 @@
 		
 		<br><br>
 		
-		<div class="well">Badges<br><br>
+		<div class="well">
+		<h1>Badges</h1>
+		<br><br>
 			<table>
 				<tr>
 					<th></th>
@@ -52,7 +56,23 @@
 					</td>
 				</tr>
 			</table>
+			
+				<form id="badgeform" novalidatestyle="font-family: chalky; color: white">
+					<h4>Give a Badge:</h4> 
+					<select style="color: black" name="studentlist"
+						form="badgeform" ng-model="user.badge" required>
+						<option ng-repeat="x in viewStudentData.allBadges"
+							value="{{x.id}}">{{x.name}}</option>
+					</select> 
+					<br>
+					<br>
+					<button
+						ng-click="viewStudentData.addBadges(user.badge)">Add</button>
+				</form>
+			
 		</div>
+		
+		
 			
 	</div>
 

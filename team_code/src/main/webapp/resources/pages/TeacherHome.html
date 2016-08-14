@@ -107,7 +107,6 @@ th, tr {
 
 
 		<div id="meetingsDiv" style="display:none" class="w3-container city w3-animate-left">
-		<div ng-controller="DatepickerDemoCtrl">
 		<form id="meetingForm" novalidatestyle="font-family: chalky; color: white">
 			<h2>My Meetings:</h2>
 			<h3>Select Parent</h3>
@@ -118,26 +117,12 @@ th, tr {
 			
 			<h3>Create New Meeting</h3>
 			<input type="text" ng-model="teach.reason" />
-			
-			<h3> Select Date</h3>
-			<input type = "date" ng-model = "dt" value = "{{dt| date: 'fullDate'}}" name = "bdatetime" id = "datetimepicker" />
-			 <!-- Calendar  -->
-	   		 <div style="display:inline-block; min-height:290px;">
-	    	   <div uib-datepicker ng-model="dt" class="well well-sm" datepicker-options="options"></div>
-	    	</div>
-	
-	    	<hr />
-	   		 <button type="button" class="btn btn-sm btn-info" ng-click="today()">Today</button>
-	   		 <button type="button" class="btn btn-sm btn-default" ng-click="setDate(2016, 8, 13)">2016-08-13</button>
-	    	 <button type="button" class="btn btn-sm btn-danger" ng-click="clear()">Clear</button>
-	    	 <button type="button" class="btn btn-sm btn-default" ng-click="toggleMin()" uib-tooltip="After today restriction">Min date</button>
-		<!-- Calendar  -->
 			<br>
 			<br>
-			<button ng-click="teacherHomeData.createMeeting(teach.parent, teach.reason,dt)">Create Meeting</button>
+			<button ng-click="teacherHomeData.createMeeting(teach.parent, teach.reason)">Create Meeting</button>
 			
 			</form>
-		</div>
+		
 
 		<table class="">
 			<tr>
