@@ -42,6 +42,7 @@ public interface KinderService {
 	public List <EventType> getAllTypes();
 	public Event deleteEvent (String name);
 	public Event updateEvent (Event event, @PathVariable String eventName);
+	public List<Event> getStudentEvents (int studentId);
 	
 	
 	//Meeting Stuff 
