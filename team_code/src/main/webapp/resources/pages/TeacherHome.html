@@ -108,7 +108,7 @@ th, tr {
 
 
 		<div id="meetingsDiv" style="display:none" class="w3-container city w3-animate-left">
-		<form id="meetingForm" novalidatestyle="font-family: chalky; color: white">
+		<form id="meetingForm" novalidatestyle="font-family:chalky;color:white>
 			<h2>My Meetings:</h2>
 			
 			<table class="w3-table w3-border w3-bordered" style="width:75%">
@@ -140,7 +140,7 @@ th, tr {
 			<input type = "date" ng-model = "dt" value = "{{dt| date: 'fullDate'}}" name = "bdatetime" id = "datetimepicker" />
 			 <!-- Calendar  -->
 	   		 <div style="display:inline-block; min-height:290px;">
-	    	   <div uib-datepicker ng-model="dt" class="well well-sm" datepicker-options="options"></div>
+	    	   <div uib-datepicker ng-model="dt" class="well well-sm" datepicker-options="options" style="background-color:green; font-family:marker" ></div>
 	    	</div>
 		<!-- Calendar  -->
 
@@ -154,9 +154,9 @@ th, tr {
 		</div>
 
 
-		<div id="eventsDiv" style="display:none" class="w3-container city w3-animate-left">
+		<div id="eventsDiv" style="display:none" class="w3-container w3-animate-left">
 		<div ng-controller="DatepickerDemoCtrl">
-		<form id = "eventForm" novalidatestyle = "font-family :chalky; color: white">
+		<form id = "eventForm" novalidatestyle = "font-family:marker; color:black">
 		<h2>My Events:</h2>
 		
 		<table class="w3-table w3-border w3-bordered" style="width:75%">
@@ -199,7 +199,7 @@ th, tr {
 		
 	    <!-- Calendar  -->
 	    <div style="display:inline-block; min-height:290px;">
-	      <div uib-datepicker ng-model="dt" class="well well-sm" datepicker-options="options"></div>
+	      <div uib-datepicker ng-model="dt" class="well well-sm" datepicker-options="options" style="background-color:green; font-family:marker"></div>
 	    </div>
 		<!-- Calendar  -->
 		
