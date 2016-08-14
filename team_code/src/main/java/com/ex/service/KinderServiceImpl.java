@@ -33,6 +33,7 @@ import com.ex.domain.AttendanceStudent;
 import com.ex.domain.Badge;
 import com.ex.domain.BadgeStudent;
 import com.ex.domain.Event;
+import com.ex.domain.EventType;
 import com.ex.domain.Meetings;
 import com.ex.domain.Photos;
 import com.ex.domain.ReportCard;
@@ -41,6 +42,7 @@ import com.ex.domain.User;
 import com.ex.repo.AttendanceRepo;
 import com.ex.repo.AttendanceStudentRepo;
 import com.ex.repo.BadgeStudentRepo;
+import com.ex.repo.EventTypeRepo;
 import com.ex.repo.EventsRepo;
 import com.ex.repo.MeetingRepo;
 import com.ex.repo.PhotosRepo;
@@ -82,6 +84,9 @@ public class KinderServiceImpl implements KinderService {
 
 	@Autowired
 	private AttendanceStudentRepo attendanceStudentRepo;
+	
+	@Autowired
+	private EventTypeRepo eventTypeRepo;
 
 
 	/*
@@ -183,18 +188,20 @@ public class KinderServiceImpl implements KinderService {
 		}
 	
 		@Override
-		public Event getEventByEventName(String name) {
-			return eventRepo.findByName(name);
+		public List<EventType> getAllTypes() {
+			return eventTypeRepo.findAll();
 		}
 	
 		@Override
 		public Event createEvent(Event event, String name) {
 			
 			event.setDate(event.getDate());
+			event.setEventType(event.getEventType());
 			event.setDescription(event.getDescription());
 			event.setName(name);
 			return eventRepo.save(event) ;
 		}
+		
 		
 		@Override
 		public Event updateEvent(Event room, String eventName) {

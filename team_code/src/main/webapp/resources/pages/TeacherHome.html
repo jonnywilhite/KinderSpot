@@ -59,6 +59,7 @@ th, tr {
 	<input type="hidden" ng-model="teacherHomeData.myStudents" />
 	<input type="hidden" ng-model="teacherHomeData.myMeetings" />
 	<input type="hidden" ng-model="teacherHomeData.myEvents" />
+	<input type="hidden" ng-model ="teacherHomeData.myEventType"/>
 	<input type="hidden" ng-model="teacherHomeData.myAttendanceEntry" />
 	
 
@@ -116,7 +117,7 @@ th, tr {
 				<option ng-repeat ="x in teacherHomeData.myStudents" value ="{{x.id + 1}}">{{x.parent.firstName}}</option>
 			</select>
 			
-			<h3>Create New Meeting</h3>
+			<h3>Reason</h3>
 			<input type="text" ng-model="teach.reason" />
 			
 			<h3> Select Date</h3>
@@ -162,6 +163,12 @@ th, tr {
 		<h3>Event Name</h3>
 
 		<input type = "text" ng-model = "event.name"/>
+		
+		<h3>Event type</h3>
+		<select form ="" ng-model = "event.type" required>
+		<option ng-repeat = "x in teacherHomeData.myEventType" value = "{{x.name}}">{{x.name}}
+		</option>
+		</select>
 	
 		<h3>Description</h3>
 		

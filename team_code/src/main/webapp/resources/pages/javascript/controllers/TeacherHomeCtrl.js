@@ -142,6 +142,25 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 		});	
 	}
 	teacherHomeData.showEvents();
+	
+
+	teacherHomeData.showEventTypes = function ()
+	{
+		$http({
+			url: '/KinderSpot/event/Type',
+			method: "GET",
+			headers: {'Content-Type': 'application/json'}
+			
+		})
+		.then(function(response){
+			teacherHomeData.myEventType = response.data;
+		},
+		function(response){
+		console.log("Failed.");
+	
+	 });	
+  }
+	teacherHomeData.showEventTypes();
 
 
 	teacherHomeData.createEvents = function (eventName, description, date)
@@ -149,7 +168,7 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 		teacherHomeData.newEvent = eventName; 
 		teacherHomeData.description = description;
 		teacherHomeData.eventDate = date; 
-		
+	
 		console.log(eventName);
 		console.log(description);
 		console.log(date);
@@ -158,8 +177,8 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 			url:'/KinderSpot/event/' + eventName,
 			method: "POST",
 			data: {"name": teacherHomeData.newEvent,
-				"description": teacherHomeData.description,
-				"date": teacherHomeData.eventDate
+				   "description": teacherHomeData.description,
+				   "date": teacherHomeData.eventDate
 			},
 
 			headers: {'Content-Type':'application/json'}
