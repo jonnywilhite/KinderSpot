@@ -17,8 +17,7 @@ angular.module('myApp').controller('EditModalInstanceCtrl', ['$scope', '$uibModa
 		$scope.myAttendanceStudents = response.data;
 		$scope.myAttendanceStudents.forEach(function(item, index) {
 			$scope.myStudents[index].present = item.present;
-		})
-		console.log($scope.myStudents);
+		});
 	},
 	function(response) {
 		console.log("Failed");
