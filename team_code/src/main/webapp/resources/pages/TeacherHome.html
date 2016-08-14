@@ -91,7 +91,8 @@ th, tr {
 	<input type="hidden" ng-model="teacherHomeData.myEvents" />
 	<input type="hidden" ng-model="teacherHomeData.myEventType" />
 	<input type="hidden" ng-model="teacherHomeData.myAttendanceEntry" />
-
+	<input type="hidden" ng-model="teacherHomeData.meetingsBadge" />
+	
 
 	<div ng-app="myApp" ng-controller="teacherHomeCtrl">
 		<nav class="w3-sidenav w3-black w3-card-2" style="width: 130px">
@@ -99,14 +100,14 @@ th, tr {
 				<h5>Menu</h5>
 			</div>
 			<a href="" class="tablink"
-				ng-click="teacherHomeData.showDisplay('studentsDiv')">Class</a> <a
-				href="" class="tablink"
-				ng-click="teacherHomeData.showDisplay('meetingsDiv')">Meetings</a> <a
-				href="" class="tablink"
-				ng-click="teacherHomeData.showDisplay('eventsDiv')">Events</a> <a
-				href="" class="tablink"
-				ng-click="teacherHomeData.showDisplay('emailDiv')">Email</a> <a
-				href="#" class="tablink" ng-click="">Logout</a>
+				ng-click="teacherHomeData.showDisplay('studentsDiv')">Class</a> 
+			<a href="" class="tablink" 
+				ng-click="teacherHomeData.showDisplay('meetingsDiv')">Meetings <span class="w3-badge w3-red">{{teacherHomeData.meetingsBadge}}</span></a> 
+			<a href="" class="tablink"
+				ng-click="teacherHomeData.showDisplay('eventsDiv')">Events</a> 
+			<a href="" class="tablink"
+				ng-click="teacherHomeData.showDisplay('emailDiv')">Email</a> 
+			<a href="#" class="tablink" ng-click="">Logout</a>
 		</nav>
 
 		<!-- Div container below needed to push everything to the right of the sidenav. -->
