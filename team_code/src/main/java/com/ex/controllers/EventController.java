@@ -25,9 +25,11 @@ public class EventController {
 		return service.getAllEvents();
 	}
 	
+
 	@RequestMapping (value = "event/Type", method = RequestMethod.GET)
 	public List <EventType> getEventByType(){
 		return service.getAllTypes();
+
 	}
 	
 	@RequestMapping(value ="event/{eventName}", method = RequestMethod.POST)

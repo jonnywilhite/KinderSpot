@@ -111,6 +111,20 @@ th, tr {
 		<div ng-controller="DatepickerDemoCtrl">
 		<form id="meetingForm" novalidatestyle="font-family: chalky; color: white">
 			<h2>My Meetings:</h2>
+			
+			<table class="w3-table w3-border w3-bordered" style="width:75%">
+				<tr>
+					<th>Parent</th>
+					<th>Reason</th>
+					<th>Date Scheduled</th>
+				</tr>
+				<tr ng-repeat="m in teacherHomeData.myMeetings">
+					<td>{{m.parent.firstName}}</td>
+					<td>{{ m.reason }}</td>
+					<td>{{ m.date | date:'MMM d, yyyy h:mm a' }}</td>
+				</tr>
+			</table>
+			
 			<h3>Select Parent</h3>
 			
 			<select form = "parentForm" ng-model = "teach.parent" required> 
@@ -140,18 +154,6 @@ th, tr {
 			</form>
 		</div>
 
-		<table class="">
-			<tr>
-				<th>Parent</th>
-				<th>Type</th>
-				<th>Date Scheduled</th>
-			</tr>
-			<tr ng-repeat="m in teacherHomeData.myMeetings">
-				<td>{{m.parent.firstName}}</td>
-				<td>{{ m.reason }}</td>
-				<td>{{ m.date | date:'medium' }}</td>
-			</tr>
-		</table>
 		</div>
 
 
