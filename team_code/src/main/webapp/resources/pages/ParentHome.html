@@ -53,6 +53,7 @@ li, th, tr, td {
 	<input type="hidden" ng-model="parentHomeData.currentReportCard">
 	<input type="hidden" ng-model="parentHomeData.meeting">
 	
+	
 <h2>Parent Page: {{parentHomeData.loggedInUser.firstName}}</h2>
 
 
@@ -68,7 +69,7 @@ li, th, tr, td {
 
 
 
-<div id="emailDiv" style="display:none">
+<div id="emailDiv" style="display:inline">
 	<form novalidate>
     	<h3>Subject:</h3><br>
     	<input type="text" ng-model="user.subject" required><br>
@@ -79,7 +80,25 @@ li, th, tr, td {
 	</form>
 </div>
 
-<div id="meetingsDiv" style="dispay:none">
+<div id="badgesDiv" style="display:inline">
+		<h2>Badges</h2>
+		<table>
+				<tr>
+					<th></th>
+					<th></th>
+				</tr>
+				<tr ng-repeat="bad in parentHomeData.currentBadges">
+					<td ng-bind="bad.name"></td>
+					<td >
+						<img ng-src="{{bad.photo}}" class="img-responsive"
+						style="width: 40%; height: 20%; border: medium; border-style: double;"
+						align="top"/>
+					</td>
+				</tr>
+		</table>
+</div>
+
+<div id="meetingsDiv" style="display:inline">
 
 	<br><br>
 	<table class="w3-table w3-border w3-bordered" style="width:75%">
