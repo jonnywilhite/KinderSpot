@@ -2,6 +2,7 @@ package com.ex.service;
 
 
 import java.io.File;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.PathVariable;
@@ -64,6 +65,8 @@ public interface KinderService {
 	public Attendance submitAttendanceSheet(List<AttendanceStudent> attendanceSheet, int teacherId);
 	public List<Attendance> viewAttendanceSheets(int teacherId);
 	public List<AttendanceStudent> viewAttendanceEntriesByStudent(int studentId);
+	public List<AttendanceStudent> viewAttendanceSheetForDate(int teacherId, Date date);
+	public Attendance updateAttendanceSheetForDate(int teacherId, Date date, List<AttendanceStudent> attendanceSheet);
 	
 	//Email stuff
 	public void sendEmail(int senderId, int recipientId, String subject, String body);
