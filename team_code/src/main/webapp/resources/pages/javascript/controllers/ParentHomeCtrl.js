@@ -24,6 +24,7 @@ angular.module("myApp").controller("parentHomeCtrl", function($http, sharedPrope
 			currStudentId = response.data[0].id; //Needed to pass to function below.
 			//console.log("my child: " + response.data[0].id);
 			parentHomeData.showGrade(response.data[0].id);
+			parentHomeData.showBadges(response.data[0].id);
 		}, 
 		function(response) { // optional
 			console.log("Failed.");
@@ -47,6 +48,19 @@ angular.module("myApp").controller("parentHomeCtrl", function($http, sharedPrope
 			console.log(response);
 		});
 	}
+	parentHomeData.showBadges = function(myId) {
+		$http({
+			url: "/KinderSpot/badges/" + currStudentId,
+			method: "GET",
+			headers: {'Content-Type': 'application/json'}
+		})
+		.then(function(response) {
+			parentHomeData.currentBadges = response.data;
+		},
+		function(response) {
+			console.log("Failed.");
+		});
+	};
 	
 	parentHomeData.getMeetings = function(){
 		
@@ -88,5 +102,7 @@ angular.module("myApp").controller("parentHomeCtrl", function($http, sharedPrope
 			console.log("Failed.");
 		});
 	}; //ends email function 
+	
+	
 
 });//ends parentHomeApp.controller()
