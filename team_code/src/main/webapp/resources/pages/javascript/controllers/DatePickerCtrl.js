@@ -1,14 +1,20 @@
-angular.module("myApp").controller("DatepickerDemoCtrl", function ($scope) {
-	$scope.today = function() {
-		$scope.dt = new Date();
+angular.module("myApp").controller("DatepickerDemoCtrl", function ($scope,$controller) {
+	
+	var datePickerCtrl = $scope.$new();
+	
+	$controller("teacherHomeCtrl",{$scope : datePickerCtrl});
+	
+	
+	datePickerCtrl.today = function() {
+		datePickerCtrl.dt = new Date();
 	};
-	$scope.today();
+	datePickerCtrl.today();
 
-	$scope.clear = function() {
-		$scope.dt = null;
+	datePickerCtrl.clear = function() {
+		datePickerCtrl.dt = null;
 	};
 
-	$scope.options = {
+	datePickerCtrl.options = {
 			customClass: getDayClass,
 			minDate: new Date(),
 			showWeeks: true
@@ -21,21 +27,21 @@ angular.module("myApp").controller("DatepickerDemoCtrl", function ($scope) {
 		return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
 	}
 
-	$scope.toggleMin = function() {
-		$scope.options.minDate = $scope.options.minDate ? null : new Date();
+	datePickerCtrl.toggleMin = function() {
+		datePickerCtrl.options.minDate = datePickerCtrl.options.minDate ? null : new Date();
 	};
 
-	$scope.toggleMin();
+	datePickerCtrl.toggleMin();
 
-	$scope.setDate = function(year, month, day) {
-		$scope.dt = new Date(year, month, day);
+	datePickerCtrl.setDate = function(year, month, day) {
+		datePickerCtrl.dt = new Date(year, month, day);
 	};
 
 	var tomorrow = new Date();
 	tomorrow.setDate(tomorrow.getDate() + 1);
 	var afterTomorrow = new Date(tomorrow);
 	afterTomorrow.setDate(tomorrow.getDate() + 1);
-	$scope.events = [
+	datePickerCtrl.events = [
 	                 {
 	                	 date: tomorrow,
 	                	 status: 'full'
@@ -52,11 +58,11 @@ angular.module("myApp").controller("DatepickerDemoCtrl", function ($scope) {
 		if (mode === 'day') {
 			var dayToCheck = new Date(date).setHours(0,0,0,0);
 
-			for (var i = 0; i < $scope.events.length; i++) {
-				var currentDay = new Date($scope.events[i].date).setHours(0,0,0,0);
+			for (var i = 0; i < datePickerCtrl.events.length; i++) {
+				var currentDay = new Date(datePickerCtrl.events[i].date).setHours(0,0,0,0);
 
 				if (dayToCheck === currentDay) {
-					return $scope.events[i].status;
+					return datePickerCtrl.events[i].status;
 				}
 			}
 		}

@@ -139,7 +139,7 @@ th, tr {
 
 
 		<div id="eventsDiv" style="display:none" class="w3-container city w3-animate-left">
-		
+		<div ng-controller="DatepickerDemoCtrl">
 		<form id = "eventForm" novalidatestyle = "font-family :chalky; color: white">
 		<h2>My Events:</h2>
 		
@@ -152,18 +152,11 @@ th, tr {
 		<input type = "text" ng-model ="event.description"/>
 		
 		<h3>Select Date </h3>
-  	
-		<br>
-		<br>
-		<button ng-click = "teacherHomeData.createEvents(event.name, event.description)">Post New Event</button>
+		<input type = "date" ng-model = "dt" value = "{{dt| date: 'fullDate'}}" name = "bdatetime" id = "datetimepicker" />
 		
-		</form>
+		<!--  <pre>Selected date is: <em>{{dt | date:'fullDate'}}</em></pre> -->
 		
-		
-		<div ng-controller="DatepickerDemoCtrl">
-	    <pre>Selected date is: <em>{{dt | date:'fullDate' }}</em></pre>
-	
-	    <h4>Inline</h4>
+	    <!-- Calendar  -->
 	    <div style="display:inline-block; min-height:290px;">
 	      <div uib-datepicker ng-model="dt" class="well well-sm" datepicker-options="options"></div>
 	    </div>
@@ -173,6 +166,13 @@ th, tr {
 	    <button type="button" class="btn btn-sm btn-default" ng-click="setDate(2016, 8, 13)">2016-08-13</button>
 	    <button type="button" class="btn btn-sm btn-danger" ng-click="clear()">Clear</button>
 	    <button type="button" class="btn btn-sm btn-default" ng-click="toggleMin()" uib-tooltip="After today restriction">Min date</button>
+		<!-- Calendar  -->
+		
+		<br>
+		<br>
+		<button ng-click = "teacherHomeData.createEvents(event.name, event.description, dt)">Post New Event</button>
+		
+		</form>
 		</div>
 		
 		

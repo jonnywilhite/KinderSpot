@@ -115,18 +115,22 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 	teacherHomeData.showEvents();
 
 
-	teacherHomeData.createEvents = function (eventName, description)
+	teacherHomeData.createEvents = function (eventName, description, date)
 	{
 		teacherHomeData.newEvent = eventName; 
 		teacherHomeData.description = description;
+		teacherHomeData.eventDate = date; 
+		
 		console.log(eventName);
 		console.log(description);
+		console.log(date);
 
 		$http({ 
 			url:'/KinderSpot/event/' + eventName,
 			method: "POST",
 			data: {"name": teacherHomeData.newEvent,
-				"description": teacherHomeData.description
+				"description": teacherHomeData.description,
+				"date": teacherHomeData.eventDate
 			},
 
 			headers: {'Content-Type':'application/json'}

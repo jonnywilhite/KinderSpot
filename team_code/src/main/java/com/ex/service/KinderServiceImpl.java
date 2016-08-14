@@ -188,7 +188,7 @@ public class KinderServiceImpl implements KinderService {
 		@Override
 		public Event createEvent(Event event, String name) {
 			
-			event.setDate(new Timestamp(new Date().getTime()));
+			event.setDate(event.getDate());
 			event.setDescription(event.getDescription());
 			event.setName(name);
 			return eventRepo.save(event) ;
