@@ -3,9 +3,55 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 	var teacherHomeData = this;
 	var loggedUser = sharedProperties.getProperty();
 
-	teacherHomeData.myStudentGrades = {};
+	teacherHomeData.selected = {};
+	teacherHomeData.myStudents = [];
+	teacherHomeData.myStudentGrades = [];
 	teacherHomeData.attendanceMessage = "";
 	teacherHomeData.hasSubmittedAttendance = false;
+	
+	/*
+	 * All this is for editing grade in-line
+	 */
+	teacherHomeData.getTemplate = function (student) {
+        if (student.id === teacherHomeData.selected.id)
+        	return 'edit';
+        else
+        	return 'display';
+    };
+    
+    teacherHomeData.editGrade = function (student) {
+        teacherHomeData.selected = angular.copy(student);
+    };
+    
+    teacherHomeData.saveStudent = function (idx) {
+        teacherHomeData.myStudents[idx] = angular.copy(teacherHomeData.selected);
+        var studentId = teacherHomeData.myStudents[idx].id;
+        var newGrade = teacherHomeData.myStudents[idx].grade;
+        teacherHomeData.updateReportCard(studentId, newGrade);
+        
+        teacherHomeData.reset();
+    };
+    
+    teacherHomeData.reset = function () {
+        teacherHomeData.selected = {};
+    };
+    
+    teacherHomeData.updateReportCard = function(studentId, newGrade) {
+    	$http({
+    		url: '/KinderSpot/report-cards/' + studentId,
+    		method: "PUT",
+    		headers: {'Content-Type': 'application/json'},
+    		data: newGrade
+    	})
+    	.then(function(response) {
+    		console.log("successfully updated grade");
+    	},
+    	function (response) {
+    		console.log("failed to update grade");
+    	})
+    }
+    
+    //End in-line grade stuff
 
 	teacherHomeData.displayAttendanceMessage = function() {
 		$http({
@@ -52,6 +98,7 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 			
 			teacherHomeData.myStudents = response.data;
 			studentsService.setStudents(response.data);
+			teacherHomeData.showGrades();
 		}, 
 		function(response) { // optional
 			console.log("Failed.");
@@ -75,7 +122,6 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 			console.log("Failed to get grades");
 		});
 	};
-	teacherHomeData.showGrades();
 
 	teacherHomeData.viewStudent = function(id) {
 
@@ -253,7 +299,6 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 		document.getElementById('meetingsDiv').style.display = "none";
 
 		document.getElementById(divId).style.display = "inline";
-		document.getElementById('body').style.backgroundSize = "100% 100%";
 	};
 
 	teacherHomeData.animationsEnabled = true;

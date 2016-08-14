@@ -35,5 +35,10 @@ public class ReportCardController {
 	public ReportCard getReportCardByStudent(@PathVariable int studentId) {
 		return service.getReportCardByStudent(studentId);
 	}
+	
+	@RequestMapping(value="report-cards/{studentId}", method=RequestMethod.PUT)
+	public ReportCard updateReportCardByStudent(@PathVariable int studentId, @RequestBody String grade) {
+		return service.updateReportCardByStudent(studentId, grade);
+	}
 
 }

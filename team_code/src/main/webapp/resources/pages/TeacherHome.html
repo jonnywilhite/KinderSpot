@@ -94,7 +94,7 @@ th, tr {
 
 		<!-- Div container below needed to push everything to the right of the sidenav. -->
 		<div style="margin-left: 140px">
-			<h2>Teacher Home: welcome {{teacherHomeData.loggedInUser}}</h2>
+			<h2>Teacher Home: Welcome {{teacherHomeData.loggedInUser}}</h2>
 
 
 			<div id="studentsDiv" style="display: none" class="w3-container city w3-animate-left">
@@ -107,10 +107,8 @@ th, tr {
 						<th>Student Link</th>
 						<th>Current Grade</th>
 					</tr>
-					<tr ng-repeat="x in teacherHomeData.myStudents">
-						<td>{{x.firstName}}</td>
-						<td><button class="w3-btn w3-transparent w3-border w3-round-large" ng-click="teacherHomeData.viewStudent(x.id)">View</button></td>
-						<td>{{ x.grade }}</td>
+					<tr ng-repeat="x in teacherHomeData.myStudents" ng-include="teacherHomeData.getTemplate(x)">
+						
 					</tr>
 				</table>
 
@@ -123,12 +121,11 @@ th, tr {
 			</div>
 
 
-			<div id="meetingsDiv" style="display: none"
-				class="w3-container city w3-animate-left">
-				<form id="meetingForm" novalidate style="font-family: chalky; color: white">
+			<div id="meetingsDiv" style="display: none" class="w3-container city w3-animate-left">
+				<form id="meetingForm" novalidate>
 					<h2>My Meetings:</h2>
 
-					<table class="w3-table w3-border w3-bordered" style="width: 85%">
+					<table class="w3-table w3-border w3-bordered" style="width: 85%; font-family: chalky; color: white">
 						<tr>
 							<th>Parent</th>
 							<th>Reason</th>
@@ -156,7 +153,7 @@ th, tr {
 					
 					<!-- Calendar  -->
 					<div style="display: inline-block; min-height: 290px;">
-						<div uib-datepicker ng-model="dt" class="well well-sm" datepicker-options="options" style="background-color: green; font-family: marker"></div>
+						<div uib-datepicker ng-model="dt" class="well well-sm" datepicker-options="options" style="background-color: green"></div>
 					</div>
 
 					<hr />
@@ -252,6 +249,29 @@ th, tr {
 
 	<!-- Custom Script -->
 	<script type="text/javascript" src="javascript/controllers.js"></script>
+	
+	<script type="text/ng-template" id="display">
+		<td>{{x.firstName}}</td>
+		<td><button class="w3-btn w3-transparent w3-border w3-round-large" ng-click="teacherHomeData.viewStudent(x.id)">View</button></td>
+		<td>{{ x.grade }}
+			<button class="w3-btn w3-transparent w3-border w3-round-large" ng-click="teacherHomeData.editGrade(x)">Change Grade</button>
+		</td>
+    </script>
+    <script type="text/ng-template" id="edit">
+		<td>{{x.firstName}}</td>
+		<td><button class="w3-btn w3-transparent w3-border w3-round-large" ng-click="teacherHomeData.viewStudent(x.id)">View</button></td>
+		<td>
+			<select class="w3-transparent w3-border" ng-model="teacherHomeData.selected.grade">
+				<option style="font-family: marker; color: black">O</option>
+				<option style="font-family: marker; color: black">G</option>
+				<option style="font-family: marker; color: black">N</option>
+				<option style="font-family: marker; color: black">U</option>
+			</select>
+			<button class="w3-btn w3-transparent w3-border w3-round-large w3-small" ng-click="teacherHomeData.saveStudent($index)">Save</button>
+            <button class="w3-btn w3-transparent w3-border w3-round-large w3-small" ng-click="teacherHomeData.reset()">Cancel</button>
+		</td>
+		
+    </script>
 
 
 </body>

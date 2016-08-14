@@ -185,6 +185,14 @@ public class KinderServiceImpl implements KinderService {
 		Student student = studentRepo.findOne(studentId);
 		return reportCardRepo.findByStudent(student);
 	}
+	
+	@Override
+	public ReportCard updateReportCardByStudent(int studentId, String grade) {
+		Student student = studentRepo.findOne(studentId);
+		ReportCard reportCard = reportCardRepo.findByStudent(student);
+		reportCard.setGrade(grade);
+		return reportCard;
+	}
 
 
 
