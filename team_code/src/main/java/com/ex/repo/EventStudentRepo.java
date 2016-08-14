@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.ex.domain.Event;
 import com.ex.domain.EventStudent;
 import com.ex.domain.Student;
 

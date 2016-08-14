@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ex.domain.Event;
-import com.ex.domain.Student;
 import com.ex.domain.EventType;
 import com.ex.service.KinderService;
 
