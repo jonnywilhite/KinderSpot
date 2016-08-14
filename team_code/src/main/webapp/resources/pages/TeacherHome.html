@@ -138,7 +138,7 @@ th, tr {
 			<input type = "date" ng-model = "dt" value = "{{dt| date: 'fullDate'}}" name = "bdatetime" id = "datetimepicker" />
 			 <!-- Calendar  -->
 	   		 <div style="display:inline-block; min-height:290px;">
-	    	   <div uib-datepicker ng-model="dt" class="well well-sm" datepicker-options="options"></div>
+	    	   <div uib-datepicker ng-model="dt" class="well well-sm" datepicker-options="options" style="background-color:green;font-family:marker"></div>
 	    	</div>
 	
 	    	<hr />
@@ -157,7 +157,7 @@ th, tr {
 
 		<div id="eventsDiv" style="display:none" class="w3-container city w3-animate-left">
 		<div ng-controller="DatepickerDemoCtrl">
-		<form id = "eventForm" novalidatestyle = "font-family :chalky; color: white">
+		<form id = "eventForm" novalidatestyle = "font-family:chalky color:white">
 		<h2>My Events:</h2>
 		
 		<h3>Event Name</h3>
@@ -181,7 +181,7 @@ th, tr {
 		
 	    <!-- Calendar  -->
 	    <div style="display:inline-block; min-height:290px;">
-	      <div uib-datepicker ng-model="dt" class="well well-sm" datepicker-options="options"></div>
+	      <div uib-datepicker ng-model="dt" class="well well-sm" datepicker-options="options" style="background-color:green;font-family:marker"></div>
 	    </div>
 	
 	    <hr />

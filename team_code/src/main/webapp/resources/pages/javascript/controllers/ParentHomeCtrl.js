@@ -10,7 +10,7 @@ angular.module("myApp").controller("parentHomeCtrl", function($http, sharedPrope
 	}
 	parentHomeData.displayUser();
 
-
+	//After getting child, we run several of the below functions inside this one once we have the student ID.
 	parentHomeData.getMyChild = function(){
 
 		$http({
@@ -23,8 +23,11 @@ angular.module("myApp").controller("parentHomeCtrl", function($http, sharedPrope
 			parentHomeData.myChild = response.data[0];
 			currStudentId = response.data[0].id; //Needed to pass to function below.
 			//console.log("my child: " + response.data[0].id);
-			parentHomeData.showGrade(response.data[0].id);
-			parentHomeData.showBadges(response.data[0].id);
+			
+			//Below runs the methods that require the student ID (we only have the parent object at first)
+			parentHomeData.showGrade(currStudentId);
+			parentHomeData.showBadges(currStudentId);
+			parentHomeData.showEvents(currStudentId);
 		}, 
 		function(response) { // optional
 			console.log("Failed.");
@@ -80,6 +83,25 @@ angular.module("myApp").controller("parentHomeCtrl", function($http, sharedPrope
 		
 	}
 	parentHomeData.getMeetings();
+	
+	
+	parentHomeData.showEvents = function(studentId){
+		
+		$http({
+			url: '/KinderSpot/' + studentId + '/studentevent',
+			method: "GET",
+			headers: {'Content-Type': 'application/json'}
+		})
+		.then(function(response) {
+			//success
+			parentHomeData.events = response.data;
+			//console.log("events: " + response.data);
+		}, 
+		function(response) { // optional
+			console.log("Failed.");
+		});
+		
+	}
 
 
 	parentHomeData.emailTeacher = function(subject, body) {
