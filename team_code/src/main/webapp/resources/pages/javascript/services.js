@@ -130,3 +130,17 @@ angular.module("myApp").service('studentsService', function() {
 
 
 
+angular.module("myApp").service('attendanceService', function() {
+
+	var attendanceMessage = "";
+
+	return {
+		getMessage: function() {
+			return attendanceMessage;
+		},
+		setMessage: function(value) {
+			attendanceMessage = value;
+		}
+	}
+
+});

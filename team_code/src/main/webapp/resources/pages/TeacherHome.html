@@ -30,7 +30,7 @@
 @font-face { font-family: chalkboard; src: url("/KinderSpot/resources/fonts/chalkboard.ttf") }
 @font-face { font-family: brokenchalk; src: url("/KinderSpot/resources/fonts/BrokenChalk.ttf") }
 
-h3, h2 {
+h3, h2, h5 {
 	font-family: chalky;
 	color: white; 
 }
@@ -80,27 +80,28 @@ th, tr {
 
 
 		<div id="studentsDiv" style="display:none" class="w3-container city w3-animate-left">
-		<!-- Loops through our students list obtained from the database, then displayed below. -->
-		<h2>My students:</h2>
-		<table class="w3-table w3-border w3-bordered" style="width:75%">
-			<tr>
-				<th>Name</th>
-				<th>Student Link</th>
-				<th>Parent</th>
-			</tr>
-			<tr ng-repeat="x in teacherHomeData.myStudents">
-				<td>{{x.firstName}}</td>
-				<td><button class="w3-btn w3-transparent w3-border w3-round-large" 
-					ng-click="teacherHomeData.viewStudent(x.id)">View</button></td>
-				<td>{{ x.parent.firstName }}</td>
-			</tr>
-		</table>
-		
-		<br>
-		
-		<div>
-    		<button type="button" class="btn btn-default" ng-click="teacherHomeData.open()">Submit Attendance Sheet</button>
-		</div>
+			<!-- Loops through our students list obtained from the database, then displayed below. -->
+			
+			<h2>My students:</h2>
+			<table class="w3-table w3-border w3-bordered" style="width:75%">
+				<tr>
+					<th>Name</th>
+					<th>Student Link</th>
+					<th>Parent</th>
+				</tr>
+				<tr ng-repeat="x in teacherHomeData.myStudents">
+					<td>{{x.firstName}}</td>
+					<td><button class="w3-btn w3-transparent w3-border w3-round-large" 
+						ng-click="teacherHomeData.viewStudent(x.id)">View</button></td>
+					<td>{{ x.parent.firstName }}</td>
+				</tr>
+			</table>
+			
+			<br>
+			<h5 ng-bind="teacherHomeData.attendanceMessage"></h5>
+	    	<button type="button" class="btn btn-default" ng-click="teacherHomeData.open()">
+	    		{{teacherHomeData.hasSubmittedAttendance ? "Edit Attendance Sheet" : "Submit Attendance Sheet"}}
+	    	</button>
 		
 		</div>
 

@@ -45,8 +45,27 @@ angular.module("myApp").controller("parentHomeCtrl", function($http, sharedPrope
 		},
 		function(response) {
 			console.log(response);
-		})
+		});
 	}
+	
+	parentHomeData.getMeetings = function(){
+		
+		$http({
+			url: '/KinderSpot/meeting/' + loggedUser.id,
+			method: "GET",
+			headers: {'Content-Type': 'application/json'}
+		})
+		.then(function(response) {
+			//success
+			parentHomeData.meeting = response.data;
+			//console.log("meeting: " + response.data);
+		}, 
+		function(response) { // optional
+			console.log("Failed.");
+		});
+		
+	}
+	parentHomeData.getMeetings();
 
 
 	parentHomeData.emailTeacher = function(subject, body) {

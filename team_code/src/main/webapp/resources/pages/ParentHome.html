@@ -51,6 +51,7 @@ li, th, tr, td {
 	<input type="hidden" ng-model="loggedInUser" />
 	<input type="hidden" ng-model="parentHomeData.myChild" />
 	<input type="hidden" ng-model="parentHomeData.currentReportCard">
+	<input type="hidden" ng-model="parentHomeData.meeting">
 	
 <h2>Parent Page: {{parentHomeData.loggedInUser.firstName}}</h2>
 
@@ -76,6 +77,23 @@ li, th, tr, td {
     	<br><br>
     	<button class="w3-btn w3-transparent w3-border w3-round-large" ng-click="parentHomeData.emailTeacher(user.subject, user.body)">Send</button>
 	</form>
+</div>
+
+<div id="meetingsDiv" style="dispay:none">
+
+	<br><br>
+	<table class="w3-table w3-border w3-bordered" style="width:75%">
+				<tr>
+					<th>Meeting Description</th>
+					<th>Date Scheduled</th>
+				</tr>
+				<tr ng-repeat="x in parentHomeData.meeting">
+					<td>{{ x.reason }}</td>
+					<td>{{ x.date }}</td>
+				</tr>
+	</table>
+
+
 </div>
 
 

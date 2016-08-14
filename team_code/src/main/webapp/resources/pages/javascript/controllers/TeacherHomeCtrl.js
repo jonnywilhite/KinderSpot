@@ -2,12 +2,35 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 
 	var teacherHomeData = this;
 	var loggedUser = sharedProperties.getProperty();
-	
+
 	teacherHomeData.attendanceMessage = "";
-	
+	teacherHomeData.hasSubmittedAttendance = false;
+
 	teacherHomeData.displayAttendanceMessage = function() {
-		
+		$http({
+			url: '/KinderSpot/' + loggedUser.id + '/attendance',
+			method: "GET",
+			headers: {'Content-Type': 'application/json'}
+		})
+		.then(function(response) {
+			var thisDate = new Date(response.data[0].date);
+			var thatDate = new Date();
+			var thisDateString = thisDate.getMonth() + "-" + thisDate.getDate();
+			var thatDateString = thatDate.getMonth() + "-" + thatDate.getDate();
+			
+			if (thisDateString == thatDateString) {
+				teacherHomeData.attendanceMessage = "You've submitted today's attendance!";
+				teacherHomeData.hasSubmittedAttendance = true;
+			} else {
+				teacherHomeData.attendanceMessage = "You haven't submitted today's attendance yet";
+				teacherHomeData.hasSubmittedAttendance = false;
+			}
+		},
+		function(response) {
+			
+		});
 	}
+	teacherHomeData.displayAttendanceMessage();
 
 
 	//Displays teacher object info on View.
@@ -192,22 +215,45 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 	teacherHomeData.animationsEnabled = true;
 
 	teacherHomeData.open = function (size) {
+		
+		if (!teacherHomeData.hasSubmittedAttendance) {
 
-		var modalInstance = $uibModal.open({
-			animation: teacherHomeData.animationsEnabled,
-			templateUrl: 'myModalContent.html',
-			controller: 'ModalInstanceCtrl',
-			size: size,
-			resolve: {
-
-			}
-		});
-
-		modalInstance.result.then(function (selectedItem) {
-
-		}, function () {
-
-		});
+			var modalInstance = $uibModal.open({
+				animation: teacherHomeData.animationsEnabled,
+				templateUrl: 'myModalContent.html',
+				controller: 'ModalInstanceCtrl',
+				size: size,
+				resolve: {
+	
+				}
+			});
+	
+			modalInstance.result.then(function () {
+				teacherHomeData.attendanceMessage = "You've submitted today's attendance!";
+				teacherHomeData.hasSubmittedAttendance = true;
+			}, function () {
+				
+			});
+		
+		} else {
+			
+			var editModalInstance = $uibModal.open({
+				animation: teacherHomeData.animationsEnabled,
+				templateUrl: 'EditAttendanceModalContent.html',
+				controller: 'EditModalInstanceCtrl',
+				size: size,
+				resolve: {
+	
+				}
+			});
+	
+			editModalInstance.result.then(function () {
+				teacherHomeData.attendanceMessage = "You've submitted today's attendance!";
+				teacherHomeData.hasSubmittedAttendance = true;
+			}, function () {
+				
+			});
+		}
 	};
 
 }); //ends teacherHomeCtrl
