@@ -33,6 +33,7 @@ import com.ex.domain.AttendanceStudent;
 import com.ex.domain.Badge;
 import com.ex.domain.BadgeStudent;
 import com.ex.domain.Event;
+import com.ex.domain.EventStudent;
 import com.ex.domain.Meetings;
 import com.ex.domain.Photos;
 import com.ex.domain.ReportCard;
@@ -41,6 +42,7 @@ import com.ex.domain.User;
 import com.ex.repo.AttendanceRepo;
 import com.ex.repo.AttendanceStudentRepo;
 import com.ex.repo.BadgeStudentRepo;
+import com.ex.repo.EventStudentRepo;
 import com.ex.repo.EventsRepo;
 import com.ex.repo.MeetingRepo;
 import com.ex.repo.PhotosRepo;
@@ -55,6 +57,9 @@ public class KinderServiceImpl implements KinderService {
 
 	@Autowired
 	private StudentRepo studentRepo;
+	
+	@Autowired
+	private EventStudentRepo eventStudentRepo;
 
 	@Autowired
 	private TeacherRepo teacherRepo;
@@ -194,6 +199,22 @@ public class KinderServiceImpl implements KinderService {
 			event.setDescription(event.getDescription());
 			event.setName(name);
 			return eventRepo.save(event) ;
+		}
+		
+		@Override
+		public List<Event> getStudentEvents(int studentId) {
+			
+			Student student = studentRepo.findOne(studentId);
+			
+			List<EventStudent> esList = eventStudentRepo.findByStudent(student);
+			List<Event> eList = new ArrayList<Event>();
+			
+			for(EventStudent es: esList)
+			{
+				eList.add(es.getEvent());
+			}
+			
+			return eList;
 		}
 		
 		@Override
