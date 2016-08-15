@@ -158,35 +158,7 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 
 
 	teacherHomeData.createMeeting = function (parent,reason,date)
-	{
-		teacherHomeData.selectParent = parent;
-		teacherHomeData.meetingReason = reason; 
-		teacherHomeData.meetingDate = date;
-		
-		console.log(parent);
-		console.log(reason);
-		console.log(date);
-		
-		$http({ 
-			url:'/KinderSpot/meeting/' + parent ,
-			method: "POST",
-			data: { "reason": teacherHomeData.meetingReason,
-				"parent":{
-					"id": teacherHomeData.selectParent
-				},
-				"date": teacherHomeData.meetingDate
-
-			},
-			headers: {'Content-Type':'application/json'}
-		})
-		.then(function(response){
-
-			teacherHomeData.createNewMeeting = response.data;
-		},
-		function(response){
-			console.log("Failed.")
-		});		
-
+	{	
 
 	}
 
@@ -345,5 +317,24 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 			});
 		}
 	};
+	
+	teacherHomeData.openMeetingModal = function(size) {
+		
+		var modalInstance = $uibModal.open({
+			animation: teacherHomeData.animationsEnabled,
+			templateUrl: 'NewMeetingModal.html',
+			controller: 'MeetingModalCtrl',
+			size: size,
+			resolve: {
+
+			}
+		});
+
+		modalInstance.result.then(function () {
+			
+		}, function () {
+			
+		});
+	}
 
 }); //ends teacherHomeCtrl

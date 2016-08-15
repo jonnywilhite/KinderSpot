@@ -34,6 +34,10 @@ public class Event {
 	@JoinColumn(name="et_id")
 	private EventType eventType;
 	
+	@ManyToOne
+	@JoinColumn(name="t_id")
+	private User teacher;
+	
 	
 	public Event(int id, String name, String description, Timestamp date, EventType eventType) {
 		super();

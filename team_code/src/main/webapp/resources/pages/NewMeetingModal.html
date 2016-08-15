@@ -1,0 +1,38 @@
+<div ng-app="myApp" ng-controller="teacherHomeCtrl">
+	
+	<div class="modal-header">
+    	<h3 class="modal-title" style="font-family: marker; color: black">Schedule New Meeting</h3>
+    </div>
+	<div class="modal-body">
+		<form id="meetingForm" novalidate>
+			<h3 style="font-family: marker; color: black">Select Parent</h3>
+
+			<select style="font-family: marker; color: black" form="parentForm" ng-model="teach.parent" required>
+				<option style="font-family: marker; color: black" ng-repeat="x in myStudents" value="{{x.parent.id}}">{{x.parent.firstName}}</option>
+			</select>
+
+			<h3 style="font-family: marker; color: black">Reason</h3>
+			<input type="text" ng-model="teach.reason" />
+
+
+			<h3 style="font-family: marker; color: black">Select Date</h3>
+			<input type="date" ng-model="dt" value="{{dt| date: 'fullDate'}}" name="bdatetime" id="datetimepicker" />
+
+			<!-- Calendar  -->
+			<div style="display: inline-block; min-height: 290px;">
+				<div uib-datepicker ng-model="dt" class="well well-sm" datepicker-options="options" style="background-color: green"></div>
+			</div>
+
+			<hr />
+
+			<!-- Calendar  -->
+
+			<!-- <button ng-click="teacherHomeData.createMeeting()">Create Meeting</button> -->
+
+		</form>
+	</div>
+	<div class="modal-footer">
+    	<button class="btn btn-primary" type="button" ng-click="ok(teach.parent, teach.reason, dt)">Submit</button>
+        <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+    </div>
+</div>

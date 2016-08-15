@@ -141,7 +141,6 @@ th, tr {
 
 
 			<div id="meetingsDiv" style="display: none" class="w3-container city w3-animate-left">
-				<form id="meetingForm" novalidate>
 					<h2>My Meetings:</h2>
 
 					<table class="w3-table w3-border w3-bordered"
@@ -157,34 +156,12 @@ th, tr {
 							<td>{{ m.date | date:'MMM d, yyyy' }}</td>
 						</tr>
 					</table>
-
-					<h3>Select Parent</h3>
-
-					<select form="parentForm" ng-model="teach.parent" required>
-						<option ng-repeat="x in teacherHomeData.myStudents" value="{{x.parent.id}}">{{x.parent.firstName}}</option>
-					</select>
-
-					<h3>Reason</h3>
-					<input type="text" ng-model="teach.reason" />
-
-
-					<h3>Select Date</h3>
-					<input type="date" ng-model="dt" value="{{dt| date: 'fullDate'}}" name="bdatetime" id="datetimepicker" />
-
-					<!-- Calendar  -->
-					<div style="display: inline-block; min-height: 290px;">
-						<div uib-datepicker ng-model="dt" class="well well-sm" datepicker-options="options" style="background-color: green"></div>
-					</div>
-
-					<hr />
-
-					<!-- Calendar  -->
-
-					<br> <br>
-					<button
-						ng-click="teacherHomeData.createMeeting(teach.parent, teach.reason)">Create Meeting</button>
-
-				</form>
+					
+					<br>
+					
+					<button type="button" class="btn btn-default" ng-click="teacherHomeData.openMeetingModal()">
+						Schedule New Meeting
+					</button>
 			</div>
 
 			<div id="eventsDiv" style="display: none"
