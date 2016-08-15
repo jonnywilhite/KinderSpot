@@ -1,36 +1,37 @@
-angular.module('myApp').controller('PhotosModalCtrl', ['$scope', '$uibModalInstance', 'studentsService', '$http', 'sharedProperties', function ($scope, $uibModalInstance, studentsService, $http, sharedProperties) {
+angular.module('myApp').controller('PhotosModalCtrl', ['$scope', '$uibModalInstance', 'studentsService', '$http', 'sharedProperties', 'fileUpload', function ($scope, $uibModalInstance, studentsService, $http, sharedProperties, fileUpload) {
 
 	var loggedUser = sharedProperties.getProperty();
 	
 	$scope.myStudents = studentsService.getStudents();
 
 	$scope.ok = function (photo) {
+		
+		var file = photo;
+		console.log(file);
+		var uploadUrl = '/KinderSpot/photos/';
+		fileUpload.uploadFileToUrl(file, uploadUrl);
+		
+		/*var uploadUrl = '/KinderSpot/photos';
+	    fileUpload.uploadFileToUrl(photo.data, uploadUrl, {}).then(function(resp) {
+	        console.log("woo");
+	    });*/
 
-		$http({ 
-			url:'/KinderSpot/meeting/' + parent ,
+		/*$http({ 
+			url:'/KinderSpot/photos/' + parent ,
 			method: "POST",
 			data: {
-				"reason": $scope.meetingReason,
-				"parent": {
-					"id": $scope.selectParent
-				},
-				"teacher":{
-					"id":loggedUser.id
-				},
-				"date": $scope.meetingDate
-
+				key: photo
 			},
 			headers: {'Content-Type':'application/json'}
 		})
 		.then(function(response){
-			console.log(loggedUser.id);
-			//teacherHomeData.createNewMeeting = response.data;
+			console.log("photo uploaded");
 		},
 		function(response){
-			console.log("Failed.")
+			console.log("Failed.");
 		});	
 		
-		$uibModalInstance.close();
+		$uibModalInstance.close();*/
 
 	};
 
