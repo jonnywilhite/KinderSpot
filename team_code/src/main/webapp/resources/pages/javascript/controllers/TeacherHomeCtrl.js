@@ -305,10 +305,29 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 		}, function () {
 			
 		});
+	};
+
+	teacherHomeData.openPhotosModal = function(size) {
+
+		var modalInstance = $uibModal.open({
+			animation: teacherHomeData.animationsEnabled,
+			templateUrl: 'PhotosModal.html',
+			controller: 'PhotosModalCtrl',
+			size: size,
+			resolve: {
+
+			}
+		});
+
+		modalInstance.result.then(function () {
+
+		}, function () {
+
+		});
 	}
-	
-teacherHomeData.openEventModal = function(size) {
-		
+
+	teacherHomeData.openEventModal = function(size) {
+
 		var modalInstance = $uibModal.open({
 			animation: teacherHomeData.animationsEnabled,
 			templateUrl: 'NewEventModal.html',
@@ -320,10 +339,10 @@ teacherHomeData.openEventModal = function(size) {
 		});
 
 		modalInstance.result.then(function () {
-			
+
 		}, function () {
-			
+
 		});
-	}
+	};
 
 }); //ends teacherHomeCtrl
