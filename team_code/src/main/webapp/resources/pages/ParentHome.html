@@ -54,11 +54,30 @@ li, th, tr, td {
 	<input type="hidden" ng-model="parentHomeData.meeting">
 	<input type="hidden" ng-model="parentHomeData.events">
 	
+	<nav class="w3-sidenav w3-black w3-card-2" style="width:130px; font-family:marker">
+			<div class="w3-container">
+				<h5 style="font-family:marker">Menu</h5>
+			</div>
+			<a href="" class="tablink"
+				ng-click="parentHomeData.showDisplay('infoDiv')">My Child</a> 
+			<a href="" class="tablink" 
+				ng-click="parentHomeData.showDisplay('meetingsDiv')">Meetings 
+				<span class="w3-badge w3-red">{{parentHomeData.meetingsBadge}}</span></a> 
+			<a href="" class="tablink"
+				ng-click="parentHomeData.showDisplay('eventsDiv')">Events</a> 
+			<a href="" class="tablink"
+				ng-click="parentHomeData.showDisplay('emailDiv')">Email</a> 
+			<a href="" class="tablink"
+				ng-click="parentHomeData.showDisplay('badgesDiv')">Badges</a> 
+			<a href="#" class="tablink" ng-click="">Logout</a>
+		</nav>
 	
+<!-- Div container below needed to push everything to the right of the sidenav. -->
+<div style="margin-left: 140px">
 <h2>Parent Page: {{parentHomeData.loggedInUser.firstName}}</h2>
 
 
-<div id="infoDiv" style="display:inline">
+<div id="infoDiv" style="display:none" class="w3-container w3-animate-left">
 	<table class="w3-table w3-border">
   		<tr><td><h2>My Child Info:</h2></td></tr>
   		<tr><td>Id: {{parentHomeData.myChild.id}}</td></tr>
@@ -68,7 +87,7 @@ li, th, tr, td {
 	</table>
 </div>
 
-<div id="meetingsDiv" style="display:inline">
+<div id="meetingsDiv" style="display:none" class="w3-container w3-animate-left">
 	<br><br>
 	<table class="w3-table w3-border w3-bordered" style="width:75%">
 				<tr>
@@ -83,7 +102,7 @@ li, th, tr, td {
 </div>
 
 
-<div id="eventsDiv" style="display:inline">
+<div id="eventsDiv" style="display:none" class="w3-container w3-animate-left">
 	<br><br>
 	<table class="w3-table w3-border w3-bordered" style="width:75%">
 				<tr>
@@ -102,7 +121,7 @@ li, th, tr, td {
 </div>
 
 
-<div id="emailDiv" style="display:inline">
+<div id="emailDiv" style="display:none" class="w3-container w3-animate-left">
 	<form novalidate>
     	<h3>Subject:</h3><br>
     	<input type="text" ng-model="user.subject" required><br>
@@ -114,7 +133,7 @@ li, th, tr, td {
 </div>
 
 
-<div id="badgesDiv" style="display:inline">
+<div id="badgesDiv" style="display:none" class="w3-container w3-animate-left">
 		<h2>Badges</h2>
 		<table>
 				<tr>
@@ -130,6 +149,7 @@ li, th, tr, td {
 					</td>
 				</tr>
 		</table>
+</div>
 </div>
 
 

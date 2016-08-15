@@ -48,7 +48,7 @@ public interface KinderService {
 	
 	//Meeting Stuff 
 	public Meetings createMeeting (Meetings meeting, @PathVariable int parentId);
-	public List <Meetings> getAllMeetings ();
+	public List <Meetings> getAllMeetings (@PathVariable int teachId);
 	public Meetings updateMeetingStatus(Meetings meeting, @PathVariable Boolean meetingStatus);
 	public List <Meetings> getMeetingsByParent (int parentId);
 	

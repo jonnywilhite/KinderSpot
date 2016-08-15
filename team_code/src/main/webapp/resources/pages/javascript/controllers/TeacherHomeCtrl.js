@@ -142,7 +142,7 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 	teacherHomeData.showMeetings = function()
 	{
 		$http({
-			url: '/KinderSpot/meeting',
+			url: '/KinderSpot/meeting/' + loggedUser.id,
 			method: "GET",
 			headers: {'Content-Type': 'application/json'}
 		})

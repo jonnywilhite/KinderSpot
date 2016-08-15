@@ -264,8 +264,13 @@ public class KinderServiceImpl implements KinderService {
 	}
 
 	@Override
-	public List<Meetings> getAllMeetings() {
-		return meetingRepo.findAll();
+	public List<Meetings> getAllMeetings(int teachId) {
+		
+		User teacher = new User ();
+		teacher.setId(teachId);
+				
+		return meetingRepo.findByTeacher(teacher);
+		//return meetingRepo.findByTeacher(teacher);
 	}
 	
 	/*Gets meetings specific to a parent. I couldn't figure out how to use the Repo to get this, so I'm 

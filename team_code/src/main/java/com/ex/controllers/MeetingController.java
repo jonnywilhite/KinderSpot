@@ -22,15 +22,15 @@ import com.ex.service.KinderService;
  	public Meetings createMeeting(@RequestBody Meetings meeting, @PathVariable int parentId){
  		return service.createMeeting(meeting, parentId);
  	}
+// 	
+// 	@RequestMapping (value= "meeting/{parentId}", method = RequestMethod.GET)
+// 	public List<Meetings> getMeetingsByParent(@PathVariable int parentId) {
+// 		return service.getMeetingsByParent(parentId);
+// 	}
  	
- 	@RequestMapping (value= "meeting/{parentId}", method = RequestMethod.GET)
- 	public List<Meetings> getMeetingsByParent(@PathVariable int parentId) {
- 		return service.getMeetingsByParent(parentId);
- 	}
- 	
- 	@RequestMapping (value= "meeting", method = RequestMethod.GET)
- 	public List<Meetings> getAllMeetings() {
- 		return service.getAllMeetings();
+ 	@RequestMapping (value= "meeting/{teacherId}", method = RequestMethod.GET)
+ 	public List<Meetings> getAllMeetings(@PathVariable int teacherId) {
+ 		return service.getAllMeetings(teacherId);
  	}
  	
  	@RequestMapping(value = "meeting/{meetingStatus}", method = RequestMethod.PUT)
