@@ -1,4 +1,4 @@
-angular.module("myApp").controller("parentHomeCtrl", function($http, sharedProperties) {
+angular.module("myApp").controller("parentHomeCtrl", function($http, sharedProperties, eventIdService, $uibModal) {
 
 	var parentHomeData = this;
 	var loggedUser = sharedProperties.getProperty();
@@ -8,8 +8,8 @@ angular.module("myApp").controller("parentHomeCtrl", function($http, sharedPrope
 		//console.log("parentHomeData.loggedInUser = " + parentHomeData.loggedInUser);
 	}
 	parentHomeData.displayUser();
-	
-	
+
+
 	//Takes in a div ID from the View, and makes it visible to user. Activates when user clicks on sidenav.
 	parentHomeData.showDisplay = function(divId){
 
@@ -26,7 +26,7 @@ angular.module("myApp").controller("parentHomeCtrl", function($http, sharedPrope
 		document.getElementById(divId).style.display = "inline";
 	};
 
-	
+
 	//After getting child, we run several of the below functions inside this one once we have the student ID.
 	parentHomeData.getMyChild = function(){
 
@@ -40,7 +40,7 @@ angular.module("myApp").controller("parentHomeCtrl", function($http, sharedPrope
 			parentHomeData.myChild = response.data[0];
 			currStudentId = response.data[0].id; //Needed to pass to function below.
 			//console.log("my child: " + response.data[0].id);
-			
+
 			//Below runs the methods that require the student ID (we only have the parent object at first)
 			parentHomeData.showGrade(currStudentId);
 			parentHomeData.showBadges(currStudentId);
@@ -82,9 +82,9 @@ angular.module("myApp").controller("parentHomeCtrl", function($http, sharedPrope
 			console.log("Failed.");
 		});
 	};
-	
+
 	parentHomeData.getMeetings = function(){
-		
+
 		$http({
 			url: '/KinderSpot/parentMeeting/' + loggedUser.id,
 			method: "GET",
@@ -99,13 +99,13 @@ angular.module("myApp").controller("parentHomeCtrl", function($http, sharedPrope
 		function(response) { // optional
 			console.log("Failed.");
 		});
-		
+
 	}
 	parentHomeData.getMeetings();
-	
-	
+
+
 	parentHomeData.showEvents = function(studentId){
-		
+
 		$http({
 			url: '/KinderSpot/' + studentId + '/studentevent',
 			method: "GET",
@@ -119,7 +119,7 @@ angular.module("myApp").controller("parentHomeCtrl", function($http, sharedPrope
 		function(response) { // optional
 			console.log("Failed.");
 		});
-		
+
 	}
 
 
@@ -143,11 +143,32 @@ angular.module("myApp").controller("parentHomeCtrl", function($http, sharedPrope
 			console.log("Failed.");
 		});
 	}; //ends email function 
-	
+
 	parentHomeData.emailConfirm = function(){
 		alert("your email has been sent.");
 	}
-	
-	
+
+	parentHomeData.openPhotosModal = function(event) {
+
+		eventIdService.setEvent(event);
+
+		var modalInstance = $uibModal.open({
+			animation: parentHomeData.animationsEnabled,
+			templateUrl: 'PhotosModalParent.html',
+			controller: 'PhotosModalCtrl',
+			//size: size,
+			resolve: {
+
+			}
+		});
+
+		modalInstance.result.then(function () {
+
+		}, function () {
+
+		});
+	}
+
+
 
 });//ends parentHomeApp.controller()

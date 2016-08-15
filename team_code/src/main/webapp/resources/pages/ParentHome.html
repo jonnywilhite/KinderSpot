@@ -115,11 +115,15 @@ li, th, tr, td {
 					<th>Event</th>
 					<th>Description</th>
 					<th>Date</th>
+					<th>View Photos</th>
 				</tr>
 				<tr ng-repeat="x in parentHomeData.events">
 					<td>{{ x.name }}</td>
 					<td> {{x.description}} </td>
-					<td> {{x.date | date:'MMM d, yyyy h:mm a'}} </td>
+					<td> {{x.date | date:'MMM d, yyyy'}} </td>
+					<td>
+						<button class="w3-btn w3-transparent w3-border w3-round-large" ng-click="parentHomeData.openPhotosModal(x)">View Photos</button>
+					</td>
 				</tr>
 	</table>
 
