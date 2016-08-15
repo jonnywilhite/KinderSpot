@@ -6,14 +6,13 @@
     </div>
     <div class="modal-body">
 
-		<form ng-submit="ok(field)">
-			<input type="file" file-model="field"/>
-			<input type="submit" class="btn btn-default" value="Submit" />
-		</form>
+	<h3 style="font-family: marker; color: black">Upload a photo!</h3>
+	<input type="file" file-model="field"/>
+
 
 	</div>
     <div class="modal-footer">
-    	<button class="btn btn-primary" type="button" ng-click="cancel()">Submit</button>
+    	<button class="btn btn-primary" type="button" ng-click="ok(field, e.id)">Submit</button>
         <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
     </div>
 </div>

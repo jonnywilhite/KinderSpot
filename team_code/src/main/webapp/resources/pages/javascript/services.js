@@ -162,3 +162,16 @@ angular.module("myApp").service('attendanceService', function() {
 	}
 
 });
+
+angular.module("myApp").service('eventIdService', function () {
+	var eventId = -1;
+
+	return {
+		getEventId: function () {
+			return eventId;
+		},
+		setEventId: function(value) {
+			eventId = value;
+		}
+	};
+});

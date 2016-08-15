@@ -1,14 +1,17 @@
-angular.module('myApp').controller('PhotosModalCtrl', ['$scope', '$uibModalInstance', 'studentsService', '$http', 'sharedProperties', 'fileUpload', function ($scope, $uibModalInstance, studentsService, $http, sharedProperties, fileUpload) {
+angular.module('myApp').controller('PhotosModalCtrl', ['$scope', '$uibModalInstance', 'studentsService', '$http', 'sharedProperties', 'fileUpload', 'eventIdService', function ($scope, $uibModalInstance, studentsService, $http, sharedProperties, fileUpload, eventIdService) {
 
 	var loggedUser = sharedProperties.getProperty();
 	
 	$scope.myStudents = studentsService.getStudents();
+	
+	
 
 	$scope.ok = function (photo) {
 		
+		console.log(eventIdService.getEventId());
+		
 		var file = photo;
-		console.log(file);
-		var uploadUrl = '/KinderSpot/photos/';
+		var uploadUrl = '/KinderSpot/photos/' + eventIdService.getEventId();
 		fileUpload.uploadFileToUrl(file, uploadUrl);
 		
 		/*var uploadUrl = '/KinderSpot/photos';
@@ -29,9 +32,9 @@ angular.module('myApp').controller('PhotosModalCtrl', ['$scope', '$uibModalInsta
 		},
 		function(response){
 			console.log("Failed.");
-		});	
+		});	*/
 		
-		$uibModalInstance.close();*/
+		$uibModalInstance.close();
 
 	};
 

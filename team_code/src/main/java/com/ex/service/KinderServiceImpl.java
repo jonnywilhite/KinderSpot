@@ -382,9 +382,8 @@ public class KinderServiceImpl implements KinderService {
 	 * Photos stuff
 	 */
 	@Override
-	public Photos uploadPhoto(Photos photo, File file) {
+	public Photos uploadPhoto(File file, int eventId) {
 		AWSCredentials credentials = new ProfileCredentialsProvider().getCredentials();
-		System.out.println(credentials.getAWSAccessKeyId());
 		AmazonS3 client = new AmazonS3Client(credentials);
 		String bucketName = "kinderspot-photos";
 		String folderName = "class-photos";
@@ -392,9 +391,12 @@ public class KinderServiceImpl implements KinderService {
 
 		//client.createBucket(bucketName);
 		//createFolder(bucketName, folderName, client);
-		photo.setPhoto(folderName + SUFFIX + file.getName());
+		Event event = eventRepo.findOne(eventId);
+		Photos photo = new Photos();
+		photo.setEvent(event);
+		photo.setPhoto("https://s3.amazonaws.com/" + bucketName + "/" + folderName + SUFFIX + file.getName());
 
-		String fileName = photo.getPhoto();
+		String fileName = folderName + SUFFIX + file.getName();
 		client.putObject(new PutObjectRequest(bucketName, fileName, file));
 
 		return photoRepo.save(photo);

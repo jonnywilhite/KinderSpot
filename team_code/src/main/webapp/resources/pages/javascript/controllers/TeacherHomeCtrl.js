@@ -1,4 +1,4 @@
-angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProperties, studentProperties, $state, $uibModal, studentsService,eventTypeService)  {
+angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProperties, studentProperties, $state, $uibModal, studentsService, eventTypeService, eventIdService)  {
 
 	var teacherHomeData = this;
 	var loggedUser = sharedProperties.getProperty();
@@ -315,13 +315,15 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 		});
 	};
 
-	teacherHomeData.openPhotosModal = function(size) {
+	teacherHomeData.openPhotosModal = function(eventId) {
+		
+		eventIdService.setEventId(eventId);
 
 		var modalInstance = $uibModal.open({
 			animation: teacherHomeData.animationsEnabled,
 			templateUrl: 'PhotosModal.html',
 			controller: 'PhotosModalCtrl',
-			size: size,
+			//size: size,
 			resolve: {
 
 			}

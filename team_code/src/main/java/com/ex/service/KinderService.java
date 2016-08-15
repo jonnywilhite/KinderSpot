@@ -59,7 +59,7 @@ public interface KinderService {
 	User findById(int id);
 	
 	//Photos stuff
-	Photos uploadPhoto(Photos photo, File file);
+	Photos uploadPhoto(File file, int eventId);
 	List<Photos> getAllPhotos();
 	List<Photos> getPhotosByEvent(int eventId);
 
