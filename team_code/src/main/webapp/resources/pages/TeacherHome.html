@@ -170,19 +170,19 @@ th, tr {
 
 					<h3>Select Date</h3>
 					<input type="date" ng-model="dt" value="{{dt| date: 'fullDate'}}" name="bdatetime" id="datetimepicker" />
-
+					
 					<!-- Calendar  -->
 					<div style="display: inline-block; min-height: 290px;">
 						<div uib-datepicker ng-model="dt" class="well well-sm" datepicker-options="options" style="background-color: green"></div>
 					</div>
-
+					
 					<hr />
 
 					<!-- Calendar  -->
 
 					<br> <br>
 					<button
-						ng-click="teacherHomeData.createMeeting(teach.parent, teach.reason)">Create Meeting</button>
+						ng-click="teacherHomeData.createMeeting(teach.parent, teach.reason, dt)">Create Meeting</button>
 
 				</form>
 			</div>

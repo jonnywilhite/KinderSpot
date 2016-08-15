@@ -142,7 +142,7 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 	teacherHomeData.showMeetings = function()
 	{
 		$http({
-			url: '/KinderSpot/meeting',
+			url: '/KinderSpot/meeting/' + loggedUser.id,
 			method: "GET",
 			headers: {'Content-Type': 'application/json'}
 		})
@@ -162,6 +162,7 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 		teacherHomeData.selectParent = parent;
 		teacherHomeData.meetingReason = reason; 
 		teacherHomeData.meetingDate = date;
+
 		
 		console.log(parent);
 		console.log(reason);
@@ -174,13 +175,16 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 				"parent":{
 					"id": teacherHomeData.selectParent
 				},
+				"teacher":{
+					"id": loggedUser.id
+				},
 				"date": teacherHomeData.meetingDate
 
 			},
 			headers: {'Content-Type':'application/json'}
 		})
 		.then(function(response){
-
+			console.log(loggedUser.id);
 			teacherHomeData.createNewMeeting = response.data;
 		},
 		function(response){
