@@ -3,36 +3,16 @@ angular.module('myApp').controller('PhotosModalCtrl', ['$scope', '$uibModalInsta
 	var loggedUser = sharedProperties.getProperty();
 	
 	$scope.myStudents = studentsService.getStudents();
-	
+	$scope.event = eventIdService.getEvent();
 	
 
 	$scope.ok = function (photo) {
 		
-		console.log(eventIdService.getEventId());
+		console.log($scope.event.id);
 		
 		var file = photo;
-		var uploadUrl = '/KinderSpot/photos/' + eventIdService.getEventId();
+		var uploadUrl = '/KinderSpot/photos/' + $scope.event.id;
 		fileUpload.uploadFileToUrl(file, uploadUrl);
-		
-		/*var uploadUrl = '/KinderSpot/photos';
-	    fileUpload.uploadFileToUrl(photo.data, uploadUrl, {}).then(function(resp) {
-	        console.log("woo");
-	    });*/
-
-		/*$http({ 
-			url:'/KinderSpot/photos/' + parent ,
-			method: "POST",
-			data: {
-				key: photo
-			},
-			headers: {'Content-Type':'application/json'}
-		})
-		.then(function(response){
-			console.log("photo uploaded");
-		},
-		function(response){
-			console.log("Failed.");
-		});	*/
 		
 		$uibModalInstance.close();
 

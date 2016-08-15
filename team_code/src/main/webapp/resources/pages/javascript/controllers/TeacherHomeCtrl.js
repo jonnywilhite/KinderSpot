@@ -315,9 +315,9 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 		});
 	};
 
-	teacherHomeData.openPhotosModal = function(eventId) {
+	teacherHomeData.openPhotosModal = function(event) {
 		
-		eventIdService.setEventId(eventId);
+		eventIdService.setEvent(event);
 
 		var modalInstance = $uibModal.open({
 			animation: teacherHomeData.animationsEnabled,

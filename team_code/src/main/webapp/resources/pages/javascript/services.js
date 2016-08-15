@@ -164,14 +164,14 @@ angular.module("myApp").service('attendanceService', function() {
 });
 
 angular.module("myApp").service('eventIdService', function () {
-	var eventId = -1;
+	var event = {};
 
 	return {
-		getEventId: function () {
-			return eventId;
+		getEvent: function () {
+			return event;
 		},
-		setEventId: function(value) {
-			eventId = value;
+		setEvent: function(value) {
+			event = value;
 		}
 	};
 });
