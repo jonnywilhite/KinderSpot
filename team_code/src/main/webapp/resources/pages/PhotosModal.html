@@ -1,0 +1,14 @@
+<div ng-app="myApp" ng-controller="teacherHomeCtrl">
+	<input type="hidden" ng-model="myStudents" />
+	
+	<div class="modal-header">
+    	<h3 class="modal-title" style="font-family: marker; color: black">Photos</h3>
+    </div>
+    <div class="modal-body">
+    	<input type="file" ng-model="photo"/>
+	</div>
+    <div class="modal-footer">
+    	<button class="btn btn-primary" type="button" ng-click="ok(photo)">Submit</button>
+        <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+    </div>
+</div>
