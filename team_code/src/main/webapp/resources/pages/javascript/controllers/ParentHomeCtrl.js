@@ -76,6 +76,8 @@ angular.module("myApp").controller("parentHomeCtrl", function($http, sharedPrope
 		})
 		.then(function(response) {
 			parentHomeData.currentBadges = response.data;
+			parentHomeData.badgesCount = response.data.length;
+			console.log("badgesCount is: " + parentHomeData.badgesCount);
 		},
 		function(response) {
 			console.log("Failed.");
@@ -85,13 +87,14 @@ angular.module("myApp").controller("parentHomeCtrl", function($http, sharedPrope
 	parentHomeData.getMeetings = function(){
 		
 		$http({
-			url: '/KinderSpot/meeting/' + loggedUser.id,
+			url: '/KinderSpot/parentMeeting/' + loggedUser.id,
 			method: "GET",
 			headers: {'Content-Type': 'application/json'}
 		})
 		.then(function(response) {
 			//success
 			parentHomeData.meeting = response.data;
+			parentHomeData.meetingCount = response.data.length;
 			//console.log("meeting: " + response.data);
 		}, 
 		function(response) { // optional

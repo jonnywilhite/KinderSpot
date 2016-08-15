@@ -241,6 +241,7 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 		document.getElementById('emailDiv').style.display = "none";
 		document.getElementById('meetingsDiv').style.display = "none";
 
+		document.getElementById(divId).style.color = "red"; //doesn't work.
 		document.getElementById(divId).style.display = "inline";
 	};
 

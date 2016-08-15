@@ -21,6 +21,9 @@ body {
 @font-face { font-family: marker; src: url("/KinderSpot/resources/fonts/PWMarker.ttf") }
 @font-face { font-family: chalkboard; src: url("/KinderSpot/resources/fonts/chalkboard.ttf") }
 @font-face { font-family: brokenchalk; src: url("/KinderSpot/resources/fonts/BrokenChalk.ttf") }
+@font-face { font-family: wood1; src: url("/KinderSpot/resources/fonts/wood1.ttf") }
+@font-face { font-family: wood2; src: url("/KinderSpot/resources/fonts/wood2.ttf") }
+
 
 h3, h2, th, tr {
 	font-family: chalky;
@@ -52,7 +55,9 @@ li, th, tr, td {
 	<input type="hidden" ng-model="parentHomeData.myChild" />
 	<input type="hidden" ng-model="parentHomeData.currentReportCard">
 	<input type="hidden" ng-model="parentHomeData.meeting">
+	<input type="hidden" ng-model="parentHomeData.meetingCount">
 	<input type="hidden" ng-model="parentHomeData.events">
+	<input type="hidden" ng-model="parentHomeData.badgesCount">
 	
 	<nav class="w3-sidenav w3-black w3-card-2" style="width:130px; font-family:marker">
 			<div class="w3-container">
@@ -61,14 +66,15 @@ li, th, tr, td {
 			<a href="" class="tablink"
 				ng-click="parentHomeData.showDisplay('infoDiv')">My Child</a> 
 			<a href="" class="tablink" 
-				ng-click="parentHomeData.showDisplay('meetingsDiv')">Meetings 
-				<span class="w3-badge w3-red">{{parentHomeData.meetingsBadge}}</span></a> 
+				ng-click="parentHomeData.showDisplay('meetingsDiv')">
+				Meetings <span class="w3-badge w3-red">{{parentHomeData.meetingCount}}</span></a> 
 			<a href="" class="tablink"
 				ng-click="parentHomeData.showDisplay('eventsDiv')">Events</a> 
 			<a href="" class="tablink"
-				ng-click="parentHomeData.showDisplay('emailDiv')">Email</a> 
+				ng-click="parentHomeData.showDisplay('emailDiv')">Email Teacher</a> 
 			<a href="" class="tablink"
-				ng-click="parentHomeData.showDisplay('badgesDiv')">Badges</a> 
+				ng-click="parentHomeData.showDisplay('badgesDiv')">
+				Badges <span class="w3-badge w3-green">{{parentHomeData.badgesCount}}</span></a> 
 			<a href="#" class="tablink" ng-click="">Logout</a>
 		</nav>
 	
@@ -79,11 +85,11 @@ li, th, tr, td {
 
 <div id="infoDiv" style="display:none" class="w3-container w3-animate-left">
 	<table class="w3-table w3-border">
-  		<tr><td><h2>My Child Info:</h2></td></tr>
+  		<tr><td><h2>{{parentHomeData.myChild.firstName}} {{parentHomeData.myChild.lastName}}</h2></td></tr>
   		<tr><td>Id: {{parentHomeData.myChild.id}}</td></tr>
-  		<tr><td>Name: {{parentHomeData.myChild.firstName}} {{parentHomeData.myChild.lastName}}</td></tr>
   		<tr><td>Teacher: {{parentHomeData.myChild.teacher.firstName}} {{parentHomeData.myChild.teacher.lastName}}</td></tr>
 		<tr><td>Grade: {{parentHomeData.currentReportCard.grade}}</td></tr>
+		<tr><td>Teacher comments: {{parentHomeData.currentReportCard.comments}}</td></tr>
 	</table>
 </div>
 
@@ -123,8 +129,9 @@ li, th, tr, td {
 
 <div id="emailDiv" style="display:none" class="w3-container w3-animate-left">
 	<form novalidate>
+		<h3>Teacher email: {{parentHomeData.myChild.teacher.email}}</h3><br>
     	<h3>Subject:</h3><br>
-    	<input type="text" ng-model="user.subject" required><br>
+    	<input type="text" ng-model="user.subject" required><br><br>
     	<h3>Body:</h3><br>
     	<textarea rows="5" ng-model="user.body" autocomplete="off" required></textarea>
     	<br><br>

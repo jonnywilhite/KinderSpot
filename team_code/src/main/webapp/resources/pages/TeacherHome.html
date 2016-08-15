@@ -18,12 +18,12 @@
 <title>Teacher Homepage</title>
 
 <style>
-body {
+ body {
 	background-image: url("/KinderSpot/resources/themes/greenBoard.jpg");
 	/* background-size: 100% 175%; */
 	background-size: cover;
 	background-repeat: no-repeat;
-}
+} 
 
 @font-face {font-family: chalky; src: url("/KinderSpot/resources/fonts/SimplyChalky.ttf")}
 @font-face {font-family: lemonMilk; src: url("/KinderSpot/resources/fonts/LemonMilk.otf")}
@@ -40,6 +40,21 @@ th, tr {
 	font-family: chalky;
 	color: white;
 }
+
+.w3-sidenav a, .w3-dropnav a {
+    display: block;
+    color: white;
+}
+
+html {
+    font-family: sans-serif;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    background-image: url("/KinderSpot/resources/themes/greenBoard.jpg");
+}
+
+button, input, select, textarea {font-family: marker;}
+
 </style>
 
 </head>
@@ -48,14 +63,10 @@ th, tr {
 
 
 	<!--  Dependencies -->
-	<script
-		src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.1/angular-ui-router.min.js"></script>
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.0.1/ui-bootstrap-tpls.min.js"></script>
-	<script
-		src="bower_components/angular-modal-service/dst/angular-modal-service.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.1/angular-ui-router.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.0.1/ui-bootstrap-tpls.min.js"></script>
+	<script src="bower_components/angular-modal-service/dst/angular-modal-service.min.js"></script>
 
 	<!-- These values are referenced in the controllers to get database values to be displayed below
      in {{expressions}}. -->
@@ -123,11 +134,13 @@ th, tr {
 						style="width: 85%; font-family: chalky; color: white">
 						<tr>
 							<th>Parent</th>
+							<th>Email</th>
 							<th>Reason</th>
 							<th>Date Scheduled</th>
 						</tr>
 						<tr ng-repeat="m in teacherHomeData.myMeetings">
 							<td>{{m.parent.firstName}}</td>
+							<td>{{m.parent.email}}</td>
 							<td>{{ m.reason }}</td>
 							<td>{{ m.date | date:'MMM d, yyyy' }}</td>
 						</tr>
@@ -191,7 +204,8 @@ th, tr {
 					<textarea rows="5" ng-model="user.body" style="color: black" autocomplete="off" required></textarea>
 					<br>
 					<br>
-					<button ng-click="teacherHomeData.emailParent(user.recipient, user.subject, user.body)">Send</button>
+					<button ng-click="teacherHomeData.emailParent(user.recipient, user.subject, user.body)" style="color:black">
+						Send</button>
 				</form>
 			</div>
 		</div>
