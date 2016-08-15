@@ -1,0 +1,41 @@
+<div ng-app="myApp" ng-controller="teacherHomeCtrl">
+
+	<div class="modal-header">
+		<h3 class="modal-title" style="font-family: marker; color: black">Post
+			New Event</h3>
+	</div>
+	<div class="modal-body">
+		<form id="eventForm" novalidate>
+			<h3 style="font-family: marker; color: black">Event Name</h3>
+			<input type="text" ng-model="event.name" />
+
+			<h3>Event Type</h3>
+			<select style="font-family: marker; color: black" form="" ng-model="event.type" required>
+				<option style="font-family: marker; color: black"
+					ng-repeat="x in eventTypes" value="{{x.id}}">{{x.name}}</option>
+			</select>
+
+			<h3 style="font-family: marker; color: black">Description</h3>
+
+			<input type="text" ng-model="event.description" />
+
+			<h3 style="font-family: marker; color: black">Select Date</h3>
+			<input type="date" ng-model="dt" value="{{dt| date: 'fullDate'}}" name="bdatetime" id="datetimepicker" />
+
+			<!--  <pre>Selected date is: <em>{{dt | date:'fullDate'}}</em></pre> -->
+
+			<!-- Calendar  -->
+			<div style="display: inline-block; min-height: 290px;">
+				<div uib-datepicker ng-model="dt" class="well well-sm"
+					datepicker-options="options" style="background-color: green"></div>
+			</div>
+
+
+		</form>
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-primary" type="button"
+			ng-click="ok(event.name, event.type, event.description, dt)">Submit</button>
+		<button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+	</div>
+</div>

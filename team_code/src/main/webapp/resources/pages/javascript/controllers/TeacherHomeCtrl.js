@@ -1,4 +1,4 @@
-angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProperties, studentProperties, $state, $uibModal, studentsService)  {
+angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProperties, studentProperties, $state, $uibModal, studentsService,eventTypeService)  {
 
 	var teacherHomeData = this;
 	var loggedUser = sharedProperties.getProperty();
@@ -189,7 +189,7 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 			
 		})
 		.then(function(response){
-			teacherHomeData.myEventType = response.data;
+			eventTypeService.setEventTypes (response.data);
 		},
 		function(response){
 		console.log("Failed.");
@@ -201,36 +201,6 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 
 	teacherHomeData.createEvents = function (eventName,eventType, description, date)
 	{
-		teacherHomeData.newEvent = eventName; 
-		teacherHomeData.type = eventType;
-		teacherHomeData.description = description;
-		teacherHomeData.eventDate = date; 
-	
-		console.log(eventName);
-		console.log(eventType);
-		console.log(description);
-		console.log(date);
-
-		$http({ 
-			url:'/KinderSpot/event/' + eventName,
-			method: "POST",
-			data: {"name": teacherHomeData.newEvent,
-				   "description": teacherHomeData.description,
-				   "date": teacherHomeData.eventDate,
-				   "eventType":{
-					   "id": teacherHomeData.type
-				   }
-			},
-
-			headers: {'Content-Type':'application/json'}
-		})
-		.then(function(response){
-
-			teacherHomeData.createNewEvent = response.data;
-		},
-		function(response){
-			console.log("Failed.")
-		});		
 
 
 	}
@@ -324,6 +294,25 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 			animation: teacherHomeData.animationsEnabled,
 			templateUrl: 'NewMeetingModal.html',
 			controller: 'MeetingModalCtrl',
+			size: size,
+			resolve: {
+
+			}
+		});
+
+		modalInstance.result.then(function () {
+			
+		}, function () {
+			
+		});
+	}
+	
+teacherHomeData.openEventModal = function(size) {
+		
+		var modalInstance = $uibModal.open({
+			animation: teacherHomeData.animationsEnabled,
+			templateUrl: 'NewEventModal.html',
+			controller: 'EventModalCtrl',
 			size: size,
 			resolve: {
 

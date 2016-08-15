@@ -141,9 +141,11 @@ th, tr {
 				</form>
 			</div>
 
-			<div id="eventsDiv" style="display: none"
-				class="w3-container city w3-animate-left">
-				<div ng-controller="DatepickerDemoCtrl">
+			<div id="eventsDiv" style="display: none" class="w3-container city w3-animate-left">
+			<button type="button" class="btn btn-default" ng-click="teacherHomeData.openEventModal()">
+						Post New Event
+					</button>
+			<!--  	<div ng-controller="DatepickerDemoCtrl"> -->
 					<form id="eventForm" novalidate
 						style="font-family: chalky color : white">
 						<h2>My Events:</h2>
@@ -167,37 +169,6 @@ th, tr {
 								</td>
 							</tr>
 						</table>
-
-						<h3>Event Name</h3>
-
-						<input type="text" ng-model="event.name" />
-
-						<h3>Event Type</h3>
-						<select form="" ng-model="event.type" required>
-							<option ng-repeat="x in teacherHomeData.myEventType"
-								value="{{x.id}}">{{x.name}}</option>
-						</select>
-
-						<h3>Description</h3>
-
-						<input type="text" ng-model="event.description" />
-
-						<h3>Select Date</h3>
-						<input type="date" ng-model="dt" value="{{dt| date: 'fullDate'}}"
-							name="bdatetime" id="datetimepicker" />
-
-						<!--  <pre>Selected date is: <em>{{dt | date:'fullDate'}}</em></pre> -->
-
-						<!-- Calendar  -->
-						<div style="display: inline-block; min-height: 290px;">
-							<div uib-datepicker ng-model="dt" class="well well-sm"
-								datepicker-options="options"
-								style="background-color: green; font-family: marker"></div>
-						</div>
-
-						<br> <br>
-						<button
-							ng-click="teacherHomeData.createEvents(event.name,event.type, event.description, dt)">Submit</button>
 
 					</form>
 				</div>

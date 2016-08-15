@@ -44,6 +44,20 @@ angular.module("myApp").service('studentsService', function() {
 
 });
 
+angular.module("myApp").service('eventTypeService', function() {
+
+	var eventTypes = [];
+
+	return {
+		getEventTypes: function() {
+			return eventTypes;
+		},
+		setEventTypes: function(value) {
+			eventTypes = value;
+		}
+	}
+
+});
 
 //angular.module("myApp").service("datePicker", function () {
 //	
