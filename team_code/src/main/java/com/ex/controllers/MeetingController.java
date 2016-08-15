@@ -20,7 +20,7 @@ import com.ex.service.KinderService;
  	
  	@RequestMapping (value ="meeting/{parentId}", method = RequestMethod.POST)
  	public Meetings createMeeting(@RequestBody Meetings meeting, @PathVariable int parentId){
- 		return service.createMeeting(meeting, parentId);
+ 		return service.createMeeting(meeting, parentId, meeting.getTeacher());
  	}
 // 	
 // 	@RequestMapping (value= "meeting/{parentId}", method = RequestMethod.GET)

@@ -251,15 +251,22 @@ public class KinderServiceImpl implements KinderService {
 
 	//Meeting Stuff 
 	@Override
-	public Meetings createMeeting(Meetings meeting, int id) 
+	public Meetings createMeeting(Meetings meeting, int id, User teacher) 
 	{			
-		User parent = new User ();
-		parent.setId(id);
+		User parent = userRepo.findById(id);
+		User t = userRepo.findById(teacher.getId());
 
-
-		meeting.setDate(meeting.getDate());
 		meeting.setParent(parent);
-		meeting.setReason(meeting.getReason());
+		meeting.setTeacher(t);
+		
+		String subject = "Meeting Scheduled";
+		String body = "You now have a meeting scheduled with " + t.getFirstName() + " " + t.getLastName() + ".\n\n"
+				+ "Date: " + meeting.getDate() + "\n" 
+				+ "Reason: " + meeting.getReason() + "\n\n"
+				+ "Thank you,";
+		
+		sendEmail(teacher.getId(), id, subject, body);
+		
 		return meetingRepo.save(meeting);
 	}
 

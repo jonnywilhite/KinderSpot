@@ -28,7 +28,6 @@ angular.module('myApp').controller('MeetingModalCtrl', ['$scope', '$uibModalInst
 			headers: {'Content-Type':'application/json'}
 		})
 		.then(function(response){
-			console.log(loggedUser.id);
 			//teacherHomeData.createNewMeeting = response.data;
 		},
 		function(response){
