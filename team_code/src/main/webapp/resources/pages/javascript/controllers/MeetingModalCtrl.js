@@ -10,6 +10,7 @@ angular.module('myApp').controller('MeetingModalCtrl', ['$scope', '$uibModalInst
 		$scope.meetingReason = reason; 
 		$scope.meetingDate = date;
 		
+		
 		$http({ 
 			url:'/KinderSpot/meeting/' + parent ,
 			method: "POST",
@@ -18,13 +19,16 @@ angular.module('myApp').controller('MeetingModalCtrl', ['$scope', '$uibModalInst
 				"parent": {
 					"id": $scope.selectParent
 				},
+				"teacher":{
+					"id":loggedUser.id
+				},
 				"date": $scope.meetingDate
 
 			},
 			headers: {'Content-Type':'application/json'}
 		})
 		.then(function(response){
-
+			console.log(loggedUser.id);
 			//teacherHomeData.createNewMeeting = response.data;
 		},
 		function(response){
