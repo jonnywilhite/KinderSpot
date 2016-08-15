@@ -148,6 +148,7 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 		})
 		.then(function(response){	
 			teacherHomeData.myMeetings = response.data;
+			teacherHomeData.meetingsBadge = response.data.length; //Sets the red badge.
 		},
 		function(response){
 			console.log("Failed.");

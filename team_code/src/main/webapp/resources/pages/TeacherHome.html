@@ -91,7 +91,8 @@ th, tr {
 	<input type="hidden" ng-model="teacherHomeData.myEvents" />
 	<input type="hidden" ng-model="teacherHomeData.myEventType" />
 	<input type="hidden" ng-model="teacherHomeData.myAttendanceEntry" />
-
+	<input type="hidden" ng-model="teacherHomeData.meetingsBadge" />
+	
 
 	<div ng-app="myApp" ng-controller="teacherHomeCtrl">
 		<nav class="w3-sidenav w3-black w3-card-2" style="width: 130px">
@@ -99,14 +100,14 @@ th, tr {
 				<h5>Menu</h5>
 			</div>
 			<a href="" class="tablink"
-				ng-click="teacherHomeData.showDisplay('studentsDiv')">Class</a> <a
-				href="" class="tablink"
-				ng-click="teacherHomeData.showDisplay('meetingsDiv')">Meetings</a> <a
-				href="" class="tablink"
-				ng-click="teacherHomeData.showDisplay('eventsDiv')">Events</a> <a
-				href="" class="tablink"
-				ng-click="teacherHomeData.showDisplay('emailDiv')">Email</a> <a
-				href="#" class="tablink" ng-click="">Logout</a>
+				ng-click="teacherHomeData.showDisplay('studentsDiv')">Class</a> 
+			<a href="" class="tablink" 
+				ng-click="teacherHomeData.showDisplay('meetingsDiv')">Meetings <span class="w3-badge w3-red">{{teacherHomeData.meetingsBadge}}</span></a> 
+			<a href="" class="tablink"
+				ng-click="teacherHomeData.showDisplay('eventsDiv')">Events</a> 
+			<a href="" class="tablink"
+				ng-click="teacherHomeData.showDisplay('emailDiv')">Email</a> 
+			<a href="#" class="tablink" ng-click="">Logout</a>
 		</nav>
 
 		<!-- Div container below needed to push everything to the right of the sidenav. -->
@@ -114,8 +115,7 @@ th, tr {
 			<h2>Teacher Home: Welcome {{teacherHomeData.loggedInUser}}</h2>
 
 
-			<div id="studentsDiv" style="display: none"
-				class="w3-container city w3-animate-left">
+			<div id="studentsDiv" style="display: none" class="w3-container city w3-animate-left">
 				<!-- Loops through our students list obtained from the database, then displayed below. -->
 
 				<h2>My students:</h2>
@@ -133,16 +133,14 @@ th, tr {
 
 				<br>
 				<h5 ng-bind="teacherHomeData.attendanceMessage"></h5>
-				<button type="button" class="btn btn-default"
-					ng-click="teacherHomeData.open()">
-					{{teacherHomeData.hasSubmittedAttendance ? "Edit Attendance Sheet"
-					: "Submit Attendance Sheet"}}</button>
+				<button type="button" class="btn btn-default" ng-click="teacherHomeData.open()">
+					{{teacherHomeData.hasSubmittedAttendance ? "Edit Attendance Sheet" : "Submit Attendance Sheet"}}
+				</button>
 
 			</div>
 
 
-			<div id="meetingsDiv" style="display: none"
-				class="w3-container city w3-animate-left">
+			<div id="meetingsDiv" style="display: none" class="w3-container city w3-animate-left">
 				<form id="meetingForm" novalidate>
 					<h2>My Meetings:</h2>
 
@@ -163,8 +161,7 @@ th, tr {
 					<h3>Select Parent</h3>
 
 					<select form="parentForm" ng-model="teach.parent" required>
-						<option ng-repeat="x in teacherHomeData.myStudents"
-							value="{{x.parent.id}}">{{x.parent.firstName}}</option>
+						<option ng-repeat="x in teacherHomeData.myStudents" value="{{x.parent.id}}">{{x.parent.firstName}}</option>
 					</select>
 
 					<h3>Reason</h3>
@@ -172,13 +169,11 @@ th, tr {
 
 
 					<h3>Select Date</h3>
-					<input type="date" ng-model="dt" value="{{dt| date: 'fullDate'}}"
-						name="bdatetime" id="datetimepicker" />
+					<input type="date" ng-model="dt" value="{{dt| date: 'fullDate'}}" name="bdatetime" id="datetimepicker" />
 
 					<!-- Calendar  -->
 					<div style="display: inline-block; min-height: 290px;">
-						<div uib-datepicker ng-model="dt" class="well well-sm"
-							datepicker-options="options" style="background-color: green"></div>
+						<div uib-datepicker ng-model="dt" class="well well-sm" datepicker-options="options" style="background-color: green"></div>
 					</div>
 
 					<hr />
@@ -187,8 +182,7 @@ th, tr {
 
 					<br> <br>
 					<button
-						ng-click="teacherHomeData.createMeeting(teach.parent, teach.reason)">Create
-						Meeting</button>
+						ng-click="teacherHomeData.createMeeting(teach.parent, teach.reason)">Create Meeting</button>
 
 				</form>
 			</div>
@@ -206,6 +200,7 @@ th, tr {
 								<th>Type</th>
 								<th>Description</th>
 								<th>Date</th>
+								<th>Photos</th>
 
 							</tr>
 							<tr ng-repeat="e in teacherHomeData.myEvents">
@@ -213,6 +208,9 @@ th, tr {
 								<td>{{e.eventType.name}}</td>
 								<td>{{ e.description }}</td>
 								<td>{{ e.date |date:'MMM d, yyyy'}}</td>
+								<td>
+									<button class="w3-btn w3-transparent w3-border w3-round-large">Upload Photos</button>
+								</td>
 							</tr>
 						</table>
 
