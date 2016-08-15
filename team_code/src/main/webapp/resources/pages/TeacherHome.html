@@ -12,8 +12,6 @@
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.js"></script>
 <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.0.1.js"></script>
-<script src="example.js"></script>
-<link href="//netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
 
 <title>Teacher Homepage</title>
 
@@ -58,7 +56,7 @@ button, input, select, textarea {font-family: marker;}
 </style>
 
 </head>
-<body>
+<body ng-app="myApp">
 
 
 
@@ -70,16 +68,19 @@ button, input, select, textarea {font-family: marker;}
 
 	<!-- These values are referenced in the controllers to get database values to be displayed below
      in {{expressions}}. -->
-	<input type="hidden" ng-model="loggedInUser" />
-	<input type="hidden" ng-model="teacherHomeData.myStudents" />
-	<input type="hidden" ng-model="teacherHomeData.myMeetings" />
-	<input type="hidden" ng-model="teacherHomeData.myEvents" />
-	<input type="hidden" ng-model="teacherHomeData.myEventType" />
-	<input type="hidden" ng-model="teacherHomeData.myAttendanceEntry" />
-	<input type="hidden" ng-model="teacherHomeData.meetingsBadge" />
+	
 	
 
-	<div ng-app="myApp" ng-controller="teacherHomeCtrl">
+	<div ng-controller="teacherHomeCtrl">
+		<input type="hidden" ng-model="loggedInUser" />
+		<input type="hidden" ng-model="teacherHomeData.myStudents" />
+		<input type="hidden" ng-model="teacherHomeData.myMeetings" />
+		<input type="hidden" ng-model="teacherHomeData.myEvents" />
+		<input type="hidden" ng-model="teacherHomeData.myEventType" />
+		<input type="hidden" ng-model="teacherHomeData.myAttendanceEntry" />
+		<input type="hidden" ng-model="teacherHomeData.meetingsBadge" />
+		
+		
 		<nav class="w3-sidenav w3-black w3-card-2" style="width:130px; font-family:marker; font-color:white">
 			<div class="w3-container">
 				<h5 style="font-family:marker">Menu</h5>
@@ -172,10 +173,10 @@ button, input, select, textarea {font-family: marker;}
 
 							</tr>
 							<tr ng-repeat="e in teacherHomeData.myEvents">
-								<td>{{ e.name }}</td>
-								<td>{{e.eventType.name}}</td>
-								<td>{{ e.description }}</td>
-								<td>{{ e.date |date:'MMM d, yyyy'}}</td>
+								<td ng-bind="e.name"></td>
+								<td ng-bind="e.eventType.name"></td>
+								<td ng-bind="e.description"></td>
+								<td ng-bind="e.date |date:'MMM d, yyyy'"></td>
 								<td>
 									<button class="w3-btn w3-transparent w3-border w3-round-large" ng-click="teacherHomeData.openPhotosModal(e)">Upload Photos</button>
 								</td>

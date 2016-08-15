@@ -349,7 +349,8 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 		});
 
 		modalInstance.result.then(function () {
-
+			setTimeout(teacherHomeData.showEvents(), 3000)
+			console.log("donezo")
 		}, function () {
 
 		});
