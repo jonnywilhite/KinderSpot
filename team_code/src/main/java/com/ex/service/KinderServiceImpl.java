@@ -374,7 +374,7 @@ public class KinderServiceImpl implements KinderService {
 		System.out.println(credentials.getAWSAccessKeyId());
 		AmazonS3 client = new AmazonS3Client(credentials);
 		String bucketName = "kinderspot-photos";
-		String folderName = "badges";
+		String folderName = "class-photos";
 		String SUFFIX = "/";
 
 		//client.createBucket(bucketName);

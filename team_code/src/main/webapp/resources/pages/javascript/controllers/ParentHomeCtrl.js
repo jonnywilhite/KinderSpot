@@ -4,12 +4,29 @@ angular.module("myApp").controller("parentHomeCtrl", function($http, sharedPrope
 	var loggedUser = sharedProperties.getProperty();
 
 	parentHomeData.displayUser = function() {
-		//console.log("loggedUser is: " + loggedUser.firstName);
 		parentHomeData.loggedInUser = loggedUser; //loggedInUser is the ng-model in ParentHome.html
 		//console.log("parentHomeData.loggedInUser = " + parentHomeData.loggedInUser);
 	}
 	parentHomeData.displayUser();
+	
+	
+	//Takes in a div ID from the View, and makes it visible to user. Activates when user clicks on sidenav.
+	parentHomeData.showDisplay = function(divId){
 
+		/*
+		 Hides all ID's, then displays the user input. The result is that only one of the teacher
+		 sections is displayed at a time. Without this, you'd have an element show up, but never leave.
+		 */
+		document.getElementById('infoDiv').style.display = "none";
+		document.getElementById('meetingsDiv').style.display = "none";
+		document.getElementById('eventsDiv').style.display = "none";
+		document.getElementById('emailDiv').style.display = "none";
+		document.getElementById('badgesDiv').style.display = "none";
+
+		document.getElementById(divId).style.display = "inline";
+	};
+
+	
 	//After getting child, we run several of the below functions inside this one once we have the student ID.
 	parentHomeData.getMyChild = function(){
 
