@@ -3,24 +3,17 @@
 <head>
 <meta charset="ISO-8859-1">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
 	crossorigin="anonymous">
 <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
-<link rel="stylesheet"
-	href="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">
 
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.js"></script>
-<script
-	src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.js"></script>
-<script
-	src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.0.1.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.js"></script>
+<script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.0.1.js"></script>
 <script src="example.js"></script>
-<link
-	href="//netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
-	rel="stylesheet">
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
 
 <title>Teacher Homepage</title>
 
@@ -32,30 +25,11 @@ body {
 	background-repeat: no-repeat;
 }
 
-@font-face {
-	font-family: chalky;
-	src: url("/KinderSpot/resources/fonts/SimplyChalky.ttf")
-}
-
-@font-face {
-	font-family: lemonMilk;
-	src: url("/KinderSpot/resources/fonts/LemonMilk.otf")
-}
-
-@font-face {
-	font-family: marker;
-	src: url("/KinderSpot/resources/fonts/PWMarker.ttf")
-}
-
-@font-face {
-	font-family: chalkboard;
-	src: url("/KinderSpot/resources/fonts/chalkboard.ttf")
-}
-
-@font-face {
-	font-family: brokenchalk;
-	src: url("/KinderSpot/resources/fonts/BrokenChalk.ttf")
-}
+@font-face {font-family: chalky; src: url("/KinderSpot/resources/fonts/SimplyChalky.ttf")}
+@font-face {font-family: lemonMilk; src: url("/KinderSpot/resources/fonts/LemonMilk.otf")}
+@font-face {font-family: marker; src: url("/KinderSpot/resources/fonts/PWMarker.ttf")}
+@font-face {font-family: chalkboard; src: url("/KinderSpot/resources/fonts/chalkboard.ttf")}
+@font-face {font-family: brokenchalk; src: url("/KinderSpot/resources/fonts/BrokenChalk.ttf")}
 
 h3, h2, h5 {
 	font-family: chalky;
@@ -95,14 +69,15 @@ th, tr {
 	
 
 	<div ng-app="myApp" ng-controller="teacherHomeCtrl">
-		<nav class="w3-sidenav w3-black w3-card-2" style="width: 130px">
+		<nav class="w3-sidenav w3-black w3-card-2" style="width:130px; font-family:marker; font-color:white">
 			<div class="w3-container">
-				<h5>Menu</h5>
+				<h5 style="font-family:marker">Menu</h5>
 			</div>
 			<a href="" class="tablink"
 				ng-click="teacherHomeData.showDisplay('studentsDiv')">Class</a> 
 			<a href="" class="tablink" 
-				ng-click="teacherHomeData.showDisplay('meetingsDiv')">Meetings <span class="w3-badge w3-red">{{teacherHomeData.meetingsBadge}}</span></a> 
+				ng-click="teacherHomeData.showDisplay('meetingsDiv')">Meetings 
+				<span class="w3-badge w3-red">{{teacherHomeData.meetingsBadge}}</span></a> 
 			<a href="" class="tablink"
 				ng-click="teacherHomeData.showDisplay('eventsDiv')">Events</a> 
 			<a href="" class="tablink"
@@ -140,7 +115,7 @@ th, tr {
 			</div>
 
 
-			<div id="meetingsDiv" style="display: none" class="w3-container city w3-animate-left">
+			<div id="meetingsDiv" style="display:none;" class="w3-container city w3-animate-left">
 				<form id="meetingForm" novalidate>
 					<h2>My Meetings:</h2>
 
@@ -185,6 +160,7 @@ th, tr {
 						ng-click="teacherHomeData.createMeeting(teach.parent, teach.reason, dt)">Create Meeting</button>
 
 				</form>
+				
 			</div>
 
 			<div id="eventsDiv" style="display: none"
