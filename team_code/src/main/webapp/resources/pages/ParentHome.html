@@ -128,7 +128,7 @@ li, th, tr, td {
     	<h3>Body:</h3><br>
     	<textarea rows="5" ng-model="user.body" autocomplete="off" required></textarea>
     	<br><br>
-    	<button class="w3-btn w3-transparent w3-border w3-round-large" ng-click="parentHomeData.emailTeacher(user.subject, user.body)">Send</button>
+    	<button class="w3-btn w3-transparent w3-border w3-round-large" ng-click="parentHomeData.emailTeacher(user.subject, user.body);parentHomeData.emailConfirm()">Send</button>
 	</form>
 </div>
 

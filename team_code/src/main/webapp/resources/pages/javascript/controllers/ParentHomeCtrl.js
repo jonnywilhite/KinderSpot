@@ -142,6 +142,10 @@ angular.module("myApp").controller("parentHomeCtrl", function($http, sharedPrope
 		});
 	}; //ends email function 
 	
+	parentHomeData.emailConfirm = function(){
+		alert("your email has been sent.");
+	}
+	
 	
 
 });//ends parentHomeApp.controller()
