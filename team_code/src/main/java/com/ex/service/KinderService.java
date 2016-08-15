@@ -34,7 +34,7 @@ public interface KinderService {
 	ReportCard createReportCardEntry(ReportCard rc);
 	List<ReportCard> getAllReportCardsByTeacher(int teacherId);
 	ReportCard getReportCardByStudent(int studentId);
-	ReportCard updateReportCardByStudent(int studentId, String grade);
+	ReportCard updateReportCardByStudent(int studentId, ReportCard rc);
 	
 	
 	//Event stuff

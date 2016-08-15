@@ -110,6 +110,7 @@ button, input, select, textarea {font-family: marker;}
 						<th>Name</th>
 						<th>Student Link</th>
 						<th>Current Grade</th>
+						<th>Comment</th>
 					</tr>
 					<tr ng-repeat="x in teacherHomeData.myStudents"
 						ng-include="teacherHomeData.getTemplate(x)">
@@ -193,7 +194,7 @@ button, input, select, textarea {font-family: marker;}
 					<h3>Recipient:</h3>
 					<select style="color: black" name="studentlist" form="studentform" ng-model="user.recipient" required>
 						<option value="All">All</option>
-						<option ng-repeat="x in teacherHomeData.myStudents" value="{{x.id}}">{{x.parent.firstName}}</option>
+						<option ng-repeat="x in teacherHomeData.myStudents" value="{{x.id}}">Child: {{x.firstName}}, Parent: {{x.parent.firstName}}</option>
 					</select>
 					<br>
 					<h3>Subject:</h3>
@@ -221,6 +222,9 @@ button, input, select, textarea {font-family: marker;}
 		<td>{{ x.grade }}
 			<button class="w3-btn w3-transparent w3-border w3-round-large" ng-click="teacherHomeData.editGrade(x)">Change Grade</button>
 		</td>
+		<td>{{ x.comments }}
+			<button class="w3-btn w3-transparent w3-border w3-round-large" ng-click="teacherHomeData.editComments(x)">Set Comment</button>
+		</td>
     </script>
 	<script type="text/ng-template" id="edit">
 		<td>{{x.firstName}}</td>
@@ -234,6 +238,14 @@ button, input, select, textarea {font-family: marker;}
 			</select>
 			<button class="w3-btn w3-transparent w3-border w3-round-large w3-small" ng-click="teacherHomeData.saveStudent($index)">Save</button>
             <button class="w3-btn w3-transparent w3-border w3-round-large w3-small" ng-click="teacherHomeData.reset()">Cancel</button>
+		</td>
+		<td>
+			<form novalidate>
+    			<p>Comment:</p>
+    			<input type="text" ng-model="teacherHomeData.selected.comments" style="color:black"><br>
+    			<button ng-click="teacherHomeData.saveStudent($index)" style="color:black">submit</button>
+				<button class="w3-btn w3-transparent w3-border w3-round-large w3-small" ng-click="teacherHomeData.reset()">Cancel</button>
+  				</form>
 		</td>
 		
     </script>

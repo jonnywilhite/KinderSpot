@@ -77,7 +77,6 @@ angular.module("myApp").controller("parentHomeCtrl", function($http, sharedPrope
 		.then(function(response) {
 			parentHomeData.currentBadges = response.data;
 			parentHomeData.badgesCount = response.data.length;
-			console.log("badgesCount is: " + parentHomeData.badgesCount);
 		},
 		function(response) {
 			console.log("Failed.");

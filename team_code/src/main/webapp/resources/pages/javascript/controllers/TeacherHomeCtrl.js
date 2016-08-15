@@ -23,11 +23,17 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
         teacherHomeData.selected = angular.copy(student);
     };
     
+    teacherHomeData.editComments = function (student) {
+        teacherHomeData.selected = angular.copy(student);
+    };
+    
     teacherHomeData.saveStudent = function (idx) {
         teacherHomeData.myStudents[idx] = angular.copy(teacherHomeData.selected);
         var studentId = teacherHomeData.myStudents[idx].id;
         var newGrade = teacherHomeData.myStudents[idx].grade;
-        teacherHomeData.updateReportCard(studentId, newGrade);
+        var newComments = teacherHomeData.myStudents[idx].comments;
+        teacherHomeData.updateReportCard(studentId, newGrade, newComments);
+        //console.log("comments is: " + newComments);
         
         teacherHomeData.reset();
     };
@@ -36,12 +42,13 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
         teacherHomeData.selected = {};
     };
     
-    teacherHomeData.updateReportCard = function(studentId, newGrade) {
+    teacherHomeData.updateReportCard = function(studentId, newGrade, newComments) {
     	$http({
     		url: '/KinderSpot/report-cards/' + studentId,
     		method: "PUT",
     		headers: {'Content-Type': 'application/json'},
-    		data: newGrade
+    		//data: newGrade
+    		data: { "grade": newGrade, "comments": newComments }
     	})
     	.then(function(response) {
     		console.log("successfully updated grade");
