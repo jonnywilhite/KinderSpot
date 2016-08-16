@@ -58,7 +58,15 @@ html {
 		<input type="hidden" ng-model="viewStudentData.currentBadges">
 		<input type="hidden" ng-model="viewStudentData.allBadges">
 		
-		<h2>View Student: <span ng-bind="viewStudentData.currentStudent.firstName"></span></h2>
+		
+		<h2>View Student: <span ng-bind="viewStudentData.currentStudent.firstName"></span>
+			<!-- <span class="w3-tag w3-large w3-padding w3-green" style="transform:rotate(-5deg);font-family:lemonMilk;float:right">
+				<a href="#/teacherHome">Go Back</a>
+			</span> -->
+			<span id="back" class="w3-tag w3-round w3-border w3-border-white" style="font-family: chalky; background-color: transparent;float:right"> 
+				<a href="#/teacherHome">Back</a>
+			</span>
+		</h2>
 		
 		<h2>Grade: <span ng-bind="viewStudentData.currentReportCard.grade"></span></h2>
 		
@@ -106,12 +114,9 @@ html {
 					<button ng-click="viewStudentData.addBadges(user.badge)" style="font-family:marker;color:black">
 						Add</button>
 				</form>
+		</div> <!-- ends badges div -->
 			
-		</div>
-		
-		
-			
-	</div>
+	</div> <!-- Ends controller div -->
 
 
 </body>

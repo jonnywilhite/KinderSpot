@@ -19,6 +19,10 @@ angular.module("myApp").controller("teacherHomeCtrl", function($scope, $http, sh
 		teacherHomeData.showEvents();
 	});
 	
+	teacherHomeData.confirm = function(){
+		alert("Email sent.");
+	}
+	
 	/*
 	 * All this is for editing grade in-line
 	 */

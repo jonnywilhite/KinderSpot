@@ -26,10 +26,17 @@ public class TeacherController {
 	
 	@RequestMapping(value="photos/{eventId}", method=RequestMethod.POST)
 	public Photos uploadPhoto(@RequestBody MultipartFile key, @PathVariable int eventId) {
+		
+		//System.out.println("entering method...");
+		
 		File file = new File(key.getOriginalFilename());
 		
+		//System.out.println("key is: " + key.getOriginalFilename());
+		
 		try {
+			//System.out.println("transfering..");
 			key.transferTo(file);
+			//System.out.println("transferred...");
 			return service.uploadPhoto(file, eventId);
 		} catch (IllegalStateException | IOException e) {
 			
