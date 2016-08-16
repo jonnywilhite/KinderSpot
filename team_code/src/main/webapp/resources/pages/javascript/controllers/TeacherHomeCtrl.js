@@ -1,4 +1,4 @@
-angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProperties, studentProperties, $state, $uibModal, studentsService, eventTypeService, eventIdService)  {
+angular.module("myApp").controller("teacherHomeCtrl", function($scope, $http, sharedProperties, studentProperties, $state, $uibModal, studentsService, eventTypeService, eventIdService)  {
 
 	var teacherHomeData = this;
 	var loggedUser = sharedProperties.getProperty();
@@ -8,6 +8,16 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 	teacherHomeData.myStudentGrades = [];
 	teacherHomeData.attendanceMessage = "";
 	teacherHomeData.hasSubmittedAttendance = false;
+	
+	//Update lists
+	$scope.$on("updateMeetingList",function(){
+		console.log("Heard the call");
+		teacherHomeData.showMeetings();
+	});
+	$scope.$on("updateEventList",function(){
+		console.log("Heard the call");
+		teacherHomeData.showEvents();
+	});
 	
 	/*
 	 * All this is for editing grade in-line
@@ -330,7 +340,7 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 		});
 
 		modalInstance.result.then(function () {
-
+			
 		}, function () {
 
 		});
@@ -349,7 +359,7 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 		});
 
 		modalInstance.result.then(function () {
-
+			
 		}, function () {
 
 		});

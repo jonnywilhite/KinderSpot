@@ -1,4 +1,4 @@
-angular.module('myApp').controller('EventModalCtrl', ['$scope', '$uibModalInstance', 'studentsService', '$http', 'sharedProperties','eventTypeService', function ($scope, $uibModalInstance, studentsService, $http, sharedProperties,eventTypeService) 
+angular.module('myApp').controller('EventModalCtrl', ['$rootScope', '$scope', '$uibModalInstance', 'studentsService', '$http', 'sharedProperties','eventTypeService', function ($rootScope, $scope, $uibModalInstance, studentsService, $http, sharedProperties,eventTypeService) 
  {
 
 	var loggedUser = sharedProperties.getProperty();
@@ -31,7 +31,7 @@ angular.module('myApp').controller('EventModalCtrl', ['$scope', '$uibModalInstan
 			headers: {'Content-Type':'application/json'}
 		})
 		.then(function(response){
-		
+			$rootScope.$broadcast('updateEventList');
 		},
 		function(response){
 			console.log("Failed.")

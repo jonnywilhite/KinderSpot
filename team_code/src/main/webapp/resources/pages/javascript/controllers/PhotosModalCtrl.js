@@ -8,13 +8,15 @@ angular.module('myApp').controller('PhotosModalCtrl', ['$scope', '$uibModalInsta
 
 	$scope.ok = function (photo) {
 		
-		console.log($scope.event.id);
-		
-		var file = photo;
-		var uploadUrl = '/KinderSpot/photos/' + $scope.event.id;
-		fileUpload.uploadFileToUrl(file, uploadUrl);
-		
-		$uibModalInstance.close();
+		if (loggedUser.userRole.name == "Teacher") {
+			var file = photo;
+			var uploadUrl = '/KinderSpot/photos/' + $scope.event.id;
+			fileUpload.uploadFileToUrl(file, uploadUrl);
+			
+			$uibModalInstance.close();
+		} else {
+			$uibModalInstance.close();
+		}
 
 	};
 
