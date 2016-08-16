@@ -202,7 +202,7 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 		console.log("Failed.");
 	
 	 });	
-  }
+	}
 	teacherHomeData.showEventTypes();
 
 

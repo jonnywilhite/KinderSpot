@@ -1,5 +1,29 @@
+<!DOCTYPE html>
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+	crossorigin="anonymous">
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.js"></script>
+<script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.0.2.js"></script>
+<script src="example.js"></script>
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+
+
+<head>
+<style>
+</style>
+
+</head>
+<body>
 <div ng-app="myApp" ng-controller="teacherHomeCtrl">
+
 	<input type="hidden" ng-model="myStudents" />
+	<input type="hidden" ng-model="myPhotos" />
 	
 	<div class="modal-header">
     	<h3 class="modal-title" style="font-family: marker; color: black">{{event.name}} Photos</h3>
@@ -8,11 +32,67 @@
 
 	<h3 style="font-family: marker; color: black">Upload a photo!</h3>
 	<input type="file" file-model="field"/>
-
+	
+	<br><br>
+	<button class="btn btn-primary" type="button" ng-click="ok(field)">Submit</button>
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
 
 	</div>
-    <div class="modal-footer">
-    	<button class="btn btn-primary" type="button" ng-click="ok(field)">Submit</button>
-        <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
-    </div>
+    <div class="modal-footer" ng-init="showPics()">
+    	
+        
+        <!-- <ul>
+        	<li ng-repeat="x in myPhotos">
+        		<h3 style="color:black; font-family:marker">{{x.photo}}</h3>
+        		<img src="{{x.photo}}" style="width:304px;height:228px;">
+        	</li>
+        </ul>
+		 -->
+
+
+			<div style="height: 305px">
+				<div uib-carousel active="active" interval="myInterval"
+					no-wrap="noWrapSlides">
+					<div uib-slide ng-repeat="slide in slides track by slide.id"
+						index="slide.id">
+						<img ng-src="{{slide.image}}" style="width:350px;height:250px;">
+						<div class="carousel-caption">
+							<h4>Slide {{slide.id}}</h4>
+							<p>{{slide.text}}</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<button type="button" class="btn btn-info" ng-click="randomize()">Randomize
+						slides</button>
+					<div class="checkbox">
+						<label> <input type="checkbox" ng-model="noWrapSlides">
+							Disable Slide Looping
+						</label>
+					</div>
+				</div>
+				<div class="col-md-6">
+					Interval, in milliseconds: <input type="number"
+						class="form-control" ng-model="myInterval"> <br />Enter a
+					negative number or 0 to stop the interval.
+				</div>
+			</div>
+
+
+
+
+		</div>
+	
 </div>
+
+
+
+</body>
+</html>
+
+
+
+
+
