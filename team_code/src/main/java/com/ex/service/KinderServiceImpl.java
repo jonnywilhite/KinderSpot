@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
@@ -341,6 +342,7 @@ public class KinderServiceImpl implements KinderService {
 	@Override
 	public List<Attendance> viewAttendanceSheets(int teacherId) {
 		User teacher = teacherRepo.findOne(teacherId);
+		
 		return attendanceRepo.findByTeacherOrderByDate(teacher);
 	}
 
@@ -348,6 +350,9 @@ public class KinderServiceImpl implements KinderService {
 	public List<AttendanceStudent> viewAttendanceEntriesByStudent(int studentId) {
 		Student student = studentRepo.findOne(studentId);
 		List<AttendanceStudent> list = attendanceStudentRepo.findByStudentOrderByAttendance(student);
+		Collections.sort(list);
+		for (AttendanceStudent as : list) 
+			System.out.println(as.getAttendance().getDate());
 		return list;
 	}
 

@@ -8,7 +8,7 @@
 			<h3 style="font-family: marker; color: black">Select Parent</h3>
 
 			<select style="font-family: marker; color: black" form="parentForm" ng-model="teach.parent" required>
-				<option style="font-family: marker; color: black" ng-repeat="x in myStudents" value="{{x.parent.id}}">{{x.parent.firstName}}</option>
+				<option style="font-family: marker; color: black" ng-repeat="x in myStudents" value="{{x.parent.id}}">{{x.parent.firstName}} {{x.parent.lastName}} (Parent of: {{x.firstName}})</option>
 			</select>
 
 			<h3 style="font-family: marker; color: black">Reason</h3>

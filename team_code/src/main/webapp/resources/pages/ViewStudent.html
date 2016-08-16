@@ -77,7 +77,7 @@ html {
 				<th>Present</th>
 			</tr>
 			<tr ng-repeat="att in viewStudentData.currentAttendance">
-				<td ng-bind="att.attendance.date | date : mediumDate"></td>
+				<td ng-bind="att.attendance.date | date : 'EEEE MMM d, yyyy'"></td>
 				<td ng-bind="att.present"></td>
 			</tr>
 		</table>

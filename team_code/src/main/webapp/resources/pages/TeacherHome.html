@@ -141,7 +141,7 @@ button, input, select, textarea {font-family: marker;}
 							<th>Date Scheduled</th>
 						</tr>
 						<tr ng-repeat="m in teacherHomeData.myMeetings">
-							<td ng-bind="m.parent.firstName"></td>
+							<td ng-bind="m.parent.firstName + ' ' + m.parent.lastName"></td>
 							<td ng-bind="m.parent.email"></td>
 							<td ng-bind="m.reason"></td>
 							<td ng-bind="m.date | date:'MMM d, yyyy'"></td>
@@ -218,7 +218,7 @@ button, input, select, textarea {font-family: marker;}
 	<script type="text/javascript" src="javascript/controllers.js"></script>
 
 	<script type="text/ng-template" id="display">
-		<td>{{x.firstName}}</td>
+		<td>{{x.firstName + " " + x.lastName}}</td>
 		<td><button class="w3-btn w3-transparent w3-border w3-round-large" ng-click="teacherHomeData.viewStudent(x.id)">View</button></td>
 		<td>{{ x.grade }}
 			<button class="w3-btn w3-transparent w3-border w3-round-large" ng-click="teacherHomeData.editGrade(x)">Change Grade</button>
@@ -228,7 +228,7 @@ button, input, select, textarea {font-family: marker;}
 		</td>
     </script>
 	<script type="text/ng-template" id="edit">
-		<td>{{x.firstName}}</td>
+		<td>{{x.firstName + " " + x.lastName}}</td>
 		<td><button class="w3-btn w3-transparent w3-border w3-round-large" ng-click="teacherHomeData.viewStudent(x.id)">View</button></td>
 		<td>
 			<select class="w3-transparent w3-border" ng-model="teacherHomeData.selected.grade">

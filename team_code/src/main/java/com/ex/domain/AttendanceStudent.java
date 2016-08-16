@@ -13,7 +13,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="EDU_ATTENDANCE_STUDENT")
-public class AttendanceStudent implements Serializable {
+public class AttendanceStudent implements Serializable, Comparable<AttendanceStudent> {
 	/**
 	 * 
 	 */
@@ -106,5 +106,13 @@ public class AttendanceStudent implements Serializable {
 			return false;
 		return true;
 	}
+
+	@Override
+	public int compareTo(AttendanceStudent that) {
+		
+		return this.getAttendance().compareTo(that.getAttendance());
+	}
+	
+	
 	
 }

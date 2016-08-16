@@ -25,6 +25,7 @@ public class AttendanceController {
 	public List<Attendance> viewAllAttendanceSheets(@PathVariable int teacherId) {
 		List<Attendance> l = service.viewAttendanceSheets(teacherId);
 		Collections.reverse(l);
+		
 		return l;
 	}
 	
@@ -40,7 +41,10 @@ public class AttendanceController {
 	
 	@RequestMapping(value="attendance/{studentId}", method=RequestMethod.GET)
 	public List<AttendanceStudent> viewAllAttendanceEntriesForStudent(@PathVariable int studentId) {
-		return service.viewAttendanceEntriesByStudent(studentId);
+		List<AttendanceStudent> l = service.viewAttendanceEntriesByStudent(studentId);
+		Collections.reverse(l);
+		
+		return l;
 	}
 	
 	@RequestMapping(value="{teacherId}/attendance", method=RequestMethod.POST)
