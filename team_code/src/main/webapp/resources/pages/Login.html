@@ -11,22 +11,37 @@
 
 <style>
 body {
-	background-image: url("/KinderSpot/resources/themes/crayonBackground.jpg");
+	background-image:
+		url("/KinderSpot/resources/themes/crayonBackground.jpg");
 	background-size: 100% 175%;
 	background-repeat: no-repeat;
 }
+
 #loginForm {
 	text-align: center;
 	margin: auto;
 	width: 60%;
-	border: 3px solid #73AD21; 
+	border: 3px solid #73AD21;
 	padding: 30px;
-	transform: translate(0%, 35%);  
+	transform: translate(0%, 35%);
 }
+
 h2, h3, #innerForm {
 	font-family: marker
 }
-@font-face { font-family: marker; src: url("/KinderSpot/resources/fonts/PWMarker.ttf") }
+
+@font-face {
+	font-family: marker;
+	src: url("/KinderSpot/resources/fonts/PWMarker.ttf")
+}
+
+.css-form input.ng-invalid.ng-touched {
+	background-color: #FA787E;
+}
+
+.css-form input.ng-valid.ng-touched {
+	background-color: #78FA89;
+}
 </style>
 
 </head>
@@ -47,12 +62,22 @@ h2, h3, #innerForm {
 <div ng-app="myApp" ng-controller="loginCtrl" ng-init="user={}" ng-model="userMessage" id="loginForm" >
 
   <h2>KinderSpot</h2><br>
-  <form novalidate id="innerForm" class="w3-container">
+  <form novalidate id="innerForm" class="w3-container css-form" name="form">
     Email:<br>
     <!-- c  -->
-    <input type="text" ng-model="user.email" class="w3-input w3-border w3-sand w3-hover-green"><br>
+    <input type="email" ng-model="user.email" class="w3-input w3-border w3-sand w3-hover-green" name="uEmail" required="" autocomplete="off">
+    <div ng-show="form.$submitted || form.uEmail.$touched">
+      <span ng-show="form.uEmail.$error.required" class="text-danger bg-danger">Required field</span>
+      <span ng-show="form.uEmail.$error.email" class="text-danger bg-danger">This is not a valid email.</span>
+    </div>
+    
+    <br>
     Password:<br>
-    <input type="password"  ng-model="user.password" class="w3-input w3-border w3-sand w3-hover-green">
+    <input type="password"  ng-model="user.password" class="w3-input w3-border w3-sand w3-hover-green" name="uPass" required="" autocomplete="off">
+    <div ng-show="form.$submitted || form.uPass.$touched">
+      <span ng-show="form.uPass.$error.required" class="text-danger bg-danger">Required field.</span>
+    </div>
+    
     <br><br>
     <!-- S -->
     <button ng-click="loginData.login(user.email, user.password)" class="w3-btn w3-green">Login</button>
