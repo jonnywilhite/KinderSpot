@@ -141,10 +141,10 @@ button, input, select, textarea {font-family: marker;}
 							<th>Date Scheduled</th>
 						</tr>
 						<tr ng-repeat="m in teacherHomeData.myMeetings">
-							<td>{{m.parent.firstName}}</td>
-							<td>{{m.parent.email}}</td>
-							<td>{{ m.reason }}</td>
-							<td>{{ m.date | date:'MMM d, yyyy' }}</td>
+							<td ng-bind="m.parent.firstName"></td>
+							<td ng-bind="m.parent.email"></td>
+							<td ng-bind="m.reason"></td>
+							<td ng-bind="m.date | date:'MMM d, yyyy'"></td>
 						</tr>
 					</table>
 					

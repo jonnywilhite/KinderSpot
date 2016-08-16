@@ -1,4 +1,4 @@
-angular.module('myApp').controller('MeetingModalCtrl', ['$scope', '$uibModalInstance', 'studentsService', '$http', 'sharedProperties', function ($scope, $uibModalInstance, studentsService, $http, sharedProperties) {
+angular.module('myApp').controller('MeetingModalCtrl', ['$rootScope', '$scope', '$uibModalInstance', 'studentsService', '$http', 'sharedProperties', function ($rootScope, $scope, $uibModalInstance, studentsService, $http, sharedProperties) {
 
 	var loggedUser = sharedProperties.getProperty();
 	
@@ -29,6 +29,7 @@ angular.module('myApp').controller('MeetingModalCtrl', ['$scope', '$uibModalInst
 		})
 		.then(function(response){
 			//teacherHomeData.createNewMeeting = response.data;
+			$rootScope.$broadcast('updateMeetingList');
 		},
 		function(response){
 			console.log("Failed.")
