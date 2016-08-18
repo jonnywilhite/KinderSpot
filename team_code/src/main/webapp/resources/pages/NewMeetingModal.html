@@ -4,19 +4,19 @@
     	<h3 class="modal-title" style="font-family: marker; color: black">Schedule New Meeting</h3>
     </div>
 	<div class="modal-body">
-		<form id="meetingForm" novalidate>
+		<form id="meetingForm" novalidate name="form">
 			<h3 style="font-family: marker; color: black">Select Parent</h3>
 
-			<select style="font-family: marker; color: black" form="parentForm" ng-model="teach.parent" required>
+			<select style="font-family: marker; color: black" form="parentForm" ng-model="teach.parent" name="pName" required>
 				<option style="font-family: marker; color: black" ng-repeat="x in myStudents" value="{{x.parent.id}}">{{x.parent.firstName}} {{x.parent.lastName}} (Parent of: {{x.firstName}})</option>
 			</select>
 
 			<h3 style="font-family: marker; color: black">Reason</h3>
-			<input type="text" ng-model="teach.reason" />
+			<input type="text" ng-model="teach.reason" name="pReason" required />
 
 
 			<h3 style="font-family: marker; color: black">Select Date</h3>
-			<input type="date" ng-model="dt" value="{{dt| date: 'fullDate'}}" name="bdatetime" id="datetimepicker" />
+			<input type="date" ng-model="dt" value="{{dt| date: 'fullDate'}}" name="bdatetime" id="datetimepicker" required/>
 
 			<!-- Calendar  -->
 			<div style="display: inline-block; min-height: 290px;">
@@ -32,7 +32,7 @@
 		</form>
 	</div>
 	<div class="modal-footer">
-    	<button class="btn btn-primary" type="button" ng-click="ok(teach.parent, teach.reason, dt)">Submit</button>
+    	<button class="btn btn-primary" type="button" ng-click="ok(teach.parent, teach.reason, dt)" ng-disabled="form.$invalid">Submit</button>
         <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
     </div>
 </div>

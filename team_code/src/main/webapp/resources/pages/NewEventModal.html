@@ -1,13 +1,12 @@
 <div ng-app="myApp" ng-controller="teacherHomeCtrl">
 
 	<div class="modal-header">
-		<h3 class="modal-title" style="font-family: marker; color: black">Post
-			New Event</h3>
+		<h3 class="modal-title" style="font-family: marker; color: black">Post New Event</h3>
 	</div>
 	<div class="modal-body">
-		<form id="eventForm" novalidate>
+		<form id="eventForm" novalidate name="form">
 			<h3 style="font-family: marker; color: black">Event Name</h3>
-			<input type="text" ng-model="event.name" />
+			<input type="text" ng-model="event.name" name="eName" required />
 
 			<h3 style="font-family: marker; color: black">Event Type</h3>
 			<select style="font-family: marker; color: black" form="" ng-model="event.type" required>
@@ -17,10 +16,10 @@
 
 			<h3 style="font-family: marker; color: black">Description</h3>
 
-			<input type="text" ng-model="event.description" />
+			<input type="text" ng-model="event.description" name="eDescription" required />
 
 			<h3 style="font-family: marker; color: black">Select Date</h3>
-			<input type="date" ng-model="dt" value="{{dt| date: 'fullDate'}}" name="bdatetime" id="datetimepicker" />
+			<input type="date" ng-model="dt" value="{{dt| date: 'fullDate'}}" name="bdatetime" id="datetimepicker" required />
 
 			<!--  <pre>Selected date is: <em>{{dt | date:'fullDate'}}</em></pre> -->
 
@@ -35,7 +34,7 @@
 	</div>
 	<div class="modal-footer">
 		<button class="btn btn-primary" type="button"
-			ng-click="ok(event.name, event.type, event.description, dt)">Submit</button>
+			ng-click="ok(event.name, event.type, event.description, dt)" ng-disabled="form.$invalid">Submit</button>
 		<button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
 	</div>
 </div>
