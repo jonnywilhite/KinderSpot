@@ -137,6 +137,7 @@ angular.module("myApp").controller("teacherHomeCtrl", function($scope, $http, sh
 			teacherHomeData.myStudentGrades = response.data;
 			for (var i = 0; i < teacherHomeData.myStudents.length; i++) {
 				teacherHomeData.myStudents[i].grade = teacherHomeData.myStudentGrades[i].grade;
+				teacherHomeData.myStudents[i].comments = teacherHomeData.myStudentGrades[i].comments;
 			}
 		},
 		function(response) {
