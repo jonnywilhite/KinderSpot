@@ -10,7 +10,7 @@ angular.module("myApp").controller("viewStudentCtrl", function($http, sharedProp
 
 	viewStudentData.showGrade = function() {
 		$http({
-			url: "/KinderSpot/report-cards/" + viewStudentData.currentStudent.id,
+			url: "/ROOT/report-cards/" + viewStudentData.currentStudent.id,
 			method: "GET",
 			headers: {'Content-Type': 'application/json'}
 		})
@@ -25,7 +25,7 @@ angular.module("myApp").controller("viewStudentCtrl", function($http, sharedProp
 
 	viewStudentData.showAttendance = function() {
 		$http({
-			url: "/KinderSpot/attendance/" + viewStudentData.currentStudent.id,
+			url: "/ROOT/attendance/" + viewStudentData.currentStudent.id,
 			method: "GET",
 			headers: {'Content-Type': 'application/json'}
 		})
@@ -41,7 +41,7 @@ angular.module("myApp").controller("viewStudentCtrl", function($http, sharedProp
 
 	viewStudentData.showBadges = function() {
 		$http({
-			url: "/KinderSpot/badges/" + viewStudentData.currentStudent.id,
+			url: "/ROOT/badges/" + viewStudentData.currentStudent.id,
 			method: "GET",
 			headers: {'Content-Type': 'application/json'}
 		})
@@ -56,7 +56,7 @@ angular.module("myApp").controller("viewStudentCtrl", function($http, sharedProp
 	
 	viewStudentData.getAllBadges= function() {
 		$http({
-			url: "/KinderSpot/getAllBadges/",
+			url: "/ROOT/getAllBadges/",
 			method: "GET",
 			headers: {'Content-Type': 'application/json'}
 		})
@@ -72,7 +72,7 @@ angular.module("myApp").controller("viewStudentCtrl", function($http, sharedProp
 	viewStudentData.addBadges = function(badge) {
 		viewStudentData.myBadge = badge;
 		$http({
-			url: "/KinderSpot/addBadge/" + viewStudentData.currentStudent.id,
+			url: "/ROOT/addBadge/" + viewStudentData.currentStudent.id,
 			method: "POST",
 			data: { "id": viewStudentData.myBadge},
 			headers: {'Content-Type': 'application/json'}

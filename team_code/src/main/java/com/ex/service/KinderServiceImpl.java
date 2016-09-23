@@ -351,8 +351,7 @@ public class KinderServiceImpl implements KinderService {
 		Student student = studentRepo.findOne(studentId);
 		List<AttendanceStudent> list = attendanceStudentRepo.findByStudentOrderByAttendance(student);
 		Collections.sort(list);
-		for (AttendanceStudent as : list) 
-			System.out.println(as.getAttendance().getDate());
+		
 		return list;
 	}
 
@@ -368,7 +367,6 @@ public class KinderServiceImpl implements KinderService {
 	    cal.set(Calendar.MILLISECOND, cal.getMinimum(Calendar.MILLISECOND));
 	    
 	    Attendance a = attendanceRepo.findByTeacherAndDate(teacher, cal.getTime());
-		System.out.println(a);
 		return attendanceStudentRepo.findByAttendance(a);
 	}
 	
@@ -472,7 +470,6 @@ public class KinderServiceImpl implements KinderService {
 			message.setText(body);
 
 			Transport.send(message);
-			System.out.println("Successfully sent email to " + recipientEmail);
 
 
 		} catch (MessagingException e) {
@@ -515,10 +512,7 @@ public class KinderServiceImpl implements KinderService {
 				message.setSubject(subject);
 				message.setText(body);
 
-				System.out.println("Sending email to " + studentList.get(i).getParent().getEmail());
-
 				Transport.send(message);
-				System.out.println("Successfully sent email to "+ studentList.get(i).getParent().getEmail());
 
 
 			} catch (MessagingException e) {

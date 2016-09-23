@@ -16,8 +16,9 @@ import javax.persistence.Table;
 public class Photos {
 	@Id
 	@Column(name = "P_ID")
-	@SequenceGenerator(allocationSize = 1, name ="photoSeq", sequenceName ="PHOTO_SEQUENCE")
-	@GeneratedValue (strategy=GenerationType.SEQUENCE, generator = "photoSeq")
+	@GeneratedValue
+//	@SequenceGenerator(allocationSize = 1, name ="photoSeq", sequenceName ="PHOTO_SEQUENCE")
+//	@GeneratedValue (strategy=GenerationType.SEQUENCE, generator = "photoSeq")
 	private int id;
 	
 	@Column(name ="P_PHOTO")

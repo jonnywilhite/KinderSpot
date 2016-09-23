@@ -22,8 +22,9 @@ public class BadgeStudent implements Serializable{
 	
 	@Id
 	@Column(name="bs_id")
-	@SequenceGenerator(allocationSize=1, name="badgeStudentSequence", sequenceName="bs_sequence")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="badgeStudentSequence")
+	@GeneratedValue
+//	@SequenceGenerator(allocationSize=1, name="badgeStudentSequence", sequenceName="bs_sequence")
+//	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="badgeStudentSequence")
 	private int id;
 	
 	@ManyToOne

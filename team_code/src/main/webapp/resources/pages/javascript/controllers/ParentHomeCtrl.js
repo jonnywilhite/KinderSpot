@@ -31,7 +31,7 @@ angular.module("myApp").controller("parentHomeCtrl", function($http, sharedPrope
 	parentHomeData.getMyChild = function(){
 
 		$http({
-			url: '/KinderSpot/' + loggedUser.id + '/getchildren',
+			url: '/ROOT/' + loggedUser.id + '/getchildren',
 			method: "GET",
 			headers: {'Content-Type': 'application/json'}
 		})
@@ -55,7 +55,7 @@ angular.module("myApp").controller("parentHomeCtrl", function($http, sharedPrope
 
 	parentHomeData.showGrade = function(myId) {
 		$http({
-			url: "/KinderSpot/report-cards/" + currStudentId,
+			url: "/ROOT/report-cards/" + currStudentId,
 			method: "GET",
 			headers: {'Content-Type': 'application/json'}
 		})
@@ -70,7 +70,7 @@ angular.module("myApp").controller("parentHomeCtrl", function($http, sharedPrope
 	}
 	parentHomeData.showBadges = function(myId) {
 		$http({
-			url: "/KinderSpot/badges/" + currStudentId,
+			url: "/ROOT/badges/" + currStudentId,
 			method: "GET",
 			headers: {'Content-Type': 'application/json'}
 		})
@@ -86,7 +86,7 @@ angular.module("myApp").controller("parentHomeCtrl", function($http, sharedPrope
 	parentHomeData.getMeetings = function(){
 
 		$http({
-			url: '/KinderSpot/parentMeeting/' + loggedUser.id,
+			url: '/ROOT/parentMeeting/' + loggedUser.id,
 			method: "GET",
 			headers: {'Content-Type': 'application/json'}
 		})
@@ -107,7 +107,7 @@ angular.module("myApp").controller("parentHomeCtrl", function($http, sharedPrope
 	parentHomeData.showEvents = function(studentId){
 
 		$http({
-			url: '/KinderSpot/' + studentId + '/studentevent',
+			url: '/ROOT/' + studentId + '/studentevent',
 			method: "GET",
 			headers: {'Content-Type': 'application/json'}
 		})
@@ -128,7 +128,7 @@ angular.module("myApp").controller("parentHomeCtrl", function($http, sharedPrope
 		parentHomeData.myBody = body;
 
 		$http({
-			url: '/KinderSpot/' + loggedUser.id + '/email',
+			url: '/ROOT/' + loggedUser.id + '/email',
 			method: "POST",
 			data: { "subject": parentHomeData.mySubject,
 				"body": parentHomeData.myBody		},

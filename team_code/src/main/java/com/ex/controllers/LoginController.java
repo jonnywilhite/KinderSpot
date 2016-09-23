@@ -27,24 +27,6 @@ public class LoginController {
 		req.getSession().setAttribute("loggedInUser", myUser); //Saves User into session for later reference.
 		return myUser;
 	}
-	
-	//Get user (parent/teacher) by email (email must be unique, so it's same as ID).
-	/*Currently does not handle what to do if there are multiple users with the same email & pass, but that
-	  shouldn't ever happen to begin with if we set email to be unique (not done as of now)*/
-	//User @PathVariable for passing data in the url path. 
-	//For whatever reason, it won't work with two back-to-back {} variables, so put "login" in middle.
-	/*Don't forget to use @PathVariables on each parameter, and make sure the @PathVariable names match
-	  the parameters inside the function! */
-	
-	/*
-	
-	@RequestMapping(value="{userEmail}/login/{userPassword}", method=RequestMethod.POST)
-	public List<User> getUserByEmailAndPassword(@PathVariable String userEmail, @PathVariable String userPassword) 
-	{
-		return service.getUserByEmailAndPassword(userEmail, userPassword);
-	}
-	
-	*/
 
 }
 

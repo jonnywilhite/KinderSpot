@@ -15,7 +15,7 @@ angular.module('myApp').controller('EventModalCtrl', ['$rootScope', '$scope', '$
 		
 		
 		$http({ 
-			url:'/KinderSpot/event/' + eventName,
+			url:'/ROOT/event/' + eventName,
 			method: "POST",
 			data: {
 				"name": $scope.newEvent,

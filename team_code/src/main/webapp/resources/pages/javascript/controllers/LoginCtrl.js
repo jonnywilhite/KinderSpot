@@ -10,7 +10,7 @@ angular.module("myApp").controller("loginCtrl", function($http, $location, $wind
 		loginData.myPass = pass;
 
 		$http({
-			url: '/KinderSpot/home',
+			url: '/ROOT/home',
 			method: "POST",
 			data: { "email": loginData.myEmail,
 				"password": loginData.myPass		},

@@ -58,7 +58,7 @@ angular.module("myApp").controller("teacherHomeCtrl", function($scope, $http, sh
     
     teacherHomeData.updateReportCard = function(studentId, newGrade, newComments) {
     	$http({
-    		url: '/KinderSpot/report-cards/' + studentId,
+    		url: '/ROOT/report-cards/' + studentId,
     		method: "PUT",
     		headers: {'Content-Type': 'application/json'},
     		//data: newGrade
@@ -76,12 +76,12 @@ angular.module("myApp").controller("teacherHomeCtrl", function($scope, $http, sh
 
 	teacherHomeData.displayAttendanceMessage = function() {
 		$http({
-			url: '/KinderSpot/' + loggedUser.id + '/attendance',
+			url: '/ROOT/' + loggedUser.id + '/attendance',
 			method: "GET",
 			headers: {'Content-Type': 'application/json'}
 		})
 		.then(function(response) {
-			var thisDate = new Date(response.data[0].date);
+			var thisDate = new Date(response.data[0] && response.data[0].date);
 			var thatDate = new Date();
 			var thisDateString = thisDate.getMonth() + "-" + thisDate.getDate();
 			var thatDateString = thatDate.getMonth() + "-" + thatDate.getDate();
@@ -111,12 +111,11 @@ angular.module("myApp").controller("teacherHomeCtrl", function($scope, $http, sh
 	teacherHomeData.showStudents = function()
 	{
 		$http({
-			url: '/KinderSpot/' + loggedUser.id + '/students',
+			url: '/ROOT/' + loggedUser.id + '/students',
 			method: "GET",
 			headers: {'Content-Type': 'application/json'}
 		})
 		.then(function(response) {
-			
 			teacherHomeData.myStudents = response.data;
 			studentsService.setStudents(response.data);
 			teacherHomeData.showGrades();
@@ -129,7 +128,7 @@ angular.module("myApp").controller("teacherHomeCtrl", function($scope, $http, sh
 	
 	teacherHomeData.showGrades = function() {
 		$http({
-			url: '/KinderSpot/' + loggedUser.id + '/report-cards/',
+			url: '/ROOT/' + loggedUser.id + '/report-cards/',
 			method: "GET",
 			headers: {'Content-Type': 'application/json'}
 		})
@@ -148,7 +147,7 @@ angular.module("myApp").controller("teacherHomeCtrl", function($scope, $http, sh
 	teacherHomeData.viewStudent = function(id) {
 
 		$http({
-			url: '/KinderSpot/students/' + id,
+			url: '/ROOT/students/' + id,
 			method: "GET",
 			headers: {'Content-Type': 'application/json'}
 		})
@@ -164,7 +163,7 @@ angular.module("myApp").controller("teacherHomeCtrl", function($scope, $http, sh
 	teacherHomeData.showMeetings = function()
 	{
 		$http({
-			url: '/KinderSpot/meeting/' + loggedUser.id,
+			url: '/ROOT/meeting/' + loggedUser.id,
 			method: "GET",
 			headers: {'Content-Type': 'application/json'}
 		})
@@ -188,7 +187,7 @@ angular.module("myApp").controller("teacherHomeCtrl", function($scope, $http, sh
 	teacherHomeData.showEvents = function()
 	{
 		$http({
-			url: '/KinderSpot/event',
+			url: '/ROOT/event',
 			method: "GET",
 			headers: {'Content-Type': 'application/json'}
 		})
@@ -205,7 +204,7 @@ angular.module("myApp").controller("teacherHomeCtrl", function($scope, $http, sh
 	teacherHomeData.showEventTypes = function ()
 	{
 		$http({
-			url: '/KinderSpot/event/Type',
+			url: '/ROOT/event/Type',
 			method: "GET",
 			headers: {'Content-Type': 'application/json'}
 			
@@ -235,7 +234,7 @@ angular.module("myApp").controller("teacherHomeCtrl", function($scope, $http, sh
 		teacherHomeData.myBody = body;
 
 		$http({
-			url: '/KinderSpot/' + loggedUser.id + '/emailParent',
+			url: '/ROOT/' + loggedUser.id + '/emailParent',
 			method: "POST",
 			data: { "subject": teacherHomeData.mySubject,
 				"body": teacherHomeData.myBody, 	

@@ -13,8 +13,9 @@ import javax.persistence.Table;
 public class Badge {
 	@Id
 	@Column(name="b_id")
-	@SequenceGenerator(allocationSize=1, name="badgeSequence", sequenceName="badge_sequence")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="badgeSequence")
+	@GeneratedValue
+//	@SequenceGenerator(allocationSize=1, name="badgeSequence", sequenceName="badge_sequence")
+//	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="badgeSequence")
 	private int id;
 	
 	@Column(name="b_name")

@@ -12,7 +12,7 @@ angular.module('myApp').controller('MeetingModalCtrl', ['$rootScope', '$scope', 
 		
 		
 		$http({ 
-			url:'/KinderSpot/meeting/' + parent ,
+			url:'/ROOT/meeting/' + parent ,
 			method: "POST",
 			data: {
 				"reason": $scope.meetingReason,

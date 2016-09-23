@@ -10,7 +10,7 @@ angular.module('myApp').controller('PhotosModalCtrl', ['$scope', '$uibModalInsta
 		
 		if (loggedUser.userRole.name == "Teacher") {
 			var file = photo;
-			var uploadUrl = '/KinderSpot/photos/' + $scope.event.id;
+			var uploadUrl = '/ROOT/photos/' + $scope.event.id;
 			fileUpload.uploadFileToUrl(file, uploadUrl);
 			
 			$uibModalInstance.close();
@@ -29,7 +29,7 @@ angular.module('myApp').controller('PhotosModalCtrl', ['$scope', '$uibModalInsta
 	$scope.showPics = function(){
 		
 		$http({
-			url: '/KinderSpot/photos/' + $scope.event.id,
+			url: '/ROOT/photos/' + $scope.event.id,
 			method: "GET",
 			headers: {'Content-Type': 'application/json'}
 			

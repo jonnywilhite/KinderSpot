@@ -22,8 +22,9 @@ public class EventStudent implements Serializable{
 	
 	@Id
 	@Column(name="es_id")
-	@SequenceGenerator(allocationSize=1, name="eventStudentSequence", sequenceName="es_sequence")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="eventStudentSequence")
+	@GeneratedValue
+//	@SequenceGenerator(allocationSize=1, name="eventStudentSequence", sequenceName="es_sequence")
+//	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="eventStudentSequence")
 	private int id;
 	
 	

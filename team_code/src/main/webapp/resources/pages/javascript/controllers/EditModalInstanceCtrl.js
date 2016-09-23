@@ -9,7 +9,7 @@ angular.module('myApp').controller('EditModalInstanceCtrl', ['$scope', '$uibModa
 	var start = new Date().setHours(0,0,0,0);
 	
 	$http({
-		url: "/KinderSpot/" + loggedUser.id + "/attendance/" + start,
+		url: "/ROOT/" + loggedUser.id + "/attendance/" + start,
 		method: "GET",
 		headers: {'Content-Type': 'application/json'}
 	})
@@ -35,7 +35,7 @@ angular.module('myApp').controller('EditModalInstanceCtrl', ['$scope', '$uibModa
 		});
 
 		$http({
-			url: "/KinderSpot/" + loggedUser.id + "/attendance/" + start,
+			url: "/ROOT/" + loggedUser.id + "/attendance/" + start,
 			method: "PUT",
 			headers: {'Content-Type': 'application/json'},
 			data: list

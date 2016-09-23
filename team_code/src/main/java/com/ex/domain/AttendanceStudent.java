@@ -21,8 +21,9 @@ public class AttendanceStudent implements Serializable, Comparable<AttendanceStu
 
 	@Id
 	@Column(name="as_id")
-	@SequenceGenerator(allocationSize=1, name="attendanceStudentSequence", sequenceName="as_sequence")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="attendanceStudentSequence")
+	@GeneratedValue
+//	@SequenceGenerator(allocationSize=1, name="attendanceStudentSequence", sequenceName="as_sequence")
+//	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="attendanceStudentSequence")
 	private int id;
 	
 	@ManyToOne
@@ -81,6 +82,11 @@ public class AttendanceStudent implements Serializable, Comparable<AttendanceStu
 		result = prime * result + (present ? 1231 : 1237);
 		result = prime * result + ((student == null) ? 0 : student.hashCode());
 		return result;
+	}
+
+	@Override
+	public String toString() {
+		return "AttendanceStudent [id=" + id + "]";
 	}
 
 	@Override
