@@ -10,17 +10,20 @@
 <style>
 
 body {
-	background-image: url("/KinderSpot/resources/themes/greenBoard.jpg");
+	background-image: url("/ROOT/resources/themes/greenBoard.jpg");
 	/* background-size: 100% 175%; */
 	background-size: cover;
 	background-repeat: no-repeat;
 } 
 
-@font-face { font-family: chalky; src: url("/KinderSpot/resources/fonts/SimplyChalky.ttf") }
-@font-face { font-family: lemonMilk; src: url("/KinderSpot/resources/fonts/LemonMilk.otf") }
-@font-face { font-family: marker; src: url("/KinderSpot/resources/fonts/PWMarker.ttf") }
-@font-face { font-family: chalkboard; src: url("/KinderSpot/resources/fonts/chalkboard.ttf") }
-@font-face { font-family: brokenchalk; src: url("/KinderSpot/resources/fonts/BrokenChalk.ttf") }
+@font-face { font-family: chalky; src: url("/ROOT/resources/fonts/SimplyChalky.ttf") }
+@font-face { font-family: lemonMilk; src: url("/ROOT/resources/fonts/LemonMilk.otf") }
+@font-face { font-family: marker; src: url("/ROOT/resources/fonts/PWMarker.ttf") }
+@font-face { font-family: chalkboard; src: url("/ROOT/resources/fonts/chalkboard.ttf") }
+@font-face { font-family: brokenchalk; src: url("/ROOT/resources/fonts/BrokenChalk.ttf") }
+@font-face { font-family: wood1; src: url("/ROOT/resources/fonts/wood1.ttf") }
+@font-face { font-family: wood2; src: url("/ROOT/resources/fonts/wood2.ttf") }
+
 
 h3, h2, th, tr {
 	font-family: chalky;
@@ -52,23 +55,45 @@ li, th, tr, td {
 	<input type="hidden" ng-model="parentHomeData.myChild" />
 	<input type="hidden" ng-model="parentHomeData.currentReportCard">
 	<input type="hidden" ng-model="parentHomeData.meeting">
+	<input type="hidden" ng-model="parentHomeData.meetingCount">
 	<input type="hidden" ng-model="parentHomeData.events">
+	<input type="hidden" ng-model="parentHomeData.badgesCount">
 	
+	<nav class="w3-sidenav w3-black w3-card-2" style="width:130px; font-family:marker">
+			<div class="w3-container">
+				<h5 style="font-family:marker">Menu</h5>
+			</div>
+			<a href="" class="tablink"
+				ng-click="parentHomeData.showDisplay('infoDiv')">My Child</a> 
+			<a href="" class="tablink" 
+				ng-click="parentHomeData.showDisplay('meetingsDiv')">
+				Meetings <span class="w3-badge w3-red">{{parentHomeData.meetingCount}}</span></a> 
+			<a href="" class="tablink"
+				ng-click="parentHomeData.showDisplay('eventsDiv')">Events</a> 
+			<a href="" class="tablink"
+				ng-click="parentHomeData.showDisplay('emailDiv')">Email Teacher</a> 
+			<a href="" class="tablink"
+				ng-click="parentHomeData.showDisplay('badgesDiv')">
+				Badges <span class="w3-badge w3-green">{{parentHomeData.badgesCount}}</span></a> 
+			<a href="#" class="tablink" ng-click="">Logout</a>
+		</nav>
 	
+<!-- Div container below needed to push everything to the right of the sidenav. -->
+<div style="margin-left: 140px">
 <h2>Parent Page: {{parentHomeData.loggedInUser.firstName}}</h2>
 
 
-<div id="infoDiv" style="display:inline">
+<div id="infoDiv" style="display:none" class="w3-container w3-animate-left">
 	<table class="w3-table w3-border">
-  		<tr><td><h2>My Child Info:</h2></td></tr>
+  		<tr><td><h2>{{parentHomeData.myChild.firstName}} {{parentHomeData.myChild.lastName}}</h2></td></tr>
   		<tr><td>Id: {{parentHomeData.myChild.id}}</td></tr>
-  		<tr><td>Name: {{parentHomeData.myChild.firstName}} {{parentHomeData.myChild.lastName}}</td></tr>
   		<tr><td>Teacher: {{parentHomeData.myChild.teacher.firstName}} {{parentHomeData.myChild.teacher.lastName}}</td></tr>
 		<tr><td>Grade: {{parentHomeData.currentReportCard.grade}}</td></tr>
+		<tr><td>Teacher comments: {{parentHomeData.currentReportCard.comments}}</td></tr>
 	</table>
 </div>
 
-<div id="meetingsDiv" style="display:inline">
+<div id="meetingsDiv" style="display:none" class="w3-container w3-animate-left">
 	<br><br>
 	<table class="w3-table w3-border w3-bordered" style="width:75%">
 				<tr>
@@ -83,18 +108,22 @@ li, th, tr, td {
 </div>
 
 
-<div id="eventsDiv" style="display:inline">
+<div id="eventsDiv" style="display:none" class="w3-container w3-animate-left">
 	<br><br>
 	<table class="w3-table w3-border w3-bordered" style="width:75%">
 				<tr>
 					<th>Event</th>
 					<th>Description</th>
 					<th>Date</th>
+					<th>View Photos</th>
 				</tr>
 				<tr ng-repeat="x in parentHomeData.events">
 					<td>{{ x.name }}</td>
 					<td> {{x.description}} </td>
-					<td> {{x.date | date:'MMM d, yyyy h:mm a'}} </td>
+					<td> {{x.date | date:'MMM d, yyyy'}} </td>
+					<td>
+						<button class="w3-btn w3-transparent w3-border w3-round-large" ng-click="parentHomeData.openPhotosModal(x)">View Photos</button>
+					</td>
 				</tr>
 	</table>
 
@@ -102,19 +131,20 @@ li, th, tr, td {
 </div>
 
 
-<div id="emailDiv" style="display:inline">
+<div id="emailDiv" style="display:none" class="w3-container w3-animate-left">
 	<form novalidate>
+		<h3>Teacher email: {{parentHomeData.myChild.teacher.email}}</h3><br>
     	<h3>Subject:</h3><br>
-    	<input type="text" ng-model="user.subject" required><br>
+    	<input type="text" ng-model="user.subject" required><br><br>
     	<h3>Body:</h3><br>
     	<textarea rows="5" ng-model="user.body" autocomplete="off" required></textarea>
     	<br><br>
-    	<button class="w3-btn w3-transparent w3-border w3-round-large" ng-click="parentHomeData.emailTeacher(user.subject, user.body)">Send</button>
+    	<button class="w3-btn w3-transparent w3-border w3-round-large" ng-click="parentHomeData.emailTeacher(user.subject, user.body);parentHomeData.emailConfirm()">Send</button>
 	</form>
 </div>
 
 
-<div id="badgesDiv" style="display:inline">
+<div id="badgesDiv" style="display:none" class="w3-container w3-animate-left">
 		<h2>Badges</h2>
 		<table>
 				<tr>
@@ -125,11 +155,12 @@ li, th, tr, td {
 					<td ng-bind="bad.name"></td>
 					<td >
 						<img ng-src="{{bad.photo}}" class="img-responsive"
-						style="width: 40%; height: 20%; border: medium; border-style: double;"
+						style="width: 20%; height: 20%; border: medium; border-style: double;"
 						align="top"/>
 					</td>
 				</tr>
 		</table>
+</div>
 </div>
 
 

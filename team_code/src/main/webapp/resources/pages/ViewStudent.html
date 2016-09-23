@@ -11,17 +11,17 @@
 <style>
 
  body {
-	background-image: url("/KinderSpot/resources/themes/greenBoard.jpg");
+	background-image: url("/ROOT/resources/themes/greenBoard.jpg");
 	/* background-size: 100% 175%; */
 	background-size: cover;
 	background-repeat: no-repeat;
 } 
 
-@font-face { font-family: chalky; src: url("/KinderSpot/resources/fonts/SimplyChalky.ttf") }
-@font-face { font-family: lemonMilk; src: url("/KinderSpot/resources/fonts/LemonMilk.otf") }
-@font-face { font-family: marker; src: url("/KinderSpot/resources/fonts/PWMarker.ttf") }
-@font-face { font-family: chalkboard; src: url("/KinderSpot/resources/fonts/chalkboard.ttf") }
-@font-face { font-family: brokenchalk; src: url("/KinderSpot/resources/fonts/BrokenChalk.ttf") }
+@font-face { font-family: chalky; src: url("/ROOT/resources/fonts/SimplyChalky.ttf") }
+@font-face { font-family: lemonMilk; src: url("/ROOT/resources/fonts/LemonMilk.otf") }
+@font-face { font-family: marker; src: url("/ROOT/resources/fonts/PWMarker.ttf") }
+@font-face { font-family: chalkboard; src: url("/ROOT/resources/fonts/chalkboard.ttf") }
+@font-face { font-family: brokenchalk; src: url("/ROOT/resources/fonts/BrokenChalk.ttf") }
 
 h3, h2, h5 {
 	font-family: chalky;
@@ -31,6 +31,13 @@ h3, h2, h5 {
 th, tr {
 	font-family: chalky; 
 	color: white;
+}
+
+html {
+    font-family: sans-serif;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    background-image: url("/ROOT/resources/themes/greenBoard.jpg");
 }
 
 </style>
@@ -51,7 +58,15 @@ th, tr {
 		<input type="hidden" ng-model="viewStudentData.currentBadges">
 		<input type="hidden" ng-model="viewStudentData.allBadges">
 		
-		<h2>View Student: <span ng-bind="viewStudentData.currentStudent.firstName"></span></h2>
+		
+		<h2>View Student: <span ng-bind="viewStudentData.currentStudent.firstName"></span>
+			<!-- <span class="w3-tag w3-large w3-padding w3-green" style="transform:rotate(-5deg);font-family:lemonMilk;float:right">
+				<a href="#/teacherHome">Go Back</a>
+			</span> -->
+			<span id="back" class="w3-tag w3-round w3-border w3-border-white" style="font-family: chalky; background-color: transparent;float:right"> 
+				<a href="#/teacherHome">Back</a>
+			</span>
+		</h2>
 		
 		<h2>Grade: <span ng-bind="viewStudentData.currentReportCard.grade"></span></h2>
 		
@@ -62,7 +77,7 @@ th, tr {
 				<th>Present</th>
 			</tr>
 			<tr ng-repeat="att in viewStudentData.currentAttendance">
-				<td ng-bind="att.attendance.date | date : mediumDate"></td>
+				<td ng-bind="att.attendance.date | date : 'EEEE MMM d, yyyy'"></td>
 				<td ng-bind="att.present"></td>
 			</tr>
 		</table>
@@ -82,7 +97,7 @@ th, tr {
 					<td ng-bind="bad.name"></td>
 					<td >
 						<img ng-src="{{bad.photo}}" class="img-responsive"
-						style="width: 40%; height: 20%; border: medium; border-style: double;"
+						style="width: 20%; height: 20%; border: medium; border-style: double;"
 						align="top"/>
 					</td>
 				</tr>
@@ -99,12 +114,9 @@ th, tr {
 					<button ng-click="viewStudentData.addBadges(user.badge)" style="font-family:marker;color:black">
 						Add</button>
 				</form>
+		</div> <!-- ends badges div -->
 			
-		</div>
-		
-		
-			
-	</div>
+	</div> <!-- Ends controller div -->
 
 
 </body>

@@ -22,6 +22,11 @@ public class EventController {
 	
 	@RequestMapping(value = "event", method=RequestMethod.GET)
 	public List<Event> getAllEvents(){
+		List<Event> e = service.getAllEvents();
+		/*System.out.println("List:");
+		for (int i = 0; i < e.size(); i++){
+			System.out.println( e.get(i).getName());
+		}*/
 		return service.getAllEvents();
 	}
 	

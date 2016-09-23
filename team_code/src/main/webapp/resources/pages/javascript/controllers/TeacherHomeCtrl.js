@@ -1,4 +1,4 @@
-angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProperties, studentProperties, $state, $uibModal, studentsService)  {
+angular.module("myApp").controller("teacherHomeCtrl", function($scope, $http, sharedProperties, studentProperties, $state, $uibModal, studentsService, eventTypeService, eventIdService)  {
 
 	var teacherHomeData = this;
 	var loggedUser = sharedProperties.getProperty();
@@ -8,6 +8,20 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 	teacherHomeData.myStudentGrades = [];
 	teacherHomeData.attendanceMessage = "";
 	teacherHomeData.hasSubmittedAttendance = false;
+	
+	//Update lists
+	$scope.$on("updateMeetingList",function(){
+		console.log("Heard the call");
+		teacherHomeData.showMeetings();
+	});
+	$scope.$on("updateEventList",function(){
+		console.log("Heard the call");
+		teacherHomeData.showEvents();
+	});
+	
+	teacherHomeData.confirm = function(){
+		alert("Email sent.");
+	}
 	
 	/*
 	 * All this is for editing grade in-line
@@ -23,11 +37,17 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
         teacherHomeData.selected = angular.copy(student);
     };
     
+    teacherHomeData.editComments = function (student) {
+        teacherHomeData.selected = angular.copy(student);
+    };
+    
     teacherHomeData.saveStudent = function (idx) {
         teacherHomeData.myStudents[idx] = angular.copy(teacherHomeData.selected);
         var studentId = teacherHomeData.myStudents[idx].id;
         var newGrade = teacherHomeData.myStudents[idx].grade;
-        teacherHomeData.updateReportCard(studentId, newGrade);
+        var newComments = teacherHomeData.myStudents[idx].comments;
+        teacherHomeData.updateReportCard(studentId, newGrade, newComments);
+        //console.log("comments is: " + newComments);
         
         teacherHomeData.reset();
     };
@@ -36,12 +56,13 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
         teacherHomeData.selected = {};
     };
     
-    teacherHomeData.updateReportCard = function(studentId, newGrade) {
+    teacherHomeData.updateReportCard = function(studentId, newGrade, newComments) {
     	$http({
-    		url: '/KinderSpot/report-cards/' + studentId,
+    		url: '/ROOT/report-cards/' + studentId,
     		method: "PUT",
     		headers: {'Content-Type': 'application/json'},
-    		data: newGrade
+    		//data: newGrade
+    		data: { "grade": newGrade, "comments": newComments }
     	})
     	.then(function(response) {
     		console.log("successfully updated grade");
@@ -55,12 +76,12 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 
 	teacherHomeData.displayAttendanceMessage = function() {
 		$http({
-			url: '/KinderSpot/' + loggedUser.id + '/attendance',
+			url: '/ROOT/' + loggedUser.id + '/attendance',
 			method: "GET",
 			headers: {'Content-Type': 'application/json'}
 		})
 		.then(function(response) {
-			var thisDate = new Date(response.data[0].date);
+			var thisDate = new Date(response.data[0] && response.data[0].date);
 			var thatDate = new Date();
 			var thisDateString = thisDate.getMonth() + "-" + thisDate.getDate();
 			var thatDateString = thatDate.getMonth() + "-" + thatDate.getDate();
@@ -90,12 +111,11 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 	teacherHomeData.showStudents = function()
 	{
 		$http({
-			url: '/KinderSpot/' + loggedUser.id + '/students',
+			url: '/ROOT/' + loggedUser.id + '/students',
 			method: "GET",
 			headers: {'Content-Type': 'application/json'}
 		})
 		.then(function(response) {
-			
 			teacherHomeData.myStudents = response.data;
 			studentsService.setStudents(response.data);
 			teacherHomeData.showGrades();
@@ -108,7 +128,7 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 	
 	teacherHomeData.showGrades = function() {
 		$http({
-			url: '/KinderSpot/' + loggedUser.id + '/report-cards/',
+			url: '/ROOT/' + loggedUser.id + '/report-cards/',
 			method: "GET",
 			headers: {'Content-Type': 'application/json'}
 		})
@@ -116,6 +136,7 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 			teacherHomeData.myStudentGrades = response.data;
 			for (var i = 0; i < teacherHomeData.myStudents.length; i++) {
 				teacherHomeData.myStudents[i].grade = teacherHomeData.myStudentGrades[i].grade;
+				teacherHomeData.myStudents[i].comments = teacherHomeData.myStudentGrades[i].comments;
 			}
 		},
 		function(response) {
@@ -126,7 +147,7 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 	teacherHomeData.viewStudent = function(id) {
 
 		$http({
-			url: '/KinderSpot/students/' + id,
+			url: '/ROOT/students/' + id,
 			method: "GET",
 			headers: {'Content-Type': 'application/json'}
 		})
@@ -142,12 +163,13 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 	teacherHomeData.showMeetings = function()
 	{
 		$http({
-			url: '/KinderSpot/meeting',
+			url: '/ROOT/meeting/' + loggedUser.id,
 			method: "GET",
 			headers: {'Content-Type': 'application/json'}
 		})
 		.then(function(response){	
 			teacherHomeData.myMeetings = response.data;
+			teacherHomeData.meetingsBadge = response.data.length; //Sets the red badge.
 		},
 		function(response){
 			console.log("Failed.");
@@ -157,35 +179,7 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 
 
 	teacherHomeData.createMeeting = function (parent,reason,date)
-	{
-		teacherHomeData.selectParent = parent;
-		teacherHomeData.meetingReason = reason; 
-		teacherHomeData.meetingDate = date;
-		
-		console.log(parent);
-		console.log(reason);
-		console.log(date);
-		
-		$http({ 
-			url:'/KinderSpot/meeting/' + parent ,
-			method: "POST",
-			data: { "reason": teacherHomeData.meetingReason,
-				"parent":{
-					"id": teacherHomeData.selectParent
-				},
-				"date": teacherHomeData.meetingDate
-
-			},
-			headers: {'Content-Type':'application/json'}
-		})
-		.then(function(response){
-
-			teacherHomeData.createNewMeeting = response.data;
-		},
-		function(response){
-			console.log("Failed.")
-		});		
-
+	{	
 
 	}
 
@@ -193,7 +187,7 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 	teacherHomeData.showEvents = function()
 	{
 		$http({
-			url: '/KinderSpot/event',
+			url: '/ROOT/event',
 			method: "GET",
 			headers: {'Content-Type': 'application/json'}
 		})
@@ -210,54 +204,24 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 	teacherHomeData.showEventTypes = function ()
 	{
 		$http({
-			url: '/KinderSpot/event/Type',
+			url: '/ROOT/event/Type',
 			method: "GET",
 			headers: {'Content-Type': 'application/json'}
 			
 		})
 		.then(function(response){
-			teacherHomeData.myEventType = response.data;
+			eventTypeService.setEventTypes (response.data);
 		},
 		function(response){
 		console.log("Failed.");
 	
 	 });	
-  }
+	}
 	teacherHomeData.showEventTypes();
 
 
 	teacherHomeData.createEvents = function (eventName,eventType, description, date)
 	{
-		teacherHomeData.newEvent = eventName; 
-		teacherHomeData.type = eventType;
-		teacherHomeData.description = description;
-		teacherHomeData.eventDate = date; 
-	
-		console.log(eventName);
-		console.log(eventType);
-		console.log(description);
-		console.log(date);
-
-		$http({ 
-			url:'/KinderSpot/event/' + eventName,
-			method: "POST",
-			data: {"name": teacherHomeData.newEvent,
-				   "description": teacherHomeData.description,
-				   "date": teacherHomeData.eventDate,
-				   "eventType":{
-					   "id": teacherHomeData.type
-				   }
-			},
-
-			headers: {'Content-Type':'application/json'}
-		})
-		.then(function(response){
-
-			teacherHomeData.createNewEvent = response.data;
-		},
-		function(response){
-			console.log("Failed.")
-		});		
 
 
 	}
@@ -270,7 +234,7 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 		teacherHomeData.myBody = body;
 
 		$http({
-			url: '/KinderSpot/' + loggedUser.id + '/emailParent',
+			url: '/ROOT/' + loggedUser.id + '/emailParent',
 			method: "POST",
 			data: { "subject": teacherHomeData.mySubject,
 				"body": teacherHomeData.myBody, 	
@@ -298,6 +262,7 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 		document.getElementById('emailDiv').style.display = "none";
 		document.getElementById('meetingsDiv').style.display = "none";
 
+		document.getElementById(divId).style.color = "red"; //doesn't work.
 		document.getElementById(divId).style.display = "inline";
 	};
 
@@ -343,6 +308,65 @@ angular.module("myApp").controller("teacherHomeCtrl", function($http, sharedProp
 				
 			});
 		}
+	};
+	
+	teacherHomeData.openMeetingModal = function(size) {
+		
+		var modalInstance = $uibModal.open({
+			animation: teacherHomeData.animationsEnabled,
+			templateUrl: 'NewMeetingModal.html',
+			controller: 'MeetingModalCtrl',
+			size: size,
+			resolve: {
+
+			}
+		});
+
+		modalInstance.result.then(function () {
+			
+		}, function () {
+			
+		});
+	};
+
+	teacherHomeData.openPhotosModal = function(event) {
+		
+		eventIdService.setEvent(event);
+
+		var modalInstance = $uibModal.open({
+			animation: teacherHomeData.animationsEnabled,
+			templateUrl: 'PhotosModal.html',
+			controller: 'PhotosModalCtrl',
+			//size: size,
+			resolve: {
+
+			}
+		});
+
+		modalInstance.result.then(function () {
+			
+		}, function () {
+
+		});
+	}
+
+	teacherHomeData.openEventModal = function(size) {
+
+		var modalInstance = $uibModal.open({
+			animation: teacherHomeData.animationsEnabled,
+			templateUrl: 'NewEventModal.html',
+			controller: 'EventModalCtrl',
+			size: size,
+			resolve: {
+
+			}
+		});
+
+		modalInstance.result.then(function () {
+			
+		}, function () {
+
+		});
 	};
 
 }); //ends teacherHomeCtrl

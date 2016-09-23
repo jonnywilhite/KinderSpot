@@ -21,8 +21,9 @@ public class Attendance implements Comparable<Attendance>
 {
 	@Id
 	@Column(name="A_ID")
-	@SequenceGenerator(allocationSize=1, name="attendanceSequence", sequenceName="attendance_sequence")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="attendanceSequence")
+	@GeneratedValue
+//	@SequenceGenerator(allocationSize=1, name="attendanceSequence", sequenceName="attendance_sequence")
+//	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="attendanceSequence")
 	private int id;
 	
 	@Column(name="A_DATE")

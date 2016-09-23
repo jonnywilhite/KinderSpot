@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ex.domain.ReportCard;
+import com.ex.domain.Student;
 import com.ex.service.KinderService;
 
 @RestController
@@ -37,8 +38,8 @@ public class ReportCardController {
 	}
 	
 	@RequestMapping(value="report-cards/{studentId}", method=RequestMethod.PUT)
-	public ReportCard updateReportCardByStudent(@PathVariable int studentId, @RequestBody String grade) {
-		return service.updateReportCardByStudent(studentId, grade);
+	public ReportCard updateReportCardByStudent(@PathVariable int studentId, @RequestBody ReportCard rc) {
+		return service.updateReportCardByStudent(studentId, rc);
 	}
 
 }

@@ -13,7 +13,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="EDU_ATTENDANCE_STUDENT")
-public class AttendanceStudent implements Serializable {
+public class AttendanceStudent implements Serializable, Comparable<AttendanceStudent> {
 	/**
 	 * 
 	 */
@@ -21,8 +21,9 @@ public class AttendanceStudent implements Serializable {
 
 	@Id
 	@Column(name="as_id")
-	@SequenceGenerator(allocationSize=1, name="attendanceStudentSequence", sequenceName="as_sequence")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="attendanceStudentSequence")
+	@GeneratedValue
+//	@SequenceGenerator(allocationSize=1, name="attendanceStudentSequence", sequenceName="as_sequence")
+//	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="attendanceStudentSequence")
 	private int id;
 	
 	@ManyToOne
@@ -84,6 +85,11 @@ public class AttendanceStudent implements Serializable {
 	}
 
 	@Override
+	public String toString() {
+		return "AttendanceStudent [id=" + id + "]";
+	}
+
+	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
@@ -106,5 +112,13 @@ public class AttendanceStudent implements Serializable {
 			return false;
 		return true;
 	}
+
+	@Override
+	public int compareTo(AttendanceStudent that) {
+		
+		return this.getAttendance().compareTo(that.getAttendance());
+	}
+	
+	
 	
 }

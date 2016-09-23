@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
@@ -187,10 +188,11 @@ public class KinderServiceImpl implements KinderService {
 	}
 	
 	@Override
-	public ReportCard updateReportCardByStudent(int studentId, String grade) {
+	public ReportCard updateReportCardByStudent(int studentId, ReportCard rc) {
 		Student student = studentRepo.findOne(studentId);
 		ReportCard reportCard = reportCardRepo.findByStudent(student);
-		reportCard.setGrade(grade);
+		reportCard.setGrade(rc.getGrade());
+		reportCard.setComments(rc.getComments());
 		return reportCard;
 	}
 
@@ -251,23 +253,35 @@ public class KinderServiceImpl implements KinderService {
 
 	//Meeting Stuff 
 	@Override
-	public Meetings createMeeting(Meetings meeting, int id) 
+	public Meetings createMeeting(Meetings meeting, int id, User teacher) 
 	{			
-		User parent = new User ();
-		parent.setId(id);
+		User parent = userRepo.findById(id);
+		User t = userRepo.findById(teacher.getId());
 
-
-		meeting.setDate(meeting.getDate());
 		meeting.setParent(parent);
-		meeting.setReason(meeting.getReason());
+		meeting.setTeacher(t);
+		
+		String subject = "Meeting Scheduled";
+		String body = "You now have a meeting scheduled with " + t.getFirstName() + " " + t.getLastName() + ".\n\n"
+				+ "Date: " + meeting.getDate() + "\n" 
+				+ "Reason: " + meeting.getReason() + "\n\n"
+				+ "Thank you,";
+		
+		sendEmail(teacher.getId(), id, subject, body);
+		
 		return meetingRepo.save(meeting);
 	}
 
 	
 	//Meeting Stuff 
 	@Override
-	public List<Meetings> getAllMeetings() {
-		return meetingRepo.findAll();
+	public List<Meetings> getAllMeetings(int teachId) {
+		
+		User teacher = new User ();
+		teacher.setId(teachId);
+				
+		return meetingRepo.findByTeacher(teacher);
+		//return meetingRepo.findByTeacher(teacher);
 	}
 	
 	/*Gets meetings specific to a parent. I couldn't figure out how to use the Repo to get this, so I'm 
@@ -330,6 +344,7 @@ public class KinderServiceImpl implements KinderService {
 	@Override
 	public List<Attendance> viewAttendanceSheets(int teacherId) {
 		User teacher = teacherRepo.findOne(teacherId);
+		
 		return attendanceRepo.findByTeacherOrderByDate(teacher);
 	}
 
@@ -337,6 +352,8 @@ public class KinderServiceImpl implements KinderService {
 	public List<AttendanceStudent> viewAttendanceEntriesByStudent(int studentId) {
 		Student student = studentRepo.findOne(studentId);
 		List<AttendanceStudent> list = attendanceStudentRepo.findByStudentOrderByAttendance(student);
+		Collections.sort(list);
+		
 		return list;
 	}
 
@@ -352,7 +369,6 @@ public class KinderServiceImpl implements KinderService {
 	    cal.set(Calendar.MILLISECOND, cal.getMinimum(Calendar.MILLISECOND));
 	    
 	    Attendance a = attendanceRepo.findByTeacherAndDate(teacher, cal.getTime());
-		System.out.println(a);
 		return attendanceStudentRepo.findByAttendance(a);
 	}
 	
@@ -371,19 +387,21 @@ public class KinderServiceImpl implements KinderService {
 	 * Photos stuff
 	 */
 	@Override
-	public Photos uploadPhoto(Photos photo, File file) {
+	public Photos uploadPhoto(File file, int eventId) {
 		AWSCredentials credentials = new ProfileCredentialsProvider().getCredentials();
-		System.out.println(credentials.getAWSAccessKeyId());
 		AmazonS3 client = new AmazonS3Client(credentials);
 		String bucketName = "kinderspot-photos";
-		String folderName = "badges";
+		String folderName = "class-photos";
 		String SUFFIX = "/";
 
 		//client.createBucket(bucketName);
 		//createFolder(bucketName, folderName, client);
-		photo.setPhoto(folderName + SUFFIX + file.getName());
+		Event event = eventRepo.findOne(eventId);
+		Photos photo = new Photos();
+		photo.setEvent(event);
+		photo.setPhoto("https://s3.amazonaws.com/" + bucketName + "/" + folderName + SUFFIX + file.getName());
 
-		String fileName = photo.getPhoto();
+		String fileName = folderName + SUFFIX + file.getName();
 		client.putObject(new PutObjectRequest(bucketName, fileName, file));
 
 		return photoRepo.save(photo);
@@ -454,7 +472,6 @@ public class KinderServiceImpl implements KinderService {
 			message.setText(body);
 
 			Transport.send(message);
-			System.out.println("Successfully sent email to " + recipientEmail);
 
 
 		} catch (MessagingException e) {
@@ -497,10 +514,7 @@ public class KinderServiceImpl implements KinderService {
 				message.setSubject(subject);
 				message.setText(body);
 
-				System.out.println("Sending email to " + studentList.get(i).getParent().getEmail());
-
 				Transport.send(message);
-				System.out.println("Successfully sent email to "+ studentList.get(i).getParent().getEmail());
 
 
 			} catch (MessagingException e) {

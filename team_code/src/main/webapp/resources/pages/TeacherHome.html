@@ -3,59 +3,31 @@
 <head>
 <meta charset="ISO-8859-1">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
 	crossorigin="anonymous">
 <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
-<link rel="stylesheet"
-	href="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">
 
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.js"></script>
-<script
-	src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.js"></script>
-<script
-	src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.0.1.js"></script>
-<script src="example.js"></script>
-<link
-	href="//netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
-	rel="stylesheet">
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.js"></script>
+<script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.0.1.js"></script>
 
 <title>Teacher Homepage</title>
 
 <style>
-body {
-	background-image: url("/KinderSpot/resources/themes/greenBoard.jpg");
+ body {
+	background-image: url("/ROOT/resources/themes/greenBoard.jpg");
 	/* background-size: 100% 175%; */
 	background-size: cover;
 	background-repeat: no-repeat;
-}
+} 
 
-@font-face {
-	font-family: chalky;
-	src: url("/KinderSpot/resources/fonts/SimplyChalky.ttf")
-}
-
-@font-face {
-	font-family: lemonMilk;
-	src: url("/KinderSpot/resources/fonts/LemonMilk.otf")
-}
-
-@font-face {
-	font-family: marker;
-	src: url("/KinderSpot/resources/fonts/PWMarker.ttf")
-}
-
-@font-face {
-	font-family: chalkboard;
-	src: url("/KinderSpot/resources/fonts/chalkboard.ttf")
-}
-
-@font-face {
-	font-family: brokenchalk;
-	src: url("/KinderSpot/resources/fonts/BrokenChalk.ttf")
-}
+@font-face {font-family: chalky; src: url("/ROOT/resources/fonts/SimplyChalky.ttf")}
+@font-face {font-family: lemonMilk; src: url("/ROOT/resources/fonts/LemonMilk.otf")}
+@font-face {font-family: marker; src: url("/ROOT/resources/fonts/PWMarker.ttf")}
+@font-face {font-family: chalkboard; src: url("/ROOT/resources/fonts/chalkboard.ttf")}
+@font-face {font-family: brokenchalk; src: url("/ROOT/resources/fonts/BrokenChalk.ttf")}
 
 h3, h2, h5 {
 	font-family: chalky;
@@ -66,47 +38,63 @@ th, tr {
 	font-family: chalky;
 	color: white;
 }
+
+.w3-sidenav a, .w3-dropnav a {
+    display: block;
+    color: white;
+}
+
+html {
+    font-family: sans-serif;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    background-image: url("/ROOT/resources/themes/greenBoard.jpg");
+}
+
+button, input, select, textarea {font-family: marker;}
+
 </style>
 
 </head>
-<body>
+<body ng-app="myApp">
 
 
 
 	<!--  Dependencies -->
-	<script
-		src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.1/angular-ui-router.min.js"></script>
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.0.1/ui-bootstrap-tpls.min.js"></script>
-	<script
-		src="bower_components/angular-modal-service/dst/angular-modal-service.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.1/angular-ui-router.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.0.1/ui-bootstrap-tpls.min.js"></script>
+	<script src="bower_components/angular-modal-service/dst/angular-modal-service.min.js"></script>
 
 	<!-- These values are referenced in the controllers to get database values to be displayed below
      in {{expressions}}. -->
-	<input type="hidden" ng-model="loggedInUser" />
-	<input type="hidden" ng-model="teacherHomeData.myStudents" />
-	<input type="hidden" ng-model="teacherHomeData.myMeetings" />
-	<input type="hidden" ng-model="teacherHomeData.myEvents" />
-	<input type="hidden" ng-model="teacherHomeData.myEventType" />
-	<input type="hidden" ng-model="teacherHomeData.myAttendanceEntry" />
+	
+	
 
-
-	<div ng-app="myApp" ng-controller="teacherHomeCtrl">
-		<nav class="w3-sidenav w3-black w3-card-2" style="width: 130px">
+	<div ng-controller="teacherHomeCtrl">
+		<input type="hidden" ng-model="loggedInUser" />
+		<input type="hidden" ng-model="teacherHomeData.myStudents" />
+		<input type="hidden" ng-model="teacherHomeData.myMeetings" />
+		<input type="hidden" ng-model="teacherHomeData.myEvents" />
+		<input type="hidden" ng-model="teacherHomeData.myEventType" />
+		<input type="hidden" ng-model="teacherHomeData.myAttendanceEntry" />
+		<input type="hidden" ng-model="teacherHomeData.meetingsBadge" />
+		
+		
+		<nav class="w3-sidenav w3-black w3-card-2" style="width:130px; font-family:marker; font-color:white">
 			<div class="w3-container">
-				<h5>Menu</h5>
+				<h5 style="font-family:marker">Menu</h5>
 			</div>
 			<a href="" class="tablink"
-				ng-click="teacherHomeData.showDisplay('studentsDiv')">Class</a> <a
-				href="" class="tablink"
-				ng-click="teacherHomeData.showDisplay('meetingsDiv')">Meetings</a> <a
-				href="" class="tablink"
-				ng-click="teacherHomeData.showDisplay('eventsDiv')">Events</a> <a
-				href="" class="tablink"
-				ng-click="teacherHomeData.showDisplay('emailDiv')">Email</a> <a
-				href="#" class="tablink" ng-click="">Logout</a>
+				ng-click="teacherHomeData.showDisplay('studentsDiv')">Class</a> 
+			<a href="" class="tablink" 
+				ng-click="teacherHomeData.showDisplay('meetingsDiv')">Meetings 
+				<span class="w3-badge w3-red">{{teacherHomeData.meetingsBadge}}</span></a> 
+			<a href="" class="tablink"
+				ng-click="teacherHomeData.showDisplay('eventsDiv')">Events</a> 
+			<a href="" class="tablink"
+				ng-click="teacherHomeData.showDisplay('emailDiv')">Email</a> 
+			<a href="#" class="tablink" ng-click="">Logout</a>
 		</nav>
 
 		<!-- Div container below needed to push everything to the right of the sidenav. -->
@@ -114,8 +102,7 @@ th, tr {
 			<h2>Teacher Home: Welcome {{teacherHomeData.loggedInUser}}</h2>
 
 
-			<div id="studentsDiv" style="display: none"
-				class="w3-container city w3-animate-left">
+			<div id="studentsDiv" style="display: none" class="w3-container city w3-animate-left">
 				<!-- Loops through our students list obtained from the database, then displayed below. -->
 
 				<h2>My students:</h2>
@@ -123,7 +110,8 @@ th, tr {
 					<tr>
 						<th>Name</th>
 						<th>Student Link</th>
-						<th>Current Grade</th>
+						<th>Grade</th>
+						<th>Comment</th>
 					</tr>
 					<tr ng-repeat="x in teacherHomeData.myStudents"
 						ng-include="teacherHomeData.getTemplate(x)">
@@ -133,16 +121,14 @@ th, tr {
 
 				<br>
 				<h5 ng-bind="teacherHomeData.attendanceMessage"></h5>
-				<button type="button" class="btn btn-default"
-					ng-click="teacherHomeData.open()">
-					{{teacherHomeData.hasSubmittedAttendance ? "Edit Attendance Sheet"
-					: "Submit Attendance Sheet"}}</button>
+				<button type="button" class="btn btn-default" ng-click="teacherHomeData.open()">
+					{{teacherHomeData.hasSubmittedAttendance ? "Edit Attendance Sheet" : "Submit Attendance Sheet"}}
+				</button>
 
 			</div>
 
 
-			<div id="meetingsDiv" style="display: none"
-				class="w3-container city w3-animate-left">
+			<div id="meetingsDiv" style="display:none;" class="w3-container city w3-animate-left">
 				<form id="meetingForm" novalidate>
 					<h2>My Meetings:</h2>
 
@@ -150,52 +136,29 @@ th, tr {
 						style="width: 85%; font-family: chalky; color: white">
 						<tr>
 							<th>Parent</th>
+							<th>Email</th>
 							<th>Reason</th>
 							<th>Date Scheduled</th>
 						</tr>
 						<tr ng-repeat="m in teacherHomeData.myMeetings">
-							<td>{{m.parent.firstName}}</td>
-							<td>{{ m.reason }}</td>
-							<td>{{ m.date | date:'MMM d, yyyy h:mm a' }}</td>
+							<td ng-bind="m.parent.firstName + ' ' + m.parent.lastName"></td>
+							<td ng-bind="m.parent.email"></td>
+							<td ng-bind="m.reason"></td>
+							<td ng-bind="m.date | date:'MMM d, yyyy'"></td>
 						</tr>
 					</table>
-
-					<h3>Select Parent</h3>
-
-					<select form="parentForm" ng-model="teach.parent" required>
-						<option ng-repeat="x in teacherHomeData.myStudents"
-							value="{{x.parent.id}}">{{x.parent.firstName}}</option>
-					</select>
-
-					<h3>Reason</h3>
-					<input type="text" ng-model="teach.reason" />
-
-
-					<h3>Select Date</h3>
-					<input type="date" ng-model="dt" value="{{dt| date: 'fullDate'}}"
-						name="bdatetime" id="datetimepicker" />
-
-					<!-- Calendar  -->
-					<div style="display: inline-block; min-height: 290px;">
-						<div uib-datepicker ng-model="dt" class="well well-sm"
-							datepicker-options="options" style="background-color: green"></div>
-					</div>
-
-					<hr />
-
-					<!-- Calendar  -->
-
-					<br> <br>
-					<button
-						ng-click="teacherHomeData.createMeeting(teach.parent, teach.reason)">Create
-						Meeting</button>
-
+					
+					<br>
+					
+					<button type="button" class="btn btn-default" ng-click="teacherHomeData.openMeetingModal()">
+						Schedule New Meeting
+					</button>
 				</form>
 			</div>
 
-			<div id="eventsDiv" style="display: none"
-				class="w3-container city w3-animate-left">
-				<div ng-controller="DatepickerDemoCtrl">
+			<div id="eventsDiv" style="display: none" class="w3-container city w3-animate-left">
+			
+			<!--  	<div ng-controller="DatepickerDemoCtrl"> -->
 					<form id="eventForm" novalidate
 						style="font-family: chalky color : white">
 						<h2>My Events:</h2>
@@ -206,57 +169,33 @@ th, tr {
 								<th>Type</th>
 								<th>Description</th>
 								<th>Date</th>
+								<th>Photos</th>
 
 							</tr>
 							<tr ng-repeat="e in teacherHomeData.myEvents">
-								<td>{{ e.name }}</td>
-								<td>{{e.eventType.name}}</td>
-								<td>{{ e.description }}</td>
-								<td>{{ e.date |date:'MMM d, yyyy'}}</td>
+								<td ng-bind="e.name"></td>
+								<td ng-bind="e.eventType.name"></td>
+								<td ng-bind="e.description"></td>
+								<td ng-bind="e.date |date:'MMM d, yyyy'"></td>
+								<td>
+									<button class="w3-btn w3-transparent w3-border w3-round-large" ng-click="teacherHomeData.openPhotosModal(e)">View/Upload</button>
+								</td>
 							</tr>
 						</table>
-
-						<h3>Event Name</h3>
-
-						<input type="text" ng-model="event.name" />
-
-						<h3>Event Type</h3>
-						<select form="" ng-model="event.type" required>
-							<option ng-repeat="x in teacherHomeData.myEventType"
-								value="{{x.id}}">{{x.name}}</option>
-						</select>
-
-						<h3>Description</h3>
-
-						<input type="text" ng-model="event.description" />
-
-						<h3>Select Date</h3>
-						<input type="date" ng-model="dt" value="{{dt| date: 'fullDate'}}"
-							name="bdatetime" id="datetimepicker" />
-
-						<!--  <pre>Selected date is: <em>{{dt | date:'fullDate'}}</em></pre> -->
-
-						<!-- Calendar  -->
-						<div style="display: inline-block; min-height: 290px;">
-							<div uib-datepicker ng-model="dt" class="well well-sm"
-								datepicker-options="options"
-								style="background-color: green; font-family: marker"></div>
-						</div>
-
-						<br> <br>
-						<button
-							ng-click="teacherHomeData.createEvents(event.name,event.type, event.description, dt)">Submit</button>
-
+						<br>
+						<button type="button" class="btn btn-default" ng-click="teacherHomeData.openEventModal()">
+						Post New Event
+					  </button>
 					</form>
 				</div>
-			</div>
+			
 
 			<div id="emailDiv" style="display: none" class="w3-container city w3-animate-left">
 				<form id="studentform" novalidate style="font-family: chalky; color: white">
 					<h3>Recipient:</h3>
 					<select style="color: black" name="studentlist" form="studentform" ng-model="user.recipient" required>
 						<option value="All">All</option>
-						<option ng-repeat="x in teacherHomeData.myStudents" value="{{x.id}}">{{x.parent.firstName}}</option>
+						<option ng-repeat="x in teacherHomeData.myStudents" value="{{x.id}}">{{x.parent.firstName}} {{x.parent.lastName}} (Parent of: {{x.firstName}})</option>
 					</select>
 					<br>
 					<h3>Subject:</h3>
@@ -267,7 +206,8 @@ th, tr {
 					<textarea rows="5" ng-model="user.body" style="color: black" autocomplete="off" required></textarea>
 					<br>
 					<br>
-					<button ng-click="teacherHomeData.emailParent(user.recipient, user.subject, user.body)">Send</button>
+					<button ng-click="teacherHomeData.emailParent(user.recipient, user.subject, user.body);teacherHomeData.confirm()" style="color:black">
+						Send</button>
 				</form>
 			</div>
 		</div>
@@ -278,14 +218,13 @@ th, tr {
 	<script type="text/javascript" src="javascript/controllers.js"></script>
 
 	<script type="text/ng-template" id="display">
-		<td>{{x.firstName}}</td>
+		<td>{{x.firstName + " " + x.lastName}}</td>
 		<td><button class="w3-btn w3-transparent w3-border w3-round-large" ng-click="teacherHomeData.viewStudent(x.id)">View</button></td>
-		<td>{{ x.grade }}
-			<button class="w3-btn w3-transparent w3-border w3-round-large" ng-click="teacherHomeData.editGrade(x)">Change Grade</button>
-		</td>
+		<td>{{ x.grade }} <button class="w3-btn w3-transparent w3-border w3-round-large" ng-click="teacherHomeData.editGrade(x)">Change Grade</button></td>
+		<td>{{ x.comments }} <button class="w3-btn w3-transparent w3-border w3-round-large" ng-click="teacherHomeData.editComments(x)">Set Comment</button></td>
     </script>
 	<script type="text/ng-template" id="edit">
-		<td>{{x.firstName}}</td>
+		<td>{{x.firstName + " " + x.lastName}}</td>
 		<td><button class="w3-btn w3-transparent w3-border w3-round-large" ng-click="teacherHomeData.viewStudent(x.id)">View</button></td>
 		<td>
 			<select class="w3-transparent w3-border" ng-model="teacherHomeData.selected.grade">
@@ -296,6 +235,13 @@ th, tr {
 			</select>
 			<button class="w3-btn w3-transparent w3-border w3-round-large w3-small" ng-click="teacherHomeData.saveStudent($index)">Save</button>
             <button class="w3-btn w3-transparent w3-border w3-round-large w3-small" ng-click="teacherHomeData.reset()">Cancel</button>
+		</td>
+		<td>
+			<form novalidate>
+    			<input type="text" ng-model="teacherHomeData.selected.comments" style="color:black"><br>
+    			<button class="w3-btn w3-transparent w3-border w3-round-large w3-small" ng-click="teacherHomeData.saveStudent($index)">Save</button>
+				<button class="w3-btn w3-transparent w3-border w3-round-large w3-small" ng-click="teacherHomeData.reset()">Cancel</button>
+  			</form>
 		</td>
 		
     </script>

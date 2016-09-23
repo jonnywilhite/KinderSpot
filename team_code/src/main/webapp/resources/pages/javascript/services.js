@@ -44,6 +44,20 @@ angular.module("myApp").service('studentsService', function() {
 
 });
 
+angular.module("myApp").service('eventTypeService', function() {
+
+	var eventTypes = [];
+
+	return {
+		getEventTypes: function() {
+			return eventTypes;
+		},
+		setEventTypes: function(value) {
+			eventTypes = value;
+		}
+	}
+
+});
 
 //angular.module("myApp").service("datePicker", function () {
 //	
@@ -117,16 +131,20 @@ angular.module("myApp").service('studentsService', function() {
 //});
 
 
-
-
-
-
-
-
-
-
-
-
+angular.module("myApp").service('fileUpload', ['$http', function ($http) {
+    this.uploadFileToUrl = function(file, uploadUrl){
+        var fd = new FormData();
+        fd.append('key', file);
+        $http.post(uploadUrl, fd, {
+            transformRequest: angular.identity,
+            headers: {'Content-Type': undefined}
+        })
+        .success(function(){
+        })
+        .error(function(){
+        });
+    }
+}]);
 
 
 
@@ -143,4 +161,17 @@ angular.module("myApp").service('attendanceService', function() {
 		}
 	}
 
+});
+
+angular.module("myApp").service('eventIdService', function () {
+	var event = {};
+
+	return {
+		getEvent: function () {
+			return event;
+		},
+		setEvent: function(value) {
+			event = value;
+		}
+	};
 });

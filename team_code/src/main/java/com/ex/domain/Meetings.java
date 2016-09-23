@@ -17,8 +17,9 @@ import javax.persistence.Table;
 public class Meetings {
 	@Id
 	@Column(name ="M_ID")
-	@SequenceGenerator(allocationSize = 1, name ="meetingSeq", sequenceName ="MEETING_SEQUENCE")
-	@GeneratedValue (strategy=GenerationType.SEQUENCE, generator ="meetingSeq")
+	@GeneratedValue
+//	@SequenceGenerator(allocationSize = 1, name ="meetingSeq", sequenceName ="MEETING_SEQUENCE")
+//	@GeneratedValue (strategy=GenerationType.SEQUENCE, generator ="meetingSeq")
 	private int id;
 	
 	@Column(name ="M_DATE")

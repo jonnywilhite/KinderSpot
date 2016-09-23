@@ -16,8 +16,9 @@ public class Student implements Comparable<Student> {
 	
 	@Id
 	@Column(name="s_id")
-	@SequenceGenerator(allocationSize=1, name="studentSequence", sequenceName="student_sequence")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="studentSequence")
+	@GeneratedValue
+//	@SequenceGenerator(allocationSize=1, name="studentSequence", sequenceName="student_sequence")
+//	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="studentSequence")
 	private int id;
 	
 	@Column(name="s_firstname")

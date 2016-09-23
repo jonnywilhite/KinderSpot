@@ -24,16 +24,20 @@ public class TeacherController {
 	@Autowired
 	private KinderService service;
 	
-	@RequestMapping(value="photos", method=RequestMethod.POST)
-	public Photos uploadPhoto(@RequestBody MultipartFile key) {
-		Photos photo = new Photos();
+	@RequestMapping(value="photos/{eventId}", method=RequestMethod.POST)
+	public Photos uploadPhoto(@RequestBody MultipartFile key, @PathVariable int eventId) {
+		
+		//System.out.println("entering method...");
+		
 		File file = new File(key.getOriginalFilename());
 		
+		//System.out.println("key is: " + key.getOriginalFilename());
+		
 		try {
-			
+			//System.out.println("transfering..");
 			key.transferTo(file);
-			photo.setEvent(null);
-			return service.uploadPhoto(photo, file);
+			//System.out.println("transferred...");
+			return service.uploadPhoto(file, eventId);
 		} catch (IllegalStateException | IOException e) {
 			
 			e.printStackTrace();
@@ -50,7 +54,7 @@ public class TeacherController {
 	
 	@RequestMapping(value="photos/{eventId}", method=RequestMethod.GET)
 	public List<Photos> getPhotosByEvent(@PathVariable int eventId) {
-		return null;
+		return service.getPhotosByEvent(eventId);
 	}
 
 }

@@ -21,7 +21,7 @@ angular.module('myApp').controller('ModalInstanceCtrl', ['$scope', '$uibModalIns
 		});
 
 		$http({
-			url: "/KinderSpot/" + loggedUser.id + "/attendance/",
+			url: "/ROOT/" + loggedUser.id + "/attendance/",
 			method: "POST",
 			headers: {'Content-Type': 'application/json'},
 			data: list

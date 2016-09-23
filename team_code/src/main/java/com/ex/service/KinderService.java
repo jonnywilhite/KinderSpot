@@ -34,7 +34,7 @@ public interface KinderService {
 	ReportCard createReportCardEntry(ReportCard rc);
 	List<ReportCard> getAllReportCardsByTeacher(int teacherId);
 	ReportCard getReportCardByStudent(int studentId);
-	ReportCard updateReportCardByStudent(int studentId, String grade);
+	ReportCard updateReportCardByStudent(int studentId, ReportCard rc);
 	
 	
 	//Event stuff
@@ -47,8 +47,8 @@ public interface KinderService {
 	
 	
 	//Meeting Stuff 
-	public Meetings createMeeting (Meetings meeting, @PathVariable int parentId);
-	public List <Meetings> getAllMeetings ();
+	public Meetings createMeeting (Meetings meeting, @PathVariable int parentId, User teacher);
+	public List <Meetings> getAllMeetings (@PathVariable int teachId);
 	public Meetings updateMeetingStatus(Meetings meeting, @PathVariable Boolean meetingStatus);
 	public List <Meetings> getMeetingsByParent (int parentId);
 	
@@ -59,7 +59,7 @@ public interface KinderService {
 	User findById(int id);
 	
 	//Photos stuff
-	Photos uploadPhoto(Photos photo, File file);
+	Photos uploadPhoto(File file, int eventId);
 	List<Photos> getAllPhotos();
 	List<Photos> getPhotosByEvent(int eventId);
 

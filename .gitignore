@@ -4,6 +4,7 @@
 *.project
 *.settings/
 team_code/.gitignore
+*.DS_Store
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/

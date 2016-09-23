@@ -18,8 +18,9 @@ public class ReportCard implements Comparable<ReportCard> {
 	
 	@Id
 	@Column(name = "RC_ID")
-	@SequenceGenerator(allocationSize = 1, name ="rcSeqGen", sequenceName ="RC_SEQUENCE")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator ="rcSeqGen")
+	@GeneratedValue
+//	@SequenceGenerator(allocationSize = 1, name ="rcSeqGen", sequenceName ="RC_SEQUENCE")
+//	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator ="rcSeqGen")
 	private int id;
 	
 	@Column(name = "RC_GRADE")

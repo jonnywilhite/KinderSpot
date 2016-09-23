@@ -20,17 +20,18 @@ import com.ex.service.KinderService;
  	
  	@RequestMapping (value ="meeting/{parentId}", method = RequestMethod.POST)
  	public Meetings createMeeting(@RequestBody Meetings meeting, @PathVariable int parentId){
- 		return service.createMeeting(meeting, parentId);
+ 		return service.createMeeting(meeting, parentId, meeting.getTeacher());
  	}
  	
- 	@RequestMapping (value= "meeting/{parentId}", method = RequestMethod.GET)
+ 	
+ 	@RequestMapping (value= "parentMeeting/{parentId}", method = RequestMethod.GET)
  	public List<Meetings> getMeetingsByParent(@PathVariable int parentId) {
  		return service.getMeetingsByParent(parentId);
  	}
  	
- 	@RequestMapping (value= "meeting", method = RequestMethod.GET)
- 	public List<Meetings> getAllMeetings() {
- 		return service.getAllMeetings();
+ 	@RequestMapping (value= "meeting/{teacherId}", method = RequestMethod.GET)
+ 	public List<Meetings> getAllMeetings(@PathVariable int teacherId) {
+ 		return service.getAllMeetings(teacherId);
  	}
  	
  	@RequestMapping(value = "meeting/{meetingStatus}", method = RequestMethod.PUT)
